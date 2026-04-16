@@ -140,6 +140,32 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
   letter-spacing:.08em;text-shadow:0 0 8px rgba(232,48,64,.4);}
 .secsub{font-size:13px;color:#a8b8d0;line-height:1.9;margin-bottom:16px;}
 
+/* PREP SECTION */
+.prep-sec .sech{display:flex;justify-content:space-between;align-items:center;}
+.prep-toggle{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--dim);transition:transform .3s;}
+.prep-toggle.open{transform:rotate(180deg);}
+.prep-body{display:none;}
+.prep-body.open{display:block;}
+.prep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;}
+@media(max-width:900px){.prep-grid{grid-template-columns:1fr;}}
+.prep-card{background:rgba(10,14,26,.6);border:1px solid var(--border2);padding:20px;}
+.prep-card-head{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold2);
+  margin-bottom:16px;letter-spacing:.06em;}
+.prep-item{display:flex;gap:10px;margin-bottom:14px;align-items:flex-start;}
+.prep-tag{font-family:'Press Start 2P',monospace;font-size:6px;padding:3px 6px;
+  white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.prep-tag.must{background:rgba(232,48,64,.2);color:var(--red);border:1px solid rgba(232,48,64,.4);}
+.prep-tag.rec{background:rgba(68,204,136,.15);color:var(--green2);border:1px solid rgba(68,204,136,.3);}
+.prep-tag.later{background:rgba(255,200,50,.1);color:var(--gold2);border:1px solid rgba(255,200,50,.25);}
+.prep-item-title{font-size:13px;color:var(--text);font-weight:600;margin-bottom:4px;}
+.prep-item-desc{font-size:11px;color:var(--dim);line-height:1.7;}
+.prep-ready{margin-top:24px;padding:18px 24px;background:rgba(68,204,136,.07);
+  border:1px solid rgba(68,204,136,.25);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.prep-ready-txt{font-size:12px;color:var(--green2);font-weight:600;}
+.prep-start-btn{font-family:'Press Start 2P',monospace;font-size:7px;padding:12px 20px;
+  background:linear-gradient(135deg,var(--red2),var(--red));border:none;color:#fff;
+  cursor:pointer;letter-spacing:.06em;box-shadow:0 3px 0 var(--red2);transition:all .15s;}
+.prep-start-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--red2);}
 /* STAGE MAP */
 .smap{display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:8px;}
 .snode{background:linear-gradient(135deg,var(--card),rgba(11,15,26,.9));
@@ -569,6 +595,119 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 </div>
 
 <div class="main">
+
+<!-- ⓪ PROLOGUE — 準備 -->
+<div class="sec prep-sec" id="prepSec">
+  <div class="sech" onclick="togglePrep()" style="cursor:pointer;">
+    <div class="secht">⚙ 冒険の前に — 準備チェックリスト</div>
+    <div class="prep-toggle" id="prepToggle">▼</div>
+  </div>
+  <div class="prep-body" id="prepBody">
+    <p class="secsub">AI QUESTを始める前に以下を確認しよう。準備が整えばすぐにSTAGE 1に進める。</p>
+
+    <div class="prep-grid">
+
+      <!-- 環境 -->
+      <div class="prep-card">
+        <div class="prep-card-head">💻 動作環境</div>
+        <div class="prep-item req">
+          <span class="prep-tag must">必須</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">PCまたはMac</div>
+            <div class="prep-item-desc">スマートフォンは非推奨。作業の9割はキーボード入力になるためPCを用意しよう。</div>
+          </div>
+        </div>
+        <div class="prep-item req">
+          <span class="prep-tag must">必須</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Chrome / Safari / Edge（最新版）</div>
+            <div class="prep-item-desc">ブラウザは最新版を使うこと。Internet Explorerは非対応。</div>
+          </div>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag rec">推奨</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">画面サイズ 13インチ以上</div>
+            <div class="prep-item-desc">複数ウィンドウを並べての作業が多いため、広い画面が快適。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 今すぐ登録 -->
+      <div class="prep-card">
+        <div class="prep-card-head">🔑 今すぐ登録するもの</div>
+        <div class="prep-item req">
+          <span class="prep-tag must">必須</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Claude.ai アカウント</div>
+            <div class="prep-item-desc">claude.ai にアクセスして無料アカウントを作成。Googleアカウントで30秒で登録できる。STAGE 1からすぐ使う。</div>
+          </div>
+        </div>
+        <div class="prep-item req">
+          <span class="prep-tag must">必須</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Googleアカウント</div>
+            <div class="prep-item-desc">Claude・Notion・スプレッドシートの登録に使う。すでに持っていればOK。</div>
+          </div>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag later">後で</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Notionアカウント</div>
+            <div class="prep-item-desc">STAGE 4で使う。notion.so から無料登録。今はまだ不要。</div>
+          </div>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag later">後で</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Slackワークスペース参加</div>
+            <div class="prep-item-desc">STAGE 6で使う。Allenから招待リンクをもらうこと。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 後でインストール -->
+      <div class="prep-card">
+        <div class="prep-card-head">📦 後でインストールするもの</div>
+        <div class="prep-item">
+          <span class="prep-tag later">STAGE 7〜</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Cursor（AIコードエディタ）</div>
+            <div class="prep-item-desc">cursor.sh から無料ダウンロード。STAGE 7になったらインストールすればOK。今は不要。</div>
+          </div>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag later">STAGE 7〜</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Node.js（v20以上）</div>
+            <div class="prep-item-desc">nodejs.org からインストール。Vercelデプロイに必要。STAGE 7で案内するので今は不要。</div>
+          </div>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag later">STAGE 7〜</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">GitHubアカウント</div>
+            <div class="prep-item-desc">github.com から無料登録。コードの管理・デプロイに使う。STAGE 7で案内する。</div>
+          </div>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag later">STAGE 7〜</span>
+          <div class="prep-item-body">
+            <div class="prep-item-title">Vercelアカウント</div>
+            <div class="prep-item-desc">vercel.com から無料登録（GitHubアカウントで登録可）。Webサイトの公開に使う。</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /prep-grid -->
+
+    <div class="prep-ready">
+      <div class="prep-ready-txt">✅ Claude.aiとGoogleアカウントがあれば今すぐ始められる</div>
+      <button class="prep-start-btn" onclick="switchStage(1);document.getElementById('dungeons').scrollIntoView({behavior:'smooth'})">▶ STAGE 1 スタート</button>
+    </div>
+
+  </div><!-- /prep-body -->
+</div>
 
 <!-- ① STAGE MAP -->
 <div class="sec">
@@ -2531,6 +2670,8 @@ async function startAdventure(){
     loadMasterMode();
     return;
   }
+  // 新規プレイヤーなら準備セクションを開く（既存は閉じたまま）
+  const isNew = !(await supa.from('players').select('id').eq('name',name).maybeSingle()).data;
 
   // 同名プレイヤーがいれば再利用、いなければ新規作成
   let { data: existing } = await supa.from('players').select('id,name').eq('name',name).maybeSingle();
@@ -2551,6 +2692,14 @@ async function startAdventure(){
   document.getElementById('loginOverlay').classList.add('hide');
   setHeaderName(existing.name);
   await loadProgress();
+  if(isNew){ document.getElementById('prepBody').classList.add('open'); document.getElementById('prepToggle').classList.add('open'); }
+}
+
+function togglePrep(){
+  const body = document.getElementById('prepBody');
+  const toggle = document.getElementById('prepToggle');
+  body.classList.toggle('open');
+  toggle.classList.toggle('open');
 }
 
 function logout(){
