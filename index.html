@@ -550,7 +550,7 @@ textarea:focus{border-color:#4488ff;}
 </div>
 
 <footer class="footer">
-  <div class="footer-t">© TREPRO INC. — AI QUEST v3.0 | STAGE 1 IMPLEMENTED | STAGE 2-10 COMING SOON</div>
+  <div class="footer-t">© TREPRO INC. — AI QUEST v3.0 | STAGE 1〜3 IMPLEMENTED | STAGE 4-10 COMING SOON</div>
 </footer>
 </div>
 
@@ -976,8 +976,241 @@ STEP 4：改善後の求人票を書く
       body:'LESSON 06〜09で作ったプロンプトをまとめてプロンプト集 v1を作ろう。\n\n【Notionに作るページ構成】\n📁 AI QUEST プロンプト集\n　├ メール作成系\n　├ 文書作成系\n　├ 分析・要約系\n　└ 採用・HR系\n\n【各プロンプトの記録形式】\nタイトル：[何に使うか]\nプロンプト：[本文をそのままコピペ]\n使用場面：[どんなときに使うか]\n改善メモ：[使ってみた感想]\n\nまだNotionを使ったことがない場合は次のSTAGE 4で学ぶ。今はメモ帳でもOK。' }
   },
 
-  // ★ STAGE 3 DATA — ここから追加（第3回処理で実装）
-  // { stage:3, lv:11, ... },
+  // ★ STAGE 3 DATA — LV 11〜15（実装済み） ──────────────────────────────
+  {
+    stage:3, lv:11, num:'LESSON 11',
+    title:'メール・報告書・提案書をClaudeで書く',
+    time:'25 min', diff:'★★☆☆☆', xpVal:100,
+    blocks:[
+      { icon:'📚', title:'ビジネス文書3種の型を覚える', time:'10 min', html:`
+        <p class="lbtxt">Claudeに頼む前に「何を書くか」の型を持っておくと、指示が10倍明確になる。<br><br>
+        <strong>① ビジネスメール</strong><br>
+        件名 / 挨拶 / 本題（目的・依頼・報告）/ 締め<br>
+        → <em>「誰に・何のために・何を依頼するか」を1行で書いてからClaudeに渡す</em><br><br>
+        <strong>② 報告書</strong><br>
+        タイトル / 日時・参加者 / 内容サマリー / 決定事項 / 次のアクション<br>
+        → <em>会議メモをそのまま貼ってClaudeに「報告書の形に整えて」と一言でOK</em><br><br>
+        <strong>③ 提案書</strong><br>
+        課題提起 / 解決策 / 効果・実績 / 費用・スケジュール / CTA<br>
+        → <em>「サービス概要」「ターゲット」「強み」を箇条書きで渡せばClaudeが構成ごと作る</em></p>
+        <div class="pills"><div class="pill pr">メール</div><div class="pill pb">報告書</div><div class="pill pg">提案書</div><div class="pill py">型があれば怖くない</div></div>` },
+      { icon:'⚡', title:'即使えるプロンプト3本', time:'10 min', html:`
+        <p class="lbtxt"><strong>① アポメール</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — アポメール</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>あなたはビジネスメールのプロです。
+【相手】初めて連絡する企業の採用担当者
+【目的】採用支援サービスの紹介アポを取る
+【自社】Trepro株式会社 採用支援事業部
+【条件】丁寧だが堅すぎない。本文150文字以内。件名も出力。</pre></div>
+        <p class="lbtxt" style="margin-top:12px;"><strong>② 議事録→報告書</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 報告書</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の会議メモを報告書の形式にまとめてください。
+【構成】①会議概要（日時・参加者）②決定事項③懸念事項④次のアクション（担当・期限）
+【会議メモ】
+[ここにメモを貼る]</pre></div>
+        <p class="lbtxt" style="margin-top:12px;"><strong>③ 提案書ひな形生成</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 提案書</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>あなたはBtoB営業の提案書ライターです。
+【サービス】Trepro採用支援（HR特化の採用代行）
+【課題】応募数が少なく採用に3ヶ月以上かかっている
+【強み】HR業界特化チームが伴走。費用は成果報酬型
+提案書の構成と各セクションの文章を出力してください。</pre></div>` }
+    ],
+    quiz:{
+      q:'Claudeに「報告書を作って」と依頼するとき、最も出力精度が上がる渡し方は？',
+      opts:['「報告書を作ってください」とだけ送る','報告書のテンプレートURLを貼る','会議メモをそのまま貼って「報告書の形に整えて」と指示する','英語で指示してから日本語に翻訳させる'],
+      c:2,
+      ok:'✅ 正解！ 生の会議メモをそのまま渡して「形式を整えて」と指示するのが最速・最高精度です。構成はClaudeが自動で判断します。',
+      ng:'❌ 不正解。生の会議メモを貼って「報告書の形に整えて」と一言添えるのが最も効果的です。AIに素材を渡して形式化させるのが正しい使い方です。'
+    },
+    ch:{ title:'実際に仕事で使うメール or 報告書をClaudeで1本作る',
+      body:'今週実際に書く必要があるメールまたは報告書を1本、Claudeに作らせてみよう。\n\n【手順】\n① 「誰に・何のために・何を伝えるか」を箇条書きで書く\n② LESSON 07で学んだ3点セット（役割・背景・形式）を使って指示文を作る\n③ Claudeに送って出力を確認\n④ 気になる部分だけ修正指示を出す\n\n→ 実際に使えるレベルのものが出てきたら、そのプロンプトをプロンプト集に保存しておこう。' }
+  },
+
+  {
+    stage:3, lv:12, num:'LESSON 12',
+    title:'会議の議事録・要約・翻訳を瞬時にこなす',
+    time:'20 min', diff:'★★☆☆☆', xpVal:100,
+    blocks:[
+      { icon:'📚', title:'「整理する」作業はAIが最速', time:'8 min', html:`
+        <p class="lbtxt">議事録・要約・翻訳は「読んで→構造化する」作業だ。これはAIが最も得意とする仕事。<br><br>
+        <strong>人間がやること</strong>：内容を判断する・事実確認する・最終的に責任を持つ<br>
+        <strong>AIにやらせること</strong>：整理・構造化・変換・要約<br><br>
+        この分担を徹底するだけで、1日の事務作業が半分になる。<br><br>
+        <em>「書く」仕事から「チェックする」仕事に変わる。これが本当のAI活用だ。</em></p>
+        <div class="pills"><div class="pill pr">議事録</div><div class="pill pb">要約</div><div class="pill pg">翻訳</div><div class="pill py">AIに任せる</div></div>` },
+      { icon:'⚡', title:'議事録・要約・翻訳の即効プロンプト', time:'8 min', html:`
+        <p class="lbtxt"><strong>① 音声書き起こし → 議事録</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 議事録</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の文章を議事録にまとめてください。
+【出力形式】
+・会議名・日時・参加者
+・議題ごとの内容（箇条書き）
+・決定事項（番号付き）
+・次回アクション（担当者名付き）
+【元テキスト】
+[書き起こし or メモをここに貼る]</pre></div>
+        <p class="lbtxt" style="margin-top:12px;"><strong>② 長文 → 3行要約</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 要約</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の文章を3行で要約してください。
+・1行目：何の話か（テーマ）
+・2行目：最重要ポイント
+・3行目：次に取るべきアクション
+[要約したい文章をここに貼る]</pre></div>
+        <p class="lbtxt" style="margin-top:12px;"><strong>③ 日→英 ビジネス翻訳</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 翻訳</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の日本語をビジネス英語に翻訳してください。
+丁寧かつ自然なメールの文体で。
+[翻訳したい日本語をここに貼る]</pre></div>` }
+    ],
+    quiz:{
+      q:'会議の音声書き起こしテキストを議事録にする場合、最も効率的な方法は？',
+      opts:['全部自分で読んで整理する','書き起こしをそのままClaudeに貼って構成を指定して変換させる','要点だけメモしてから自分で清書する','別の人に頼む'],
+      c:1,
+      ok:'✅ 正解！ 書き起こしをそのままClaudeに渡して「議事録の形式で出力して」と指示するのが最速です。AIが構造化・整理・清書まで一括でやります。',
+      ng:'❌ 不正解。書き起こしをそのままClaudeに貼って出力形式を指定するのが圧倒的に速いです。整理・構造化はAIの最得意分野です。'
+    },
+    ch:{ title:'直近の会議メモ or 書き起こしを議事録にClaudeで変換する',
+      body:'① 直近に出席した会議のメモ・書き起こしを用意する（なければ架空のメモでもOK）\n② 上のプロンプトをコピーして[元テキスト]部分に貼り付ける\n③ Claudeに送信\n④ 出力された議事録を確認して、修正が必要な部分だけ指示を追加する\n\n→ 一度テンプレートを作ったら毎回使い回せる。これが「再現性のあるAI活用」だ。' }
+  },
+
+  {
+    stage:3, lv:13, num:'LESSON 13',
+    title:'LPのコピーライティングを丸ごと生成する',
+    time:'25 min', diff:'★★★☆☆', xpVal:120,
+    blocks:[
+      { icon:'📚', title:'LPコピーの構造を理解する', time:'10 min', html:`
+        <p class="lbtxt">LP（ランディングページ）のコピーには、読み手を「問題認識 → 解決策 → 行動」へ導く構造がある。<br><br>
+        <strong>LPの基本構成</strong><br>
+        ① ヒーローコピー（一瞬で心をつかむ一行）<br>
+        ② サブコピー（ヒーローコピーを補足する2〜3行）<br>
+        ③ 課題提起（「こんな悩みありませんか？」）<br>
+        ④ 解決策の提示（このサービスがどう解決するか）<br>
+        ⑤ 実績・信頼性（数字・事例・口コミ）<br>
+        ⑥ CTA（行動喚起ボタン）<br><br>
+        <em>この構造をClaudeに渡すだけで、プロのコピーライターに近い品質が出る。</em></p>
+        <div class="pills"><div class="pill pr">ヒーローコピー</div><div class="pill pb">課題提起</div><div class="pill pg">CTA</div><div class="pill py">LP全文生成</div></div>` },
+      { icon:'⚡', title:'LP全文生成プロンプト — 完全版', time:'10 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — LP全文生成</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>あなたはLP専門のコピーライターです。
+
+【サービス情報】
+サービス名：[サービス名]
+ターゲット：[どんな人に向けたサービスか]
+解決する課題：[どんな悩みを解決するか]
+強み・差別化：[競合との違い]
+実績・数字：[あれば記載]
+
+【出力形式】
+以下の構成でLP全文を出力してください。
+1. ヒーローコピー（20文字以内・インパクト重視）
+2. サブコピー（60文字以内・ヒーローコピーを補足）
+3. 課題提起（「こんな悩みありませんか？」形式で3点）
+4. 解決策（各80文字、3点）
+5. 選ばれる理由（3点・数字を入れる）
+6. CTAボタン文言（2パターン）</pre></div>
+        <div class="warn"><div class="warn-l">▶ Trepro向けカスタマイズ</div><div class="warn-t">サービス名に「Trepro採用支援」「Solve」「Lakkan」を入れて試してみよう。実際の業務に使えるコピーが出てくる。</div></div>` }
+    ],
+    quiz:{
+      q:'LPのヒーローコピーを作る際、Claudeへの指示で最も重要な要素はどれ？',
+      opts:['文字数制限だけを伝える','ターゲットが抱える課題と、それを解決するサービスの強みを伝える','会社名だけを伝える','競合他社のコピーを参考として貼る'],
+      c:1,
+      ok:'✅ 正解！ ターゲットの課題とサービスの強みを伝えることで、Claudeが「誰の・どんな問題を・どう解決するか」を理解して刺さるコピーを生成できます。',
+      ng:'❌ 不正解。ヒーローコピーの精度を上げる最重要要素は「ターゲットが抱える課題」と「サービスがどう解決するか」の情報です。'
+    },
+    ch:{ title:'Trepro or Lakkanのサービスを使ってLP全文生成プロンプトを試す',
+      body:'上のプロンプトテンプレートを使って、Trepro採用支援またはLakkanのLP全文をClaudeに生成させてみよう。\n\n【入力情報の例（Trepro採用支援）】\nサービス名：Trepro採用支援\nターゲット：採用に課題を抱える中小企業の経営者・人事担当者\n解決する課題：求人を出しても応募が来ない・採用に時間がかかりすぎる\n強み：HR業界特化チームが完全伴走・成果報酬型で初期費用ゼロ\n実績：導入後平均3ヶ月で採用目標達成\n\n→ 生成されたコピーを読んで「使えそうか」「どこを直せばいいか」を考えてみよう。' }
+  },
+
+  {
+    stage:3, lv:14, num:'LESSON 14',
+    title:'Claudeのプロジェクト機能 — 文脈を記憶させる',
+    time:'25 min', diff:'★★★☆☆', xpVal:120,
+    blocks:[
+      { icon:'📚', title:'プロジェクト機能とは何か', time:'10 min', html:`
+        <p class="lbtxt">Claudeの「プロジェクト」機能は、<em>Claudeに文脈を記憶させる仕組み</em>だ。<br><br>
+        通常のチャットはセッションをまたぐと記憶がリセットされる。<br>
+        プロジェクトを使うと、<strong>設定・ファイル・過去の会話</strong>を記憶した状態でAIと話せる。<br><br>
+        <strong>プロジェクトで設定できること</strong><br>
+        ・システムプロンプト（AIへの事前設定）<br>
+        ・参照ファイル（資料・マニュアル・ブランドガイドなど）<br>
+        ・チャット履歴の共有<br><br>
+        <em>「毎回説明しなくていい」状態を作ることで、仕事の速度が3倍になる。</em></p>
+        <div class="pills"><div class="pill pr">プロジェクト</div><div class="pill pb">文脈記憶</div><div class="pill pg">システムプロンプト</div><div class="pill py">ファイル参照</div></div>` },
+      { icon:'⚡', title:'業務別プロジェクト設計 — 作り方と活用例', time:'10 min', html:`
+        <div class="stepbox"><div class="step-title">▶ プロジェクト作成手順</div>
+          <div class="step"><div class="step-n">1</div><div class="step-body"><strong>claude.aiの左サイドバー「Projects」→「New project」</strong><br>名前は「採用支援業務」「LP制作」など業務単位で付ける</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-body"><strong>「Custom instructions」にシステムプロンプトを設定</strong><br>例：「あなたはTrepro採用支援の担当アシスタントです。回答は日本語で簡潔に。」</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-body"><strong>ファイルをアップロードして参照させる</strong><br>サービス資料・求人票テンプレ・ブランドガイドをPDF/テキストで渡す</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-body"><strong>プロジェクト内でチャットを開始する</strong><br>以降は毎回「Trepro採用支援の担当者として」の文脈で動いてくれる</div></div>
+        </div>
+        <div class="warn"><div class="warn-l">▶ 活用例</div><div class="warn-t">
+        「採用業務」プロジェクト → 求人票・面接質問・フィードバック生成<br>
+        「LP制作」プロジェクト → ブランドガイドを読ませてトンマナ統一<br>
+        「AI QUEST学習」プロジェクト → 学習の記録・振り返りを蓄積</div></div>` }
+    ],
+    quiz:{
+      q:'Claudeのプロジェクト機能を使う最大のメリットはどれ？',
+      opts:['送れるメッセージ数が増える','毎回「Troproの採用担当です」などの説明をせずに仕事が始められる','AIの処理速度が上がる','無料プランで使える機能が増える'],
+      c:1,
+      ok:'✅ 正解！ プロジェクト機能の最大のメリットは「毎回背景説明をせずに作業に入れること」です。システムプロンプトとファイルが記憶されているので、すぐに本題から始められます。',
+      ng:'❌ 不正解。プロジェクト機能の最大メリットは「毎回の背景説明が不要になること＝文脈を記憶させること」です。'
+    },
+    ch:{ title:'claude.aiに「AI QUEST学習」プロジェクトを作って設定する',
+      body:'① claude.aiを開いて左サイドバーの「Projects」から「New project」を作成\n② 名前：「AI QUEST学習」\n③ Custom instructionsに以下を設定：\n「私はTrepro株式会社の新入社員でAI QUESTというカリキュラムを学習中です。AIの基礎からLP制作・DXまでを学んでいます。質問に対して初心者向けに丁寧に、かつ具体的な操作手順も含めて答えてください。」\n④ このプロジェクト内で「今日学んだことを3点教えて」と送ってみる\n\n→ 次からはこのプロジェクト内で質問するだけで、毎回文脈を引き継いだ回答が返ってくる。' }
+  },
+
+  {
+    stage:3, lv:15, num:'LESSON 15',
+    title:'企画書・DX提案書をゼロから1時間で作る',
+    time:'30 min', diff:'★★★★☆', xpVal:140,
+    blocks:[
+      { icon:'📚', title:'企画書・DX提案書の構成を知る', time:'10 min', html:`
+        <p class="lbtxt">企画書・提案書は「相手に判断してもらうための資料」だ。<br>
+        構成が9割。書き方より<strong>「何を・どの順番で・どう見せるか」</strong>が全てを決める。<br><br>
+        <strong>DX提案書の黄金構成</strong><br>
+        ① 現状の課題（数字・事実ベースで）<br>
+        ② そのまま放置した場合のリスク<br>
+        ③ 解決策の提案（手段と理由）<br>
+        ④ 導入スケジュール・費用感<br>
+        ⑤ 期待効果（数字で示す）<br>
+        ⑥ 次のアクション（判断してもらうための締め）<br><br>
+        <em>この構成をClaudeに渡せば、1時間でA4 3〜5枚分の提案書が完成する。</em></p>
+        <div class="pills"><div class="pill pr">DX提案</div><div class="pill pb">構成設計</div><div class="pill pg">1時間で完成</div><div class="pill py">数字で語る</div></div>` },
+      { icon:'⚡', title:'DX提案書ゼロイチプロンプト', time:'15 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — DX提案書</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>あなたはDXコンサルタントです。
+以下の情報をもとに、経営者向けDX提案書を作成してください。
+
+【提案先情報】
+会社規模：[社員数・業種]
+現在の課題：[具体的な問題]
+デジタル化レベル：[現状のツール・習熟度]
+
+【提案内容】
+導入するAI/ツール：[Claude, Notion, スプシAPI等]
+解決する業務：[議事録、採用、報告書等]
+
+【出力構成】
+1. エグゼクティブサマリー（3行）
+2. 現状課題の整理（箇条書き3点）
+3. 提案内容（手段と理由）
+4. 導入ロードマップ（3ヶ月・6ヶ月・1年）
+5. 期待効果（工数削減・コスト削減を数字で）
+6. 投資対効果（ROI概算）
+7. 次のアクション（3点）</pre></div>
+        <div class="warn"><div class="warn-l">▶ STAGE 3 BOSS CHALLENGE</div><div class="warn-t">このレッスンがSTAGE 3のボス戦。実際に社内の誰かの業務をDX化する提案書を1枚Claudeで作ってみよう。完成したらAllenに見せること。</div></div>` }
+    ],
+    quiz:{
+      q:'DX提案書で「相手が判断しやすい」構成として正しいのはどれ？',
+      opts:['ツールの機能説明から始める','現状の課題 → リスク → 解決策 → 効果 → 次のアクションの順で伝える','まず費用を最初に見せる','競合他社の事例だけを並べる'],
+      c:1,
+      ok:'✅ 正解！ 「課題→リスク→解決策→効果→次のアクション」の流れが相手に判断を促す最も効果的な構成です。相手の思考の流れに沿っているから読みやすい。',
+      ng:'❌ 不正解。「現状課題→リスク→解決策→期待効果→次のアクション」の順が相手に判断してもらいやすい構成です。相手の思考の流れに沿って設計することが重要です。'
+    },
+    ch:{ title:'社内の誰かの業務をDX化するミニ提案書をClaudeで作る',
+      body:'Trepro or Lakkanの社内で「まだアナログな業務」を1つ見つけて、そのDX化提案書をClaudeに作らせよう。\n\n【ヒント：よくあるアナログ業務】\n・議事録を毎回Wordで手書き\n・求人票をゼロから毎回書いている\n・報告書をメールで送ってExcelで管理\n・スケジュール調整を手動でSlack\n\n提案書が完成したら社内の誰かに読んでもらうか、Allenに共有しよう。\n「これ、ClaudeとLESSON 15で作りました」と言えたら本物のスキルだ。' }
+  },
 
   // ★ STAGE 4 DATA — ここから追加
   // ★ STAGE 5 DATA — ここから追加
