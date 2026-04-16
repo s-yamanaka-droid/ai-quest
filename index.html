@@ -450,6 +450,11 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 .login-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--red2);}
 .login-err{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--red);
   margin-top:10px;min-height:16px;}
+.login-master-hint{font-size:10px;color:rgba(255,200,50,.35);margin-top:18px;letter-spacing:.04em;}
+.master-badge{display:none;background:linear-gradient(135deg,#b8860b,#ffd700);
+  color:#000;font-family:'Press Start 2P',monospace;font-size:7px;padding:4px 10px;
+  margin-left:10px;letter-spacing:.06em;vertical-align:middle;}
+.master-badge.show{display:inline-block;}
 /* SAVE INDICATOR */
 .save-ind{position:fixed;bottom:20px;right:20px;z-index:1000;
   font-family:'Press Start 2P',monospace;font-size:7px;padding:8px 14px;
@@ -488,6 +493,7 @@ body.theme-10 .pc{border-top-color:#ffd060;}
     <input class="login-inp" id="loginName" type="text" placeholder="例：まな" maxlength="20" autocomplete="off">
     <button class="login-btn" onclick="startAdventure()">▶ ADVENTURE START</button>
     <div class="login-err" id="loginErr"></div>
+    <div class="login-master-hint">※ 管理者は MASTER と入力</div>
   </div>
 </div>
 
@@ -505,7 +511,7 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 
 <!-- HEADER -->
 <header class="hdr">
-  <div class="logo">⚔ AI QUEST</div>
+  <div class="logo">⚔ AI QUEST<span class="master-badge" id="masterBadge">👑 MASTER</span></div>
   <div class="hud">
     <div class="hc-name" id="headerName"></div>
     <div class="hc">HP<span>100</span><div class="mbar"><div class="mfill mf-hp" style="width:100%"></div></div></div>
@@ -2514,6 +2520,15 @@ async function startAdventure(){
   if(!name){ document.getElementById('loginErr').textContent='名前を入力してください'; return; }
   document.getElementById('loginErr').textContent = '';
 
+  // MASTER モード判定
+  if(name.toUpperCase() === 'MASTER'){
+    document.getElementById('loginOverlay').classList.add('hide');
+    setHeaderName('MASTER');
+    document.getElementById('masterBadge').classList.add('show');
+    loadMasterMode();
+    return;
+  }
+
   // 同名プレイヤーがいれば再利用、いなければ新規作成
   let { data: existing } = await supa.from('players').select('id,name').eq('name',name).maybeSingle();
   if(!existing){
@@ -2572,6 +2587,32 @@ async function loadProgress(){
     const allCleared = hasData && LESSON_DATA.filter(l=>l.stage===i+1).every(l=>l.cleared);
     if(allCleared){ node.querySelector('.sn-s').textContent='✓ DONE'; node.querySelector('.sn-s').style.color='var(--green2)'; }
   });
+}
+
+function loadMasterMode(){
+  // 全レッスンをクリア済みにする
+  let totalXP = 0;
+  LESSON_DATA.forEach(ld => {
+    ld.cleared = true;
+    totalXP += ld.xpVal;
+  });
+  // XP・レベル最大化
+  xp = totalXP;
+  lv = 10;
+  document.getElementById('lvnum').textContent = lv;
+  document.getElementById('hlv').textContent = lv;
+  // 全バッジ点灯
+  for(let i=0;i<=9;i++){ const b=document.getElementById('b'+i); if(b)b.classList.add('on'); }
+  updatePlayer();
+  renderLessons(curStage);
+  // 全ステージノードを DONE にする
+  const nodes = document.querySelectorAll('.snode');
+  nodes.forEach((node,i)=>{
+    const s = node.querySelector('.sn-s');
+    if(s){ s.textContent='✓ DONE'; s.style.color='var(--green2)'; }
+  });
+  // ステージ10の背景にする
+  switchStage(10);
 }
 
 async function saveProgress(lvNum, xpVal){
