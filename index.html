@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI QUEST — Zero to Creator</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
    AI QUEST — DARK FANTASY PIXEL RPG
@@ -368,6 +369,38 @@ textarea:focus{border-color:#4488ff;}
   background:linear-gradient(90deg,transparent,rgba(200,216,248,.06),rgba(232,48,64,.15),rgba(200,216,248,.06),transparent);}
 .footer-t{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);}
 
+/* LOGIN MODAL */
+.login-overlay{position:fixed;inset:0;background:rgba(5,8,16,.97);z-index:99999;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.login-overlay.hide{display:none;}
+.login-box{background:linear-gradient(135deg,rgba(13,18,32,.99),rgba(8,12,24,.99));
+  border:2px solid var(--red);padding:44px 48px;text-align:center;max-width:400px;width:90%;
+  box-shadow:0 0 60px rgba(232,48,64,.2);}
+.login-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--red);
+  letter-spacing:.08em;margin-bottom:8px;text-shadow:0 0 10px var(--red-g);}
+.login-sub{font-size:12px;color:var(--dim);margin-bottom:28px;line-height:1.8;}
+.login-inp{width:100%;padding:12px 14px;background:rgba(0,0,0,.6);
+  border:1px solid var(--border2);color:var(--text);font-size:15px;
+  font-family:'Noto Sans JP',sans-serif;outline:none;text-align:center;
+  transition:border-color .2s;margin-bottom:16px;}
+.login-inp:focus{border-color:var(--red);}
+.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--red2),var(--red));
+  border:none;color:#fff;font-family:'Press Start 2P',monospace;font-size:8px;
+  cursor:pointer;letter-spacing:.08em;box-shadow:0 4px 0 var(--red2),0 0 20px var(--red-g);
+  transition:all .15s;}
+.login-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--red2);}
+.login-err{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--red);
+  margin-top:10px;min-height:16px;}
+/* SAVE INDICATOR */
+.save-ind{position:fixed;bottom:20px;right:20px;z-index:1000;
+  font-family:'Press Start 2P',monospace;font-size:7px;padding:8px 14px;
+  background:rgba(68,204,136,.1);border:1px solid rgba(68,204,136,.3);color:var(--green2);
+  opacity:0;transition:opacity .3s;}
+.save-ind.show{opacity:1;}
+/* PLAYER NAME in header */
+.hc-name{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold2);
+  letter-spacing:.04em;}
+
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--red);box-shadow:0 0 4px var(--red-g)}
@@ -388,6 +421,20 @@ textarea:focus{border-color:#4488ff;}
 </head>
 <body>
 
+<!-- LOGIN MODAL -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-title">⚔ AI QUEST</div>
+    <p class="login-sub">名前を入力して冒険を始めよう。<br>次回からも同じ名前で続きが再開できる。</p>
+    <input class="login-inp" id="loginName" type="text" placeholder="例：まな" maxlength="20" autocomplete="off">
+    <button class="login-btn" onclick="startAdventure()">▶ ADVENTURE START</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- SAVE INDICATOR -->
+<div class="save-ind" id="saveInd">✓ SAVED</div>
+
 <!-- BG -->
 <div class="sky"></div>
 <div class="stars-l" id="starsL"></div>
@@ -401,6 +448,7 @@ textarea:focus{border-color:#4488ff;}
 <header class="hdr">
   <div class="logo">⚔ AI QUEST</div>
   <div class="hud">
+    <div class="hc-name" id="headerName"></div>
     <div class="hc">HP<span>100</span><div class="mbar"><div class="mfill mf-hp" style="width:100%"></div></div></div>
     <div class="hc">XP<span id="hxp">0</span><div class="mbar"><div class="mfill mf-xp" id="hxpbar" style="width:0%"></div></div></div>
     <div class="hc">LV<span id="hlv">1</span></div>
@@ -550,7 +598,7 @@ textarea:focus{border-color:#4488ff;}
 </div>
 
 <footer class="footer">
-  <div class="footer-t">© TREPRO INC. — AI QUEST v3.0 | STAGE 1〜3 IMPLEMENTED | STAGE 4-10 COMING SOON</div>
+  <div class="footer-t">© TREPRO INC. — AI QUEST v3.0 | STAGE 1〜5 IMPLEMENTED | Supabase進捗保存対応</div>
 </footer>
 </div>
 
@@ -1212,8 +1260,449 @@ STEP 4：改善後の求人票を書く
       body:'Trepro or Lakkanの社内で「まだアナログな業務」を1つ見つけて、そのDX化提案書をClaudeに作らせよう。\n\n【ヒント：よくあるアナログ業務】\n・議事録を毎回Wordで手書き\n・求人票をゼロから毎回書いている\n・報告書をメールで送ってExcelで管理\n・スケジュール調整を手動でSlack\n\n提案書が完成したら社内の誰かに読んでもらうか、Allenに共有しよう。\n「これ、ClaudeとLESSON 15で作りました」と言えたら本物のスキルだ。' }
   },
 
-  // ★ STAGE 4 DATA — ここから追加
-  // ★ STAGE 5 DATA — ここから追加
+  // ★ STAGE 4 DATA — LV 16〜20（実装済み） ──────────────────────────────
+  {
+    stage:4, lv:16, num:'LESSON 16',
+    title:'Notionとは何か — ゼロから使えるようになる',
+    time:'20 min', diff:'★★☆☆☆', xpVal:100,
+    blocks:[
+      { icon:'📚', title:'Notionの正体を3分で理解する', time:'8 min', html:`
+        <p class="lbtxt">Notionは「メモ・タスク・データベース・Wiki」が1つになったツールだ。<br><br>
+        <strong>従来：ツールがバラバラ</strong><br>
+        メモ → メモ帳 / タスク → Trello / 資料 → Google Drive / 共有 → Slack<br><br>
+        <strong>Notion：全部1か所</strong><br>
+        議事録・タスク管理・社内Wiki・プロジェクト管理・データベースが全て繋がる。<br><br>
+        <em>Troproでは「Notion = 会社の脳みそ」として使っている。ここに全情報が集まる。</em></p>
+        <div class="pills"><div class="pill pr">オールインワン</div><div class="pill pb">データベース</div><div class="pill pg">チーム共有</div><div class="pill py">社内Wiki</div></div>` },
+      { icon:'⚡', title:'Notionの基本操作 — 最初の5分でやること', time:'8 min', html:`
+        <div class="stepbox"><div class="step-title">▶ Notionアカウント作成 & 初期設定</div>
+          <div class="step"><div class="step-n">1</div><div class="step-body"><strong>notion.so にアクセス → Googleアカウントでログイン</strong><br>無料プランでOK。チーム利用は後で招待できる</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-body"><strong>左サイドバーの「+ New page」でページ作成</strong><br>タイトルを入力してEnterで本文エリアが開く</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-body"><strong>「/」コマンドでブロックを追加</strong><br>/table → テーブル / /todo → チェックリスト / /h1 → 大見出し</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-body"><strong>右上「Share」→「Invite」でチームメンバーを招待</strong><br>メールアドレスを入力して権限（Edit/View）を設定</div></div>
+        </div>
+        <div class="warn"><div class="warn-l">▶ Trepro Notion Hub</div><div class="warn-t">社内NotionのURLは入社時に共有されます。まずは自分の個人ページを作ってNotionに慣れることから始めよう。</div></div>` }
+    ],
+    quiz:{
+      q:'Notionが他のツール（メモ帳・Trello・Google Drive）と最も異なる点は？',
+      opts:['無料で使える','メモ・タスク・データベース・Wikiが1つに統合されている','デザインがきれい','スマホでも使える'],
+      c:1,
+      ok:'✅ 正解！ Notionの最大の特徴は「メモ・タスク管理・データベース・Wiki」が1か所に統合されていること。ツールを行き来する時間がゼロになります。',
+      ng:'❌ 不正解。Notionの最大の特徴は「メモ・タスク・データベース・Wikiが1つに統合されている」ことです。情報が一か所に集まることで業務効率が劇的に上がります。'
+    },
+    ch:{ title:'Notionに「AI QUEST 学習ノート」ページを作る',
+      body:'① notion.so にログイン（アカウントがなければ作成）\n② 左サイドバー「+ New page」\n③ タイトル：「AI QUEST 学習ノート」\n④ /h2 で「STAGE 1〜3 学んだこと」という見出しを作る\n⑤ /todo でチェックリストを作り、STAGE 1〜3で学んだことを3点書く\n\n→ これが今後の学習記録の基地になる。毎レッスン後に更新していこう。' }
+  },
+
+  {
+    stage:4, lv:17, num:'LESSON 17',
+    title:'Notionのデータベース — 情報を「管理」する仕組み',
+    time:'25 min', diff:'★★★☆☆', xpVal:110,
+    blocks:[
+      { icon:'📚', title:'データベースとは何か', time:'10 min', html:`
+        <p class="lbtxt">Notionのデータベースは「Excelより賢い表」だ。<br><br>
+        普通の表：セルに文字を入れるだけ<br>
+        <strong>Notionデータベース：各行が「ページ」になっていて、タグ・日付・ステータスなどのプロパティを持てる</strong><br><br>
+        <strong>使えるプロパティの種類</strong><br>
+        テキスト / 数値 / セレクト（ドロップダウン）/ マルチセレクト / 日付 / チェックボックス / 関連（リレーション）<br><br>
+        <strong>ビューの種類</strong><br>
+        テーブル / ボード（カンバン）/ カレンダー / ギャラリー / リスト / タイムライン<br><br>
+        <em>同じデータを「タスクボード」「カレンダー」「リスト」と複数の見方で使い回せる。これがExcelとの決定的な違い。</em></p>
+        <div class="pills"><div class="pill pr">データベース</div><div class="pill pb">プロパティ</div><div class="pill pg">ビュー切替</div><div class="pill py">カンバン</div></div>` },
+      { icon:'⚡', title:'採用管理DBを5分で作る', time:'10 min', html:`
+        <div class="stepbox"><div class="step-title">▶ 採用管理データベースの作り方</div>
+          <div class="step"><div class="step-n">1</div><div class="step-body"><strong>新規ページ → 「/database」→ 「Table」を選択</strong></div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-body"><strong>カラム（プロパティ）を追加</strong><br>候補者名（Title）/ 応募職種（Select）/ ステータス（Select）/ 面接日（Date）/ 評価（Number）</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-body"><strong>ステータスに選択肢を追加</strong><br>書類選考 / 一次面接 / 二次面接 / 内定 / 不採用</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-body"><strong>「+ Add view」→「Board」でカンバン表示に切替</strong><br>ステータス別に候補者が並ぶ採用管理ボードが完成</div></div>
+        </div>` }
+    ],
+    quiz:{
+      q:'Notionデータベースで「同じデータをカンバン表示とカレンダー表示で見る」ことができる機能は？',
+      opts:['フィルター','ソート','ビュー','テンプレート'],
+      c:2,
+      ok:'✅ 正解！ Notionの「ビュー」機能を使えば同じデータをテーブル・ボード・カレンダー・ギャラリーなど複数の形式で見ることができます。',
+      ng:'❌ 不正解。「ビュー」機能が正解です。同じデータベースに複数のビューを追加することで、テーブル・カンバン・カレンダーなど用途に合わせた表示ができます。'
+    },
+    ch:{ title:'Notionに簡単な「タスク管理DB」を作ってみる',
+      body:'① Notionで新規ページを作成\n② /database → Table を挿入\n③ 以下のプロパティを追加：\n　・タスク名（Title）\n　・ステータス（Select：未着手 / 進行中 / 完了）\n　・期限（Date）\n　・担当者（Text）\n④ タスクを5件入力してみる\n⑤ 「+ Add view」からBoard表示に切り替えてカンバンで確認\n\n→ これがTreproで実際に使っているタスク管理の基本形だ。' }
+  },
+
+  {
+    stage:4, lv:18, num:'LESSON 18',
+    title:'ClaudeでNotion用コンテンツを量産する',
+    time:'25 min', diff:'★★★☆☆', xpVal:120,
+    blocks:[
+      { icon:'📚', title:'Claude × Notion の組み合わせ方', time:'8 min', html:`
+        <p class="lbtxt">ClaudeはNotionに直接書き込めないが、<strong>「Notion向けのコンテンツをClaudeに生成させてコピペする」</strong>だけで劇的に速くなる。<br><br>
+        <strong>特に効果的な使い方</strong><br>
+        ① 社内Wiki記事の下書きをClaudeに書かせる<br>
+        ② 求人票・採用基準をClaudeで生成してDBに貼る<br>
+        ③ 議事録メモ → ClaudeでNotion構造に変換 → そのままペースト<br>
+        ④ プロジェクト計画書の骨格をClaudeで生成<br><br>
+        <em>「Claudeで作る → Notionに貼る」このループが最強の情報管理フローだ。</em></p>
+        <div class="pills"><div class="pill pr">Claude生成</div><div class="pill pb">Notionペースト</div><div class="pill pg">Wiki量産</div><div class="pill py">求人票生成</div></div>` },
+      { icon:'⚡', title:'Notion向け出力プロンプト集', time:'12 min', html:`
+        <p class="lbtxt"><strong>① 社内Wiki記事の生成</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — Wiki記事</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下のテーマについてNotionの社内Wiki記事を作成してください。
+テーマ：[記事のテーマ]
+読み手：Trepro/Lakkanの新入社員
+構成：
+# タイトル
+## 概要（3行以内）
+## 基本的な使い方（手順形式）
+## よくある質問（Q&A形式で3点）
+## 参考リンク</pre></div>
+        <p class="lbtxt" style="margin-top:12px;"><strong>② 求人票の生成</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 求人票</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の情報をもとに求人票を作成してください。
+職種：[職種名]
+業務内容：[主な仕事内容]
+求めるスキル：[必須・歓迎スキル]
+会社の雰囲気：[カルチャー]
+Notionのデータベースに貼れる形式で出力してください。</pre></div>` }
+    ],
+    quiz:{
+      q:'Claude × Notionの最も効果的な組み合わせ方は？',
+      opts:['NotionのAPIをClaudeに直接つなぐ','ClaudeでNotionのコンテンツを生成してコピペで貼る','NotionをClaudeに読み込ませて要約させる','Notionを使わずClaudeだけで管理する'],
+      c:1,
+      ok:'✅ 正解！ 「ClaudeでNotionコンテンツを生成 → コピペ」が最もシンプルで強力な組み合わせです。APIなど技術的な設定不要で今日からできます。',
+      ng:'❌ 不正解。最もシンプルで効果的なのは「Claudeでコンテンツを生成してNotionにコピペする」方法です。API連携は不要です。'
+    },
+    ch:{ title:'Claude × Notionで社内ルールのWikiページを1本作る',
+      body:'Trepro or Lakkanの「新入社員が最初に知るべきルール」を1つ選んで、WikiページをClaudeで生成してNotionに貼ろう。\n\n【例：テーマ候補】\n・Slackの使い方ルール\n・会議の進め方\n・タスク管理の方法\n・顧客対応のマナー\n\n① 上のWiki記事プロンプトにテーマを入れてClaudeで生成\n② 生成された内容をコピー\n③ Notionの「AI QUEST 学習ノート」内に新しいページを作って貼り付け\n\n→ これが「AIで会社の知識を体系化する」第一歩だ。' }
+  },
+
+  {
+    stage:4, lv:19, num:'LESSON 19',
+    title:'議事録→Notionへの自動整理フローを作る',
+    time:'25 min', diff:'★★★★☆', xpVal:130,
+    blocks:[
+      { icon:'📚', title:'「議事録フロー」を設計する', time:'10 min', html:`
+        <p class="lbtxt">会議が終わるたびに議事録を手書きしていては時間の無駄だ。<br>
+        Claude × Notionを使えば<strong>「5分で議事録をNotionに整理完了」</strong>するフローが作れる。<br><br>
+        <strong>完成形のフロー</strong><br>
+        会議中：メモアプリに箇条書きで走り書き<br>
+        ↓<br>
+        会議後：走り書きをClaudeに貼って「Notion議事録フォーマットに変換して」と送る<br>
+        ↓<br>
+        出力をNotionの議事録DBにコピペ<br>
+        ↓<br>
+        関係者にNotionのURLをSlackで共有<br><br>
+        <em>これだけで「議事録を書く時間」がゼロになる。走り書きをAIが清書する。</em></p>
+        <div class="pills"><div class="pill pr">走り書き→清書</div><div class="pill pb">Notion議事録DB</div><div class="pill pg">フロー設計</div></div>` },
+      { icon:'⚡', title:'議事録DBの構造 + 変換プロンプト', time:'10 min', html:`
+        <div class="stepbox"><div class="step-title">▶ NotionにMTG議事録DBを作る</div>
+          <div class="step"><div class="step-n">1</div><div class="step-body"><strong>新規ページ「議事録DB」を作成 → /database → Table</strong></div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-body"><strong>プロパティ設定</strong><br>会議名（Title）/ 日時（Date）/ 参加者（Text）/ 決定事項（Text）/ 次のアクション（Text）/ 関連プロジェクト（Select）</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-body"><strong>各行をクリックするとページが開く → 本文に詳細を書く</strong></div></div>
+        </div>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 議事録変換</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の走り書きメモをNotion議事録フォーマットに変換してください。
+
+【出力形式】
+会議名：
+日時・参加者：
+## 議題と内容
+- [議題1]：[内容]
+## 決定事項
+1. [決定事項を番号付きで]
+## 次のアクション
+| タスク | 担当 | 期限 |
+|---|---|---|
+
+【走り書きメモ】
+[ここにメモを貼る]</pre></div>` }
+    ],
+    quiz:{
+      q:'「議事録フロー」でClaudeが担う最も重要な役割は？',
+      opts:['会議に参加して内容を記録する','走り書きメモを構造化された議事録フォーマットに変換する','Notionに自動で書き込む','参加者にメールを送る'],
+      c:1,
+      ok:'✅ 正解！ Claudeの役割は「走り書きの情報を構造化された議事録に変換すること」です。人間は走り書きするだけ。整理・清書はAIに任せる。',
+      ng:'❌ 不正解。このフローでのClaudeの役割は「走り書きメモを構造化された議事録フォーマットに変換する」ことです。Notionへの書き込みは人間がコピペします。'
+    },
+    ch:{ title:'直近の会議の走り書きを議事録に変換してNotionに貼る',
+      body:'① 最近出席した会議のメモ（どんな形でもOK）を用意\n② 上の変換プロンプトにメモを貼ってClaudeに送信\n③ 出力をコピー\n④ Notionの議事録DBに新しい行を追加してページを開き貼り付ける\n\n【走り書きがない場合の練習用メモ】\n・週次MTG、参加：山中・まな・Claudeくん\n・今週の進捗：AI QUEST STAGE 3完成、Vercelデプロイ済み\n・課題：STAGE 4〜5まだ未完成\n・来週まで：STAGE 4を完成させる、担当：まな\n\nこのメモをそのまま使って試してみよう。' }
+  },
+
+  {
+    stage:4, lv:20, num:'LESSON 20',
+    title:'タスク・プロジェクト管理をAIで設計する',
+    time:'30 min', diff:'★★★★☆', xpVal:130,
+    blocks:[
+      { icon:'📚', title:'プロジェクト管理の設計思想', time:'10 min', html:`
+        <p class="lbtxt">「タスクをNotionに入れる」だけでは管理とは言わない。<br>
+        本当の管理とは<strong>「誰が・何を・いつまでに・どの状態か」が一目でわかる状態を作ること</strong>だ。<br><br>
+        <strong>Trepro流プロジェクト管理の4層構造</strong><br>
+        ① プロジェクトDB（案件・プロジェクト単位）<br>
+        ② タスクDB（プロジェクトに紐づくタスク）<br>
+        ③ 担当者ビュー（自分のタスクだけ表示）<br>
+        ④ 週次レビュー（毎週月曜に棚卸し）<br><br>
+        <em>Claudeを使えば「プロジェクトの設計自体」をAIに考えさせることができる。</em></p>
+        <div class="pills"><div class="pill pr">4層構造</div><div class="pill pb">プロジェクトDB</div><div class="pill pg">タスクDB</div><div class="pill py">週次レビュー</div></div>` },
+      { icon:'⚡', title:'Claudeにプロジェクト管理設計を依頼するプロンプト', time:'12 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — プロジェクト管理設計</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>あなたはNotionのプロジェクト管理エキスパートです。
+以下の条件でNotionのプロジェクト管理システムを設計してください。
+
+【チーム情報】
+規模：[人数]名
+業種：[業種]
+主な業務：[業務内容]
+現在の課題：[タスクが散らばっている/進捗が見えない等]
+
+【要件】
+・プロジェクトDBとタスクDBの構造（プロパティ一覧）
+・推奨ビューの種類と設定方法
+・週次レビューの進め方（所要時間・確認項目）
+・新メンバーが使い始めるための手順（3ステップ）</pre></div>
+        <div class="warn"><div class="warn-l">▶ STAGE 4 BOSS CHALLENGE</div><div class="warn-t">Trepro or Lakkanの実際のプロジェクト管理をNotionで設計してClaudeに作らせよう。完成したらチームに共有すること。</div></div>` }
+    ],
+    quiz:{
+      q:'プロジェクト管理で「本当に管理できている状態」の定義として正しいのはどれ？',
+      opts:['タスクの数が多い','誰が・何を・いつまでに・どの状態かが一目でわかる','高価なツールを使っている','毎日報告書を出している'],
+      c:1,
+      ok:'✅ 正解！ プロジェクト管理の本質は「誰が・何を・いつまでに・どの状態か」が一目でわかる状態を作ること。ツールや報告書の量は関係ありません。',
+      ng:'❌ 不正解。「誰が・何を・いつまでに・どの状態かが一目でわかる」状態こそが真の管理です。ツールの種類や報告頻度ではなく、可視性が重要です。'
+    },
+    ch:{ title:'Claudeに「Trepro向けプロジェクト管理システム」を設計させてNotionに実装する',
+      body:'① 上のプロンプトにTreproの情報を入れてClaudeに送る\n② 出力されたDB構造をもとにNotionでデータベースを2つ作る\n　・プロジェクトDB（案件管理）\n　・タスクDB（プロジェクトに紐づけ）\n③ RelationでプロジェクトDBとタスクDBを紐づける\n④ 自分のタスクだけフィルタリングするビューを作る\n\n→ 完成したらAllenに「Notion設計しました」とSlackで報告しよう。' }
+  },
+
+  // ★ STAGE 5 DATA — LV 21〜25（実装済み） ──────────────────────────────
+  {
+    stage:5, lv:21, num:'LESSON 21',
+    title:'Googleスプレッドシートとは何か — 基本操作をゼロから',
+    time:'20 min', diff:'★★☆☆☆', xpVal:100,
+    blocks:[
+      { icon:'📚', title:'スプシはExcelのクラウド版ではない', time:'8 min', html:`
+        <p class="lbtxt">Googleスプレッドシート（スプシ）はExcelに似ているが、決定的に違う点がある。<br><br>
+        <strong>スプシがExcelより優れている点</strong><br>
+        ・リアルタイム共同編集（複数人が同時に編集できる）<br>
+        ・URLで共有できる（メール添付不要）<br>
+        ・Google Apps Script（GAS）で自動化できる<br>
+        ・Claude・Geminiと連携しやすい<br><br>
+        <strong>スプシでよく使う関数トップ5</strong><br>
+        =SUM() / =AVERAGE() / =VLOOKUP() / =IF() / =COUNTIF()<br><br>
+        <em>「関数がわからない」はもう言い訳にならない。Claudeに「この計算をする関数を教えて」と聞けばいい。</em></p>
+        <div class="pills"><div class="pill pr">クラウド共同編集</div><div class="pill pb">URL共有</div><div class="pill pg">GAS自動化</div><div class="pill py">Claude連携</div></div>` },
+      { icon:'⚡', title:'Claudeに関数を作らせる — コード知識ゼロでOK', time:'8 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — スプシ関数生成</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>Googleスプレッドシートの関数を作ってください。
+
+【やりたいこと】
+A列に「日付」、B列に「売上金額」が入っています。
+C1セルに「今月の売上合計」を表示したい。
+今日は2026年4月です。
+
+関数だけを出力してください（説明不要）。</pre></div>
+        <div class="warn" style="margin-top:12px;"><div class="warn-l">▶ 使い方</div><div class="warn-t">やりたいことを日本語で説明してClaudeに関数を作らせる。出てきた関数をそのままセルに貼るだけ。「関数が書けない」は完全に過去の話。</div></div>` }
+    ],
+    quiz:{
+      q:'Googleスプレッドシートでわからない関数が必要なとき、最も効率的な方法は？',
+      opts:['関数の教科書を買って勉強する','GoogleでVLOOKUPの使い方を検索する','やりたいことを日本語でClaudeに説明して関数を作ってもらう','Excelに切り替える'],
+      c:2,
+      ok:'✅ 正解！ 「やりたいことを日本語でClaudeに説明する」が最速です。関数名も構文も覚えなくていい。AIに書かせてコピペするだけ。',
+      ng:'❌ 不正解。「やりたいことを日本語でClaudeに説明して関数を作ってもらう」が最速・最効率です。関数の知識ゼロでもAIがそのまま使える関数を生成します。'
+    },
+    ch:{ title:'スプシでデータを作り、関数をClaudeに作らせて使う',
+      body:'① Googleスプレッドシートで新しいシートを作成\n② A列に「商品名」、B列に「単価」、C列に「数量」を5行入力\n③ D列に「合計金額（単価×数量）」を表示したい、とClaudeに伝えて関数を作らせる\n④ E1に「全商品の合計売上」を表示する関数もClaudeに作らせて貼る\n⑤ 数値を変えて自動計算されることを確認する\n\n→ 「Claudeに作らせてコピペ」この感覚を体に覚えさせよう。' }
+  },
+
+  {
+    stage:5, lv:22, num:'LESSON 22',
+    title:'データをClaudeに読み込ませて分析・要約させる',
+    time:'25 min', diff:'★★★☆☆', xpVal:120,
+    blocks:[
+      { icon:'📚', title:'データ分析はもう専門家の仕事じゃない', time:'8 min', html:`
+        <p class="lbtxt">スプレッドシートのデータをClaudeに渡すと、<strong>分析・要約・改善提案まで出してくれる</strong>。<br><br>
+        <strong>Claudeに渡せるデータの形式</strong><br>
+        ・CSVテキスト（スプシからコピペ）<br>
+        ・表をそのままテキストで貼る<br>
+        ・「A列：日付、B列：売上」と説明して数値を貼る<br><br>
+        <strong>できること</strong><br>
+        ① 売上データのトレンド分析と改善提案<br>
+        ② 採用データの傾向把握（応募→通過→内定の歩留まり）<br>
+        ③ 顧客データのセグメント分析<br>
+        ④ 月次レポートの自動生成<br><br>
+        <em>「データを読めない」は終わった。データをClaudeに渡せば、誰でも「分析できる人」になれる。</em></p>
+        <div class="pills"><div class="pill pr">CSV貼り付け</div><div class="pill pb">トレンド分析</div><div class="pill pg">改善提案</div><div class="pill py">レポート自動生成</div></div>` },
+      { icon:'⚡', title:'データ分析プロンプト — 3パターン', time:'12 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 売上分析</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の売上データを分析してください。
+
+【分析してほしいこと】
+1. 全体の傾向（増加・減少・横ばい）
+2. 最も売上が高い月と低い月の差
+3. 改善するためのアクション提案（3点）
+
+【データ】
+月, 売上（万円）
+1月, 120
+2月, 95
+3月, 140
+4月, 180
+5月, 165
+6月, 200</pre></div>
+        <p class="lbtxt" style="margin-top:12px;"><strong>採用データ分析も同じ方法で</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 採用歩留まり分析</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の採用データの歩留まりを分析してください。
+書類応募：150名 → 書類通過：45名 → 一次面接通過：20名 → 内定：8名
+各ステップの通過率と、改善すべきボトルネックを教えてください。</pre></div>` }
+    ],
+    quiz:{
+      q:'スプレッドシートのデータをClaudeに分析させる最も簡単な方法は？',
+      opts:['専用のAPI連携ツールを設定する','データをCSV形式でClaudeに貼り付けて分析を依頼する','データをExcelに変換してからClaudeに渡す','Claudeに直接スプレッドシートのURLを送る'],
+      c:1,
+      ok:'✅ 正解！ スプシのデータをコピーしてClaudeに貼り付けるだけ。API連携もツール設定も不要。これが最も速いデータ分析の方法です。',
+      ng:'❌ 不正解。最も簡単な方法は「スプシのデータをコピーしてClaudeに貼り付けて分析を依頼する」です。API連携などの設定は不要です。'
+    },
+    ch:{ title:'実際の業務データ（or ダミーデータ）をClaudeに分析させる',
+      body:'以下のどれかのデータをClaudeに渡して分析させてみよう。\n\n【A：採用データ（練習用）】\n応募：100名、書類通過：30名、一次通過：15名、内定：5名\n\n【B：売上データ（練習用）】\n1月：80万、2月：70万、3月：95万、4月：110万、5月：105万\n\n【C：実際の業務データ（推奨）】\n今週の実際のデータを何でもいいので貼る\n\n→ 分析結果を読んで「気づきになったこと」を1点、Notionの学習ノートに記録しよう。' }
+  },
+
+  {
+    stage:5, lv:23, num:'LESSON 23',
+    title:'Google Apps Scriptとは何か — スプシを自動化する仕組み',
+    time:'25 min', diff:'★★★☆☆', xpVal:120,
+    blocks:[
+      { icon:'📚', title:'GASで「毎日の手作業」をゼロにする', time:'10 min', html:`
+        <p class="lbtxt">Google Apps Script（GAS）は、Googleのサービス（スプシ・Gmail・カレンダー）を自動化できるプログラムだ。<br><br>
+        <strong>GASでできること（コード不要でClaudeに作らせる）</strong><br>
+        ・毎朝9時にスプシのデータを集計してSlackに通知<br>
+        ・フォームの回答をスプシに自動整理してメール送信<br>
+        ・スプシのデータを変換してNotionに転記<br>
+        ・採用管理スプシで「面接日3日前」に自動リマインド<br><br>
+        <strong>GASの場所</strong><br>
+        スプレッドシート → 上メニュー「拡張機能」→「Apps Script」<br><br>
+        <em>コードが書けなくていい。Claudeにやりたいことを説明すれば、そのまま動くコードが出てくる。</em></p>
+        <div class="pills"><div class="pill pr">GAS</div><div class="pill pb">自動化</div><div class="pill pg">Claudeにコード生成</div><div class="pill py">手作業ゼロ</div></div>` },
+      { icon:'⚡', title:'GASコード生成プロンプト + 実行方法', time:'10 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — GASコード生成</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>Google Apps Script（GAS）のコードを作ってください。
+
+【やりたいこと】
+Googleスプレッドシートのシート名「売上管理」のB列の数値を
+毎朝9時に合計して、Gmail で「today@example.com」宛に
+件名「【自動】本日の売上合計」として送信する。
+
+コードのみ出力してください。</pre></div>
+        <div class="stepbox" style="margin-top:12px;"><div class="step-title">▶ GASの実行手順</div>
+          <div class="step"><div class="step-n">1</div><div class="step-body">スプシ上部メニュー「拡張機能」→「Apps Script」を開く</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-body">Claudeが生成したコードをエディタに貼り付け</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-body">「▶ 実行」ボタンを押す（初回は権限付与が必要）</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-body">時計アイコン「トリガー」で定期実行を設定</div></div>
+        </div>` }
+    ],
+    quiz:{
+      q:'Google Apps Scriptを使う主なメリットはどれ？',
+      opts:['Googleアカウントが不要になる','毎日の手作業（集計・通知・転記）を自動化できる','スプレッドシートが速くなる','Excelファイルを読み込める'],
+      c:1,
+      ok:'✅ 正解！ GASの最大のメリットは「毎日の手作業を自動化できること」です。Claudeにコードを作らせれば、プログラミング知識ゼロでも自動化を実現できます。',
+      ng:'❌ 不正解。GASの最大のメリットは「毎日の手作業（集計・通知・転記など）を自動化できること」です。Claudeがコードを書いてくれるので知識不要です。'
+    },
+    ch:{ title:'ClaudeにシンプルなGASコードを作らせて実行する',
+      body:'以下の手順でGASを初体験しよう。\n\n① スプレッドシートを新規作成\n② A1〜A5に数字を入れる（例：10, 20, 30, 40, 50）\n③ Claudeに「A1〜A5の合計をB1に表示するGASコードを作って」と依頼\n④ 出てきたコードをコピー\n⑤ スプシ上部「拡張機能」→「Apps Script」を開いてコードを貼る\n⑥「▶ 実行」を押してB1に150が表示されれば成功！\n\n→ 「コードを書かずに自動化できた」体験が次のステップへの自信になる。' }
+  },
+
+  {
+    stage:5, lv:24, num:'LESSON 24',
+    title:'ClaudeにGASコードを書かせてシートを自動更新する',
+    time:'30 min', diff:'★★★★☆', xpVal:140,
+    blocks:[
+      { icon:'📚', title:'実務で使えるGAS自動化パターン', time:'10 min', html:`
+        <p class="lbtxt">GAS×Claudeで「実際に業務で使える」自動化パターンを3つ覚えよう。<br><br>
+        <strong>パターン① Googleフォーム → スプシ → Slack通知</strong><br>
+        問い合わせフォームの回答が届いたらSlackに自動通知<br><br>
+        <strong>パターン② スプシ → 定期メール送信</strong><br>
+        毎週月曜に先週の数値をまとめてGmailで関係者に送信<br><br>
+        <strong>パターン③ スプシ → 自動バックアップ</strong><br>
+        毎日深夜にスプシの内容をGoogle Driveに自動保存<br><br>
+        <em>全部Claudeにコードを書かせてGASで実行するだけ。コーディングスキルは不要。</em></p>
+        <div class="pills"><div class="pill pr">フォーム→Slack</div><div class="pill pb">定期レポート</div><div class="pill pg">自動バックアップ</div></div>` },
+      { icon:'⚡', title:'Slack通知GASプロンプト — コピペ即実装', time:'15 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — フォーム→Slack通知GAS</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>Google Apps Scriptのコードを作ってください。
+
+【仕組み】
+Googleフォームに回答が来たとき、
+スプレッドシートに記録されると同時に
+SlackのWebhook URLに以下の形式で通知を送る。
+
+【Slack通知の内容】
+:bell: 新しい問い合わせが届きました
+名前：[フォームの回答1]
+メール：[フォームの回答2]
+内容：[フォームの回答3]
+受信時刻：[タイムスタンプ]
+
+SlackのWebhook URL：[YOUR_WEBHOOK_URL]
+スプレッドシートのシート名：「フォーム回答」</pre></div>
+        <div class="warn"><div class="warn-l">▶ Slack Webhook URLの取得方法</div><div class="warn-t">Slack → 管理者設定 → Incoming Webhooks → Add New Webhook でURLが発行される。Allenに聞けば設定してもらえる。</div></div>` }
+    ],
+    quiz:{
+      q:'「Googleフォームの回答が届いたら自動でSlackに通知」を実現するために必要なものは？',
+      opts:['有料のZapierアカウント','GASコード（Claudeに作らせる）+ Slack Webhook URL','Googleの有料プラン','Python環境の構築'],
+      c:1,
+      ok:'✅ 正解！ GASコード（Claudeに生成させる）とSlack Webhook URLの2つだけで実現できます。有料ツールも追加インストールも不要です。',
+      ng:'❌ 不正解。Claudeが生成したGASコードとSlack Webhook URLの2つだけで実現できます。ZapierなどSaaSツールの課金は不要です。'
+    },
+    ch:{ title:'Claudeに週次レポート送信GASを作らせて実行する',
+      body:'① スプシに練習用データを作る（日付・売上・件数の3列 × 5行）\n② Claudeに「毎週月曜9時に先週分のデータを集計してGmailで自分に送るGASコードを作って」と依頼\n③ 出てきたコードをGASエディタに貼る\n④ 実行テストを行う（「実行」ボタンで即時テスト可能）\n⑤ トリガーを「毎週月曜・9時」に設定\n\n→ 一度設定したら毎週自動で動く。これが「働く仕組みを作る」ということだ。' }
+  },
+
+  {
+    stage:5, lv:25, num:'LESSON 25',
+    title:'採用・営業データをAIでレポート化する',
+    time:'30 min', diff:'★★★★☆', xpVal:140,
+    blocks:[
+      { icon:'📚', title:'データレポートをAIで一瞬で仕上げる', time:'10 min', html:`
+        <p class="lbtxt">月次レポートを毎回ゼロから書くのは時間の無駄だ。<br>
+        <strong>スプシのデータ → Claudeに渡す → レポート本文が完成</strong>、このフローを確立しよう。<br><br>
+        <strong>レポートで必要な要素</strong><br>
+        ① 今月の数値サマリー（実績・目標比）<br>
+        ② 先月との比較（増減・変化率）<br>
+        ③ 良かったこと・課題<br>
+        ④ 来月のアクションプラン<br><br>
+        <em>数値を渡せばClaudeが「分析→コメント→提案」まで全部書く。人間はデータを集めるだけでいい。</em></p>
+        <div class="pills"><div class="pill pr">月次レポート</div><div class="pill pb">自動分析</div><div class="pill pg">改善提案付き</div><div class="pill py">STAGE 5 BOSS</div></div>` },
+      { icon:'⚡', title:'月次レポート生成プロンプト — 完全版', time:'15 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 月次レポート生成</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下のデータをもとに月次レポートを作成してください。
+
+【データ（先月 vs 今月）】
+[スプシからデータをここにコピペ]
+
+【出力形式】
+# [月]度 月次レポート
+
+## 1. エグゼクティブサマリー（3行）
+
+## 2. 数値実績
+| 指標 | 先月 | 今月 | 増減 | 達成率 |
+
+## 3. 良かった点（2点）
+
+## 4. 課題・改善点（2点）
+
+## 5. 来月のアクションプラン（3点・期限付き）
+
+読み手：経営者・マネージャー
+トーン：簡潔・数字ベース・具体的</pre></div>
+        <div class="warn"><div class="warn-l">▶ STAGE 5 BOSS CHALLENGE</div><div class="warn-t">実際の業務データ（採用・営業・SNS運用など）を使って月次レポートを1本Claudeで作り、Allenに提出すること。これがSTAGE 5クリアの証明だ。</div></div>` }
+    ],
+    quiz:{
+      q:'月次レポートをClaudeで作る場合、最も重要な準備はどれ？',
+      opts:['レポートのデザインテンプレートを用意する','数値データ（今月・先月の実績）をスプシで整理してClaudeに渡せる状態にする','上司の承認を事前に取る','英語で依頼する'],
+      c:1,
+      ok:'✅ 正解！ データを整理してClaudeに渡せる状態にすることが最重要です。数値さえあれば、分析・コメント・提案まで全部Claudeが書いてくれます。',
+      ng:'❌ 不正解。最重要なのは「数値データを整理してClaudeに渡せる状態にすること」です。デザインやフォーマットはClaudeが対応します。'
+    },
+    ch:{ title:'実際の業務データで月次レポートを1本Claudeで作りAllenに提出する',
+      body:'【STAGE 5 ボス戦】\n\n実際に使える月次レポートを1本完成させよう。\n\n① 自分が担当している業務の先月・今月のデータを集める\n　（採用数・営業件数・SNS数値・問い合わせ数など何でもOK）\n② 上のプロンプトにデータを入れてClaudeに送信\n③ 出力を読んで必要な修正を加える\n④ 完成したレポートをAllenにSlackで送る\n\nこれができたなら「データ × AI」の実務スキルは本物だ。\nSTAGE 6（Slack×AI）でさらに加速しよう。' }
+  },
+
   // ★ STAGE 6 DATA — ここから追加
   // ★ STAGE 7 DATA — ここから追加
   // ★ STAGE 8 DATA — ここから追加
@@ -1455,6 +1944,123 @@ function spawnXPT(t){
   p.style.cssText='left:50%;top:35%;color:#ffd060;font-size:10px;font-family:"Press Start 2P",monospace;';
   document.body.appendChild(p); setTimeout(()=>p.remove(),1500);
 }
+
+// ── SUPABASE ─────────────────────────────────────────────────
+const SUPA_URL = 'https://jjlqkxuncqnbbbgtrpci.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqbHFreHVuY3FuYmJiZ3RycGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzIzOTEsImV4cCI6MjA5MTk0ODM5MX0.lr5Ly1hTWbSKyiQFu0UH5j0rHj_t-Hr4F6VdTDrwMOQ';
+const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+let currentPlayerId = null;
+let currentPlayerName = null;
+
+// 起動時：保存済みプレイヤーがいればそのまま再開、いなければログイン表示
+(async function initPlayer(){
+  const savedId = localStorage.getItem('aq_player_id');
+  const savedName = localStorage.getItem('aq_player_name');
+  if(savedId && savedName){
+    const { data } = await supa.from('players').select('id,name').eq('id',savedId).single();
+    if(data){
+      currentPlayerId = data.id;
+      currentPlayerName = data.name;
+      document.getElementById('loginOverlay').classList.add('hide');
+      setHeaderName(data.name);
+      await loadProgress();
+      return;
+    }
+  }
+  // ログインモーダル表示
+  document.getElementById('loginOverlay').classList.remove('hide');
+  setTimeout(()=>document.getElementById('loginName').focus(),300);
+})();
+
+async function startAdventure(){
+  const name = document.getElementById('loginName').value.trim();
+  if(!name){ document.getElementById('loginErr').textContent='名前を入力してください'; return; }
+  document.getElementById('loginErr').textContent = '';
+
+  // 同名プレイヤーがいれば再利用、いなければ新規作成
+  let { data: existing } = await supa.from('players').select('id,name').eq('name',name).maybeSingle();
+  if(!existing){
+    const { data: created, error } = await supa.from('players').insert({name}).select().single();
+    if(error){ document.getElementById('loginErr').textContent='エラーが発生しました'; return; }
+    existing = created;
+  }
+
+  currentPlayerId = existing.id;
+  currentPlayerName = existing.name;
+  localStorage.setItem('aq_player_id', existing.id);
+  localStorage.setItem('aq_player_name', existing.name);
+
+  // last_seen_at 更新
+  await supa.from('players').update({last_seen_at: new Date().toISOString()}).eq('id', existing.id);
+
+  document.getElementById('loginOverlay').classList.add('hide');
+  setHeaderName(existing.name);
+  await loadProgress();
+}
+
+function setHeaderName(name){
+  const el = document.getElementById('headerName');
+  if(el) el.textContent = '▶ ' + name;
+}
+
+async function loadProgress(){
+  if(!currentPlayerId) return;
+  const { data } = await supa.from('progress').select('lesson_lv,xp_gained').eq('player_id', currentPlayerId);
+  if(!data) return;
+  let totalXP = 0;
+  data.forEach(row => {
+    const ld = LESSON_DATA.find(d=>d.lv===row.lesson_lv);
+    if(ld){ ld.cleared = true; totalXP += row.xp_gained; }
+  });
+  // XP・レベル復元
+  if(totalXP > 0){
+    xp = totalXP;
+    // レベルを再計算
+    lv = 1;
+    for(let i=1;i<LVT.length;i++){ if(xp>=LVT[i]) lv=i+1; else break; }
+    lv = Math.min(lv,10);
+    document.getElementById('lvnum').textContent = lv;
+    document.getElementById('hlv').textContent = lv;
+    // バッジ点灯
+    for(let i=1;i<lv;i++){ const b=document.getElementById('b'+i); if(b)b.classList.add('on'); }
+    updatePlayer();
+  }
+  renderLessons(curStage);
+  // ステージマップ更新
+  const nodes = document.querySelectorAll('.snode');
+  nodes.forEach((node,i)=>{
+    const stg = STAGES[i];
+    if(!stg) return;
+    const hasData = LESSON_DATA.some(l=>l.stage===i+1);
+    const allCleared = hasData && LESSON_DATA.filter(l=>l.stage===i+1).every(l=>l.cleared);
+    if(allCleared){ node.querySelector('.sn-s').textContent='✓ DONE'; node.querySelector('.sn-s').style.color='var(--green2)'; }
+  });
+}
+
+async function saveProgress(lvNum, xpVal){
+  if(!currentPlayerId) return;
+  await supa.from('progress').upsert({
+    player_id: currentPlayerId,
+    lesson_lv: lvNum,
+    xp_gained: xpVal
+  }, {onConflict:'player_id,lesson_lv'});
+  showSaveInd();
+}
+
+function showSaveInd(){
+  const el = document.getElementById('saveInd');
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2000);
+}
+
+// clearLesson をオーバーライドして保存処理を追加
+const _origClearLesson = clearLesson;
+clearLesson = async function(lvNum){
+  _origClearLesson(lvNum);
+  const ld = LESSON_DATA.find(d=>d.lv===lvNum);
+  if(ld) await saveProgress(lvNum, ld.xpVal);
+};
 
 // GUIDE NPC
 (function(){
