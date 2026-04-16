@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ai-quest",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "7780", "."],
+      "port": 7780
+    }
+  ]
+}
