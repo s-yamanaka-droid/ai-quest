@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI QUEST — Zero to Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   AI QUEST — DARK FANTASY PIXEL RPG
+   Structure: skeleton + data injection per STAGE
+   ============================================================ */
+:root {
+  --bg:#050810; --bg2:#080c18; --surface:#0d1220; --card:#111828;
+  --card2:#161e30; --border:#1e2a42; --border2:#2a3a58;
+  --red:#e83040; --red2:#cc2233; --red-g:rgba(232,48,64,0.25);
+  --moon:#c8d8f8; --blue:#3a5080; --blue2:#1a2840;
+  --green:#2a5a3a; --green2:#44cc88;
+  --gold:#c8a040; --gold2:#ffd060;
+  --purple:#6644aa; --purple2:#aa88ff;
+  --text:#e8f0fc; --dim:#a8b8d0; --dark:#6688aa; --vdark:#3a4a6a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* BG LAYERS */
+.sky{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 60% 40% at 70% 20%,rgba(40,60,120,.5) 0%,transparent 60%),
+    radial-gradient(ellipse 80% 60% at 30% 60%,rgba(20,40,80,.4) 0%,transparent 70%),
+    linear-gradient(180deg,#050810 0%,#080c18 40%,#060a14 100%);}
+.stars-l{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.px-star{position:absolute;background:var(--moon);animation:twk var(--d,3s) ease-in-out infinite;}
+@keyframes twk{0%,100%{opacity:.1}50%{opacity:.9}}
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.1) 0px,rgba(0,0,0,.1) 1px,transparent 1px,transparent 3px);}
+.grid-l{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(58,80,128,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(58,80,128,.04) 1px,transparent 1px);
+  background-size:16px 16px;}
+.moon-el{position:fixed;width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#e8f0ff,#b8c8f0 40%,#8898d0);
+  top:60px;right:15%;box-shadow:0 0 40px rgba(200,216,248,.4),0 0 80px rgba(200,216,248,.2);
+  z-index:1;pointer-events:none;}
+.moon-el::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;
+  background:rgba(100,120,180,.3);top:28px;left:46px;
+  box-shadow:-18px 18px 0 8px rgba(100,120,180,.2),14px -8px 0 5px rgba(100,120,180,.15);}
+.wrap{position:relative;z-index:2;}
+
+/* HEADER */
+.hdr{height:52px;background:linear-gradient(180deg,rgba(5,8,16,.98),rgba(8,12,24,.95));
+  border-bottom:1px solid var(--border);padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 1px 0 rgba(200,216,248,.04),0 4px 20px rgba(0,0,0,.5);}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,216,248,.08),rgba(232,48,64,.25),rgba(200,216,248,.08),transparent);}
+.logo{font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:.06em;
+  background:linear-gradient(135deg,var(--moon),var(--red));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 8px rgba(200,216,248,.4));animation:lglow 4s ease-in-out infinite;}
+@keyframes lglow{0%,100%{filter:drop-shadow(0 0 6px rgba(200,216,248,.3))}50%{filter:drop-shadow(0 0 14px rgba(200,216,248,.6))}}
+.hud{display:flex;align-items:center;gap:14px;}
+.hc{font-family:'Press Start 2P',monospace;font-size:7px;display:flex;align-items:center;gap:6px;color:var(--dim);}
+.hc span{color:var(--gold2);}
+.mbar{width:64px;height:6px;background:rgba(255,255,255,.06);border:1px solid var(--border);overflow:hidden;}
+.mfill{height:100%;transition:width .6s ease;}
+.mf-hp{background:linear-gradient(90deg,#1a8844,#22cc66);}
+.mf-xp{background:linear-gradient(90deg,#1a44aa,#4488ff);}
+
+/* HERO */
+.hero{min-height:300px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;padding:56px 24px 44px;position:relative;overflow:hidden;text-align:center;}
+.hero-cont{position:relative;z-index:1;}
+.h-badge{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--red);
+  letter-spacing:.12em;margin-bottom:16px;display:inline-block;
+  border:1px solid rgba(232,48,64,.3);padding:6px 14px;background:rgba(232,48,64,.05);}
+.h-title{font-family:'Press Start 2P',monospace;font-size:clamp(13px,3.5vw,24px);
+  line-height:1.7;margin-bottom:18px;
+  background:linear-gradient(180deg,var(--moon) 0%,#8898c8 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(200,216,248,.3));animation:tglow 3s ease-in-out infinite alternate;}
+@keyframes tglow{from{filter:drop-shadow(0 0 10px rgba(200,216,248,.2))}to{filter:drop-shadow(0 0 24px rgba(200,216,248,.5))}}
+.h-sub{font-size:13px;color:#a8b8d0;line-height:1.9;max-width:500px;margin:0 auto 28px;}
+.h-stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.hs{background:rgba(13,18,32,.8);border:1px solid var(--border);
+  border-top:1px solid rgba(200,216,248,.08);padding:11px 17px;text-align:center;backdrop-filter:blur(4px);}
+.hs-n{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--red);
+  text-shadow:0 0 8px var(--red-g);margin-bottom:4px;}
+.hs-l{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);}
+
+/* PLAYER CARD */
+.pcw{padding:0 20px 24px;display:flex;justify-content:center;}
+.pc{background:linear-gradient(135deg,rgba(13,18,32,.95),rgba(11,15,26,.98));
+  border:1px solid var(--border2);border-top:2px solid var(--red);
+  max-width:900px;width:100%;padding:18px 22px;
+  box-shadow:0 0 30px rgba(0,0,0,.6),inset 0 1px 0 rgba(200,216,248,.03);
+  display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.spr{width:76px;height:76px;flex-shrink:0;background:radial-gradient(circle at 50% 30%,rgba(200,216,248,.1),rgba(8,12,24,.9));
+  border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-size:38px;animation:sprf 2s ease-in-out infinite;}
+.spr::after{content:'';position:absolute;width:40px;height:6px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(200,216,248,.15),transparent);
+  transform:translateY(40px);}
+@keyframes sprf{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.pi{flex:1;min-width:160px;}
+.pn{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--gold2);
+  text-shadow:0 0 8px rgba(255,208,96,.4);margin-bottom:3px;}
+.pc-cls{font-size:11px;color:var(--dim);margin-bottom:12px;}
+.br{margin-bottom:8px;}
+.bl{display:flex;justify-content:space-between;font-family:'Press Start 2P',monospace;
+  font-size:6px;color:var(--dark);margin-bottom:4px;}
+.bl span{color:var(--dim);}
+.bt{height:8px;background:rgba(0,0,0,.6);border:1px solid var(--border);overflow:hidden;}
+.bf{height:100%;transition:width .8s cubic-bezier(.34,1.56,.64,1);position:relative;}
+.bf::after{content:'';position:absolute;top:0;left:0;width:100%;height:40%;background:rgba(255,255,255,.15);}
+.bfhp{background:linear-gradient(90deg,#1a8844,#22cc66);box-shadow:0 0 6px rgba(34,204,102,.4);}
+.bfxp{background:linear-gradient(90deg,#1a44aa,#4488ff);box-shadow:0 0 6px rgba(68,136,255,.4);}
+.bfsk{background:linear-gradient(90deg,var(--red2),var(--red));box-shadow:0 0 6px var(--red-g);}
+.lvb{text-align:center;flex-shrink:0;}
+.lvt{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);margin-bottom:2px;}
+.lvn{font-family:'Press Start 2P',monospace;font-size:32px;
+  background:linear-gradient(180deg,var(--gold2),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 8px rgba(255,208,96,.5));line-height:1;}
+.bdgrow{width:100%;display:flex;gap:6px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);}
+.bdg{font-family:'Press Start 2P',monospace;font-size:6px;padding:4px 9px;
+  border:1px solid var(--border);color:var(--vdark);transition:all .2s;}
+.bdg.on{border-color:var(--gold);color:var(--gold2);background:rgba(200,160,64,.08);
+  text-shadow:0 0 6px rgba(255,208,96,.4);box-shadow:0 0 8px rgba(200,160,64,.15);}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:0 18px 72px;}
+.sec{margin-bottom:48px;}
+.sech{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;
+  border-bottom:1px solid var(--border);position:relative;}
+.sech::after{content:'';position:absolute;bottom:-1px;left:0;width:100px;height:1px;
+  background:linear-gradient(90deg,var(--red),transparent);}
+.secht{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--red);
+  letter-spacing:.08em;text-shadow:0 0 8px rgba(232,48,64,.4);}
+.secsub{font-size:13px;color:#a8b8d0;line-height:1.9;margin-bottom:16px;}
+
+/* STAGE MAP */
+.smap{display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:8px;}
+.snode{background:linear-gradient(135deg,var(--card),rgba(11,15,26,.9));
+  border:1px solid var(--border);padding:12px 10px;text-align:center;
+  cursor:pointer;transition:all .2s;min-width:88px;flex:1;max-width:96px;position:relative;}
+.snode::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--border2);}
+.snode.cur::before{background:linear-gradient(90deg,var(--red),var(--red));}
+.snode.done::before{background:var(--green2);}
+.snode:hover:not(.lk){transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.4);}
+.snode.lk{opacity:.3;cursor:not-allowed;}
+.sn-n{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);margin-bottom:4px;}
+.sn-t{font-size:10px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3;}
+.sn-s{font-family:'Press Start 2P',monospace;font-size:6px;}
+.sarr{color:var(--border2);font-size:12px;align-self:center;padding:0 2px;}
+
+/* LESSON GRID */
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.lcard{background:linear-gradient(135deg,var(--card),rgba(11,15,26,.9));
+  border:1px solid var(--border);border-top:2px solid var(--border2);
+  padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.lcard::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(200,216,248,.03),transparent);
+  transition:left .4s ease;}
+.lcard:hover::after{left:150%;}
+.lcard:hover{border-color:var(--border2);transform:translate(-2px,-2px);
+  box-shadow:4px 4px 0 var(--border),0 0 20px rgba(0,0,0,.4);}
+.lcard.act{border-top-color:var(--gold2);box-shadow:0 0 16px rgba(200,160,64,.1);}
+.lcard.lk{opacity:.28;cursor:not-allowed;}
+.lcard.lk:hover{transform:none;box-shadow:none;}
+.lcard.clr{border-top-color:var(--green2);}
+.lc-n{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);margin-bottom:7px;}
+.lc-xp{position:absolute;top:12px;right:12px;font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);}
+.lc-t{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.4;}
+.lc-d{font-size:11px;color:#8899bb;line-height:1.7;}
+.lc-s{margin-top:10px;font-family:'Press Start 2P',monospace;font-size:6px;}
+.s-act{color:var(--gold2);} .s-lk{color:var(--vdark);} .s-clr{color:var(--green2);}
+
+/* LESSON VIEWER */
+.viewer{display:none;background:linear-gradient(180deg,rgba(13,18,32,.98),rgba(8,12,24,.99));
+  border:1px solid var(--border2);border-top:2px solid var(--gold2);
+  box-shadow:0 0 40px rgba(0,0,0,.8),0 0 80px rgba(200,160,64,.04);}
+.viewer.open{display:block;}
+.vh{background:rgba(8,12,24,.8);border-bottom:1px solid var(--border);
+  padding:14px 18px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.vh-l .vey{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--gold2);margin-bottom:5px;letter-spacing:.08em;}
+.vh-l .vt{font-size:16px;font-weight:700;color:var(--text);line-height:1.3;}
+.vmeta{display:flex;gap:12px;margin-top:7px;flex-wrap:wrap;}
+.vmc{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);display:flex;align-items:center;gap:4px;}
+.vmc span{color:var(--dim);}
+.closeb{background:rgba(232,48,64,.1);border:1px solid rgba(232,48,64,.3);
+  color:var(--red);font-family:'Press Start 2P',monospace;font-size:6px;
+  padding:6px 10px;cursor:pointer;flex-shrink:0;transition:all .2s;white-space:nowrap;}
+.closeb:hover{background:rgba(232,48,64,.2);}
+.vbody{padding:20px;display:flex;flex-direction:column;gap:16px;}
+
+/* LESSON BLOCKS */
+.lb{background:rgba(8,12,24,.6);border:1px solid var(--border);border-left:2px solid var(--border2);overflow:hidden;}
+.lbh{padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);
+  display:flex;align-items:center;gap:8px;}
+.lbi{width:24px;height:24px;flex-shrink:0;background:rgba(232,48,64,.08);
+  border:1px solid rgba(232,48,64,.2);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.lbt2{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--dim);letter-spacing:.03em;}
+.lbtm{margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);
+  background:var(--border);padding:2px 6px;}
+.lbb{padding:14px;}
+.lbtxt{font-size:14px;color:#c0cce0;line-height:2.0;}
+.lbtxt strong{color:#f0f4ff;} .lbtxt em{color:var(--gold2);font-style:normal;}
+.lbtxt a{color:#66aaff;text-decoration:underline;}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
+.pill{padding:4px 10px;font-size:11px;font-weight:700;border:1px solid;}
+.pr{background:rgba(232,48,64,.08);border-color:rgba(232,48,64,.3);color:var(--red);}
+.pb{background:rgba(68,136,255,.08);border-color:rgba(68,136,255,.3);color:#66aaff;}
+.pg{background:rgba(68,204,136,.08);border-color:rgba(68,204,136,.3);color:var(--green2);}
+.py{background:rgba(255,208,96,.08);border-color:rgba(255,208,96,.3);color:var(--gold2);}
+.pp{background:rgba(170,136,255,.08);border-color:rgba(170,136,255,.3);color:var(--purple2);}
+
+/* STEP BOX */
+.stepbox{background:rgba(5,8,16,.6);border:1px solid var(--border);padding:14px;margin-top:12px;}
+.step-title{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--dim);margin-bottom:10px;letter-spacing:.05em;}
+.step{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.step-n{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--gold2);
+  flex-shrink:0;width:20px;text-shadow:0 0 6px rgba(255,208,96,.4);}
+.step-body{font-size:14px;color:#c0cce0;line-height:2.0;}
+.step-body strong{color:#f0f4ff;}
+
+/* CODE BLOCK */
+.cb{background:#030508;border:1px solid var(--border);margin-top:12px;overflow:hidden;}
+.cbh2{background:rgba(200,216,248,.04);border-bottom:1px solid var(--border);
+  padding:5px 12px;display:flex;justify-content:space-between;align-items:center;}
+.cbl{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--red);}
+.cpb{background:none;border:1px solid var(--border);color:var(--dark);
+  font-family:'Press Start 2P',monospace;font-size:6px;padding:2px 7px;cursor:pointer;transition:all .2s;}
+.cpb:hover{border-color:var(--gold2);color:var(--gold2);}
+pre{padding:13px;font-size:12px;line-height:1.8;color:#b0b8d8;overflow-x:auto;font-family:monospace;background:none;border:none;}
+.k{color:#ff7b72}.f{color:#c8a0ff}.s2{color:#88c8f0}.c2{color:#3a4a6a;font-style:italic}.n2{color:#80c0ff}
+
+/* WARN BOX */
+.warn{background:rgba(255,208,96,.05);border:1px solid rgba(255,208,96,.2);
+  border-left:2px solid var(--gold2);padding:12px 14px;margin-top:12px;}
+.warn-l{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--gold2);margin-bottom:6px;}
+.warn-t{font-size:13px;color:#c0cce0;line-height:1.9;}
+
+/* QUIZ */
+.quiz{background:rgba(102,68,170,.06);border:1px solid rgba(102,68,170,.2);
+  border-left:2px solid var(--purple);padding:14px;}
+.ql{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--purple2);
+  margin-bottom:10px;letter-spacing:.08em;}
+.qq{font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;line-height:1.6;}
+.qopts{display:flex;flex-direction:column;gap:6px;}
+.qopt{display:flex;align-items:center;gap:8px;padding:9px 12px;
+  background:rgba(255,255,255,.02);border:1px solid var(--border);
+  cursor:pointer;font-size:13px;color:var(--dim);transition:all .15s;}
+.qopt:hover{border-color:var(--purple);color:var(--text);}
+.qopt.ok{border-color:var(--green2);color:var(--green2);background:rgba(68,204,136,.05);}
+.qopt.ng{border-color:var(--red);color:var(--red);background:rgba(232,48,64,.05);}
+.qltr{width:20px;height:20px;background:var(--border);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:7px;flex-shrink:0;}
+.qfb{margin-top:10px;padding:10px 12px;font-size:13px;line-height:1.7;display:none;}
+.qfb.show{display:block;}
+.qfb.ok{background:rgba(68,204,136,.07);border:1px solid rgba(68,204,136,.2);color:var(--green2);}
+.qfb.ng{background:rgba(232,48,64,.07);border:1px solid rgba(232,48,64,.2);color:var(--red);}
+
+/* CHALLENGE */
+.ch{background:rgba(68,136,255,.05);border:1px solid rgba(68,136,255,.2);
+  border-left:2px solid #4488ff;padding:14px;}
+.chl{font-family:'Press Start 2P',monospace;font-size:7px;color:#66aaff;margin-bottom:8px;}
+.cht{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.chb{font-size:14px;color:#c0cce0;line-height:2.0;}
+textarea{width:100%;min-height:80px;margin-top:10px;background:rgba(0,0,0,.4);
+  border:1px solid var(--border);color:#a0b0c8;padding:10px;font-size:12px;
+  line-height:1.7;font-family:'Noto Sans JP',sans-serif;outline:none;resize:vertical;transition:border-color .2s;}
+textarea:focus{border-color:#4488ff;}
+
+/* CLEAR BTN */
+.clrbtn{width:100%;padding:12px;
+  background:linear-gradient(135deg,var(--red2),var(--red));border:none;color:#fff;
+  font-family:'Press Start 2P',monospace;font-size:8px;cursor:pointer;letter-spacing:.08em;
+  box-shadow:0 4px 0 var(--red2),0 0 20px var(--red-g);transition:all .15s;position:relative;overflow:hidden;}
+.clrbtn::before{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transition:left .4s;}
+.clrbtn:hover::before{left:150%;}
+.clrbtn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--red2),0 0 12px var(--red-g);}
+
+/* GUIDE NPC */
+.guide-box{background:linear-gradient(135deg,var(--card),rgba(11,15,26,.98));
+  border:1px solid var(--border2);border-top:2px solid var(--red);}
+.guide-hd{background:rgba(8,12,24,.8);border-bottom:1px solid var(--border);
+  padding:12px 18px;display:flex;align-items:center;gap:9px;position:relative;}
+.guide-hd::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(232,48,64,.3),transparent);}
+.guide-hdt{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--red);text-shadow:0 0 8px var(--red-g);}
+.guide-hds{font-size:11px;color:var(--dim);margin-top:2px;}
+.guide-body{padding:18px;}
+.how-box{background:rgba(232,48,64,.06);border:1px solid rgba(232,48,64,.2);
+  border-left:2px solid var(--red);padding:14px 18px;margin-bottom:16px;}
+.how-l{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--red);
+  margin-bottom:10px;letter-spacing:.08em;}
+.how-steps{display:flex;gap:18px;flex-wrap:wrap;align-items:center;}
+.how-step{display:flex;align-items:flex-start;gap:9px;}
+.how-num{font-family:'Press Start 2P',monospace;font-size:20px;color:var(--gold2);
+  line-height:1;flex-shrink:0;text-shadow:0 0 6px rgba(255,208,96,.4);}
+.how-text{font-size:13px;color:var(--dim);line-height:1.7;}
+.how-text strong{color:var(--text);}
+.qlist{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.qbtn{width:100%;display:flex;align-items:center;gap:9px;padding:9px 12px;
+  background:rgba(255,255,255,.02);border:1px solid var(--border);
+  color:var(--dim);font-size:13px;text-align:left;cursor:pointer;transition:all .15s;font-family:inherit;}
+.qbtn:hover{border-color:var(--border2);color:var(--text);}
+.qtag{font-family:'Press Start 2P',monospace;font-size:6px;padding:2px 6px;
+  background:rgba(232,48,64,.1);border:1px solid rgba(232,48,64,.25);color:var(--red);flex-shrink:0;}
+.inp-area{border-top:1px solid var(--border);padding-top:14px;}
+.inp-l{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--dark);margin-bottom:7px;}
+.btn-row{display:flex;gap:7px;margin-top:9px;}
+.gbtn-copy{flex:1;padding:10px;background:rgba(232,48,64,.1);border:1px solid rgba(232,48,64,.3);
+  color:var(--red);font-family:'Press Start 2P',monospace;font-size:7px;cursor:pointer;transition:all .2s;}
+.gbtn-copy:hover{background:rgba(232,48,64,.2);}
+.gbtn-open{flex:1;padding:10px;background:var(--red);border:none;color:#fff;
+  font-family:'Press Start 2P',monospace;font-size:7px;cursor:pointer;
+  box-shadow:0 3px 0 var(--red2);transition:all .15s;}
+.gbtn-open:hover{background:var(--red2);transform:translateY(2px);box-shadow:0 1px 0 var(--red2);}
+.cp-confirm{display:none;margin-top:9px;padding:8px 12px;
+  background:rgba(68,204,136,.08);border:1px solid rgba(68,204,136,.2);
+  font-family:'Press Start 2P',monospace;font-size:7px;color:var(--green2);}
+.sys-box{margin-top:14px;background:rgba(8,12,24,.8);
+  border:1px solid var(--border);border-left:2px solid var(--gold2);padding:14px 16px;}
+.sys-l{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold2);margin-bottom:8px;}
+.sys-sub{font-size:12px;color:var(--dim);line-height:1.8;margin-bottom:10px;}
+.sys-pre-wrap{background:#030508;border:1px solid var(--border);padding:11px 13px;position:relative;}
+.sys-pre{font-size:12px;color:#8899cc;line-height:1.8;white-space:pre-wrap;word-break:break-all;
+  padding:0;background:none;border:none;}
+.sys-cpb{position:absolute;top:7px;right:7px;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);color:var(--dark);font-family:'Press Start 2P',monospace;
+  font-size:6px;padding:2px 7px;cursor:pointer;transition:all .2s;}
+.sys-cpb:hover{border-color:var(--gold2);color:var(--gold2);}
+
+/* LEVEL UP */
+.lvup{position:fixed;inset:0;background:rgba(5,8,16,.95);z-index:9999;
+  display:none;align-items:center;justify-content:center;flex-direction:column;}
+.lvup.on{display:flex;}
+.luvb{background:linear-gradient(135deg,rgba(13,18,32,.99),rgba(8,12,24,.99));
+  border:2px solid var(--gold2);padding:40px 56px;text-align:center;
+  box-shadow:0 0 60px rgba(200,160,64,.4),0 0 120px rgba(200,160,64,.12);
+  animation:lvin .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes lvin{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.luf{font-family:'Press Start 2P',monospace;font-size:clamp(18px,5vw,28px);
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 16px rgba(255,208,96,.8));animation:flsh .4s alternate infinite;margin-bottom:12px;}
+@keyframes flsh{from{filter:drop-shadow(0 0 8px rgba(255,208,96,.6))}to{filter:drop-shadow(0 0 24px rgba(255,208,96,1))}}
+.lus{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--dim);line-height:2.2;margin-bottom:18px;}
+.lubtn{padding:11px 26px;background:linear-gradient(135deg,var(--gold2),var(--gold));
+  color:#000;border:none;font-family:'Press Start 2P',monospace;font-size:8px;
+  cursor:pointer;box-shadow:0 4px 0 var(--gold),0 0 20px rgba(200,160,64,.3);transition:all .15s;}
+.lubtn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--gold);}
+
+/* PARTICLE */
+.pt{position:fixed;pointer-events:none;font-family:'Press Start 2P',monospace;font-size:11px;
+  animation:pfly 1.4s ease-out forwards;z-index:10001;}
+@keyframes pfly{0%{opacity:1;transform:translateY(0)scale(1)}100%{opacity:0;transform:translateY(-110px)scale(.3)}}
+
+/* FOOTER */
+.footer{background:rgba(5,8,16,.98);border-top:1px solid var(--border);
+  padding:14px 24px;text-align:center;position:relative;}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,216,248,.06),rgba(232,48,64,.15),rgba(200,216,248,.06),transparent);}
+.footer-t{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dark);}
+
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--red);box-shadow:0 0 4px var(--red-g)}
+
+@media(max-width:700px){
+  .lgrid{grid-template-columns:1fr 1fr;}
+  .smap{gap:2px;}
+  .snode{min-width:70px;padding:10px 6px;}
+  .hud{display:none;}
+  .main{padding:0 12px 48px;}
+  .h-stats{gap:8px;}
+}
+@media(max-width:480px){
+  .lgrid{grid-template-columns:1fr;}
+  .btn-row{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="sky"></div>
+<div class="stars-l" id="starsL"></div>
+<div class="grid-l"></div>
+<div class="moon-el"></div>
+<div class="scanlines"></div>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="logo">⚔ AI QUEST</div>
+  <div class="hud">
+    <div class="hc">HP<span>100</span><div class="mbar"><div class="mfill mf-hp" style="width:100%"></div></div></div>
+    <div class="hc">XP<span id="hxp">0</span><div class="mbar"><div class="mfill mf-xp" id="hxpbar" style="width:0%"></div></div></div>
+    <div class="hc">LV<span id="hlv">1</span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div id="tL" style="position:absolute;bottom:0;left:0;pointer-events:none;z-index:0;"></div>
+  <div id="tR" style="position:absolute;bottom:0;right:0;pointer-events:none;z-index:0;transform:scaleX(-1)"></div>
+  <div class="hero-cont">
+    <div class="h-badge">⚔ TREPRO × LAKKAN — AI ONBOARDING RPG</div>
+    <div class="h-title">AI QUEST<br>ZERO TO CREATOR</div>
+    <p class="h-sub">AIの基礎の基礎から学び、50のダンジョンをクリアして「AIで何でも作れる人材」になる。コードは書かない。AIに書かせる。</p>
+    <div class="h-stats">
+      <div class="hs"><div class="hs-n">50</div><div class="hs-l">DUNGEONS</div></div>
+      <div class="hs"><div class="hs-n">10</div><div class="hs-l">STAGES</div></div>
+      <div class="hs"><div class="hs-n">3ヶ月</div><div class="hs-l">TO MASTER</div></div>
+      <div class="hs"><div class="hs-n">0行</div><div class="hs-l">手書きコード</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER CARD -->
+<div class="pcw">
+  <div class="pc">
+    <div class="spr" style="position:relative;">🧑‍💻</div>
+    <div class="pi">
+      <div class="pn">NEW MEMBER</div>
+      <div class="pc-cls">BEGINNER → AI CREATOR</div>
+      <div class="br"><div class="bl">HP<span id="hptx">100/100</span></div><div class="bt"><div class="bf bfhp" style="width:100%"></div></div></div>
+      <div class="br"><div class="bl">XP<span id="xptx">0/300</span></div><div class="bt"><div class="bf bfxp" id="xpfill" style="width:0%"></div></div></div>
+      <div class="br"><div class="bl">AI SKILL<span id="sktx">0/100</span></div><div class="bt"><div class="bf bfsk" id="skfill" style="width:0%"></div></div></div>
+    </div>
+    <div class="lvb"><div class="lvt">LEVEL</div><div class="lvn" id="lvnum">1</div></div>
+    <div class="bdgrow">
+      <div class="bdg" id="b0">🌱 入門</div>
+      <div class="bdg" id="b1">🤖 AI理解</div>
+      <div class="bdg" id="b2">✍ プロンプト</div>
+      <div class="bdg" id="b3">💼 実務</div>
+      <div class="bdg" id="b4">📱 Notion</div>
+      <div class="bdg" id="b5">📊 スプシ</div>
+      <div class="bdg" id="b6">💬 Slack</div>
+      <div class="bdg" id="b7">🎨 UI制作</div>
+      <div class="bdg" id="b8">🛠 改修</div>
+      <div class="bdg" id="b9">👑 独走</div>
+      <button onclick="addXP(60)" style="margin-left:auto;padding:5px 10px;background:rgba(232,48,64,.15);border:1px solid rgba(232,48,64,.3);color:var(--red);font-family:'Press Start 2P',monospace;font-size:6px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(232,48,64,.25)'" onmouseout="this.style.background='rgba(232,48,64,.15)'">▶ +XP</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ① STAGE MAP -->
+<div class="sec">
+  <div class="sech"><div class="secht">▶ STAGE MAP — 全50ダンジョン</div></div>
+  <p class="secsub">10のステージ、各5つのダンジョン。順番にクリアすることで「AIで何でも作れる人材」になる。</p>
+  <div class="smap" id="stageMap"></div>
+</div>
+
+<!-- ② DUNGEONS -->
+<div class="sec" id="dungeons">
+  <div class="sech"><div class="secht" id="stageLabel">▶ STAGE 1 — AIとは何か</div></div>
+  <p class="secsub" id="stageDesc">「AIって何？」から始める。このステージをクリアすればAIの本質を理解して自信を持って使い始められる。</p>
+  <div class="lgrid" id="lessonGrid"></div>
+  <div class="viewer" id="viewer">
+    <div class="vh">
+      <div class="vh-l">
+        <div class="vey" id="vey">LESSON 01</div>
+        <div class="vt" id="vt">タイトル</div>
+        <div class="vmeta">
+          <div class="vmc">⏱<span id="vtm">20 min</span></div>
+          <div class="vmc">★<span id="vdf">★☆☆☆☆</span></div>
+          <div class="vmc">XP<span id="vxp">+80</span></div>
+        </div>
+      </div>
+      <button class="closeb" onclick="closeLesson()">✕ CLOSE</button>
+    </div>
+    <div class="vbody" id="vbody"></div>
+  </div>
+</div>
+
+<!-- ③ GUIDE NPC -->
+<div class="sec" id="guide">
+  <div class="sech"><div class="secht">▶ GUIDE NPC — AI講師</div></div>
+  <p class="secsub">詰まったら即Claudeに質問。質問文をコピー → claude.aiで貼り付けるだけ。AllenのAPIコストはゼロ。</p>
+  <div class="guide-box">
+    <div class="guide-hd">
+      <span style="font-size:18px;">🤖</span>
+      <div><div class="guide-hdt">AI GUIDE — TREPRO QUEST</div><div class="guide-hds">AIの基礎から実務まで何でも答えます</div></div>
+    </div>
+    <div class="guide-body">
+      <div class="how-box">
+        <div class="how-l">▶ 使い方 — 2ステップ</div>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="how-num">1</div>
+            <div class="how-text">質問を選ぶか自分で書いて<strong>コピー</strong></div>
+          </div>
+          <div style="color:var(--vdark);font-size:18px;">▶</div>
+          <div class="how-step">
+            <div class="how-num">2</div>
+            <div class="how-text"><strong>「Claudeで開く」</strong>で<br>claude.aiが開くので貼り付けて送信</div>
+          </div>
+        </div>
+      </div>
+      <div class="qlist" id="qList"></div>
+      <div class="inp-area">
+        <div class="inp-l">▶ 自分で質問を書く</div>
+        <textarea id="customQ" rows="3" placeholder="質問を自由に書いてください…&#10;例：「v0.devで作ったLPのボタンの色を赤に変えたい。どう指示すればいい？」"></textarea>
+        <div class="btn-row">
+          <button class="gbtn-copy" onclick="copyQ()">📋 質問文をコピー</button>
+          <button class="gbtn-open" onclick="openClaude()">🤖 Claudeで開く →</button>
+        </div>
+        <div class="cp-confirm" id="cpConfirm">✓ コピー完了 — Claudeで開いて貼り付けてください</div>
+      </div>
+      <div class="sys-box">
+        <div class="sys-l">▶ SYSTEM PROMPT — 最初に設定すると精度が上がる</div>
+        <div class="sys-sub">Claudeの新規チャットを開いたら最初にこれを設定しておくと、AI QUEST専任講師として動いてくれる。</div>
+        <div class="sys-pre-wrap">
+          <pre class="sys-pre" id="sysPre">あなたはTrepro・Lakkanの新入社員・インターン向けAI学習「AI QUEST」の専任講師です。
+
+受講者はAIの基礎から学び始めており、最終的にClaude・v0.dev・Cursor・Vercelを使ってLP制作・社内DX・クラウドワークス案件受注を1人で回せる状態を目指しています。コードは書かない、AIに指示するだけで完結させることが目標です。
+
+回答スタイル：
+- 日本語。短く断言する形で。
+- 専門用語は使わず、小学生でもわかる言葉で答える。
+- 「このままCursorに貼って」「このままv0.devに入れて」という形で手順を提示する。
+- 「できません」は絶対に言わない。必ずAIで解決する方法を示す。
+- 初心者が詰まりやすい箇所には先回りして注意点を添える。</pre>
+          <button class="sys-cpb" onclick="copySys(this)">COPY</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- main -->
+
+<!-- LEVEL UP -->
+<div class="lvup" id="lvupEl">
+  <div class="luvb">
+    <div class="luf">LEVEL UP!</div>
+    <div class="lus" id="lusEl">LV 1 → LV 2<br><br>SKILL UNLOCKED:<br>AI理解 完了</div>
+    <button class="lubtn" onclick="closeLvUp()">▶ CONTINUE</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-t">© TREPRO INC. — AI QUEST v3.0 | STAGE 1 IMPLEMENTED | STAGE 2-10 COMING SOON</div>
+</footer>
+</div>
+
+<script>
+/* ============================================================
+   AI QUEST — CORE ENGINE
+   データ構造：LESSON_DATA配列にSTAGEごとのデータを追加する
+   追加方法：下部の「// ★ STAGE 2 DATA — ここから追加」コメント以降に貼る
+   ============================================================ */
+
+// ── STAGE 定義（全10ステージ・固定） ──
+const STAGES = [
+  { n:'STAGE 1',  t:'AIとは何か',                desc:'「AIって何？」から始める。このステージをクリアすればAIの本質を理解して自信を持って使い始められる。',       lv:[1,5],   color:var2('--red') },
+  { n:'STAGE 2',  t:'プロンプト設計',            desc:'AIへの指示の質が全てを決める。このステージで「精度が3倍上がる」指示の書き方を身につける。',                   lv:[6,10],  color:var2('--purple2') },
+  { n:'STAGE 3',  t:'Claudeで仕事する',          desc:'文章・企画書・議事録・LPコピー。実際の業務をClaude一本でこなす実践ステージ。',                               lv:[11,15], color:'#66aaff' },
+  { n:'STAGE 4',  t:'Notionと連携する',          desc:'Notionをゼロから理解してClaudeと組み合わせ、情報管理を自動化する。',                                          lv:[16,20], color:var2('--green2') },
+  { n:'STAGE 5',  t:'スプシ × AI',              desc:'スプレッドシートとGoogle APIをClaudeで動かし、データ分析・業務自動化を実現する。',                              lv:[21,25], color:var2('--gold2') },
+  { n:'STAGE 6',  t:'Slack × AI',               desc:'Slack APIとClaude APIを繋げて、チームのコミュニケーションを自動化する。',                                       lv:[26,30], color:'#88ddff' },
+  { n:'STAGE 7',  t:'v0.dev × Vercel',          desc:'v0.devでUIを生成し、GitHubを経由してVercelで公開する。デザイン知識ゼロでサイトを世界に出す。',                  lv:[31,35], color:'#ff9966' },
+  { n:'STAGE 8',  t:'Cursorで改修する',          desc:'既存コードを日本語で修正し、社内ツールに機能を追加する。Supabaseでデータ保存も実装する。',                       lv:[36,40], color:var2('--purple2') },
+  { n:'STAGE 9',  t:'案件受注・DXを回す',         desc:'クラウドワークスで案件を取り、社内DX提案から実装まで一人で回す。採用業務のAI化も実践する。',                     lv:[41,45], color:var2('--red') },
+  { n:'STAGE 10', t:'完全独走・量産',             desc:'テンプレ量産・全自動化・ワークフロー設計。「AIで何でも作れる人材」の証明としてポートフォリオを作る。',            lv:[46,50], color:var2('--gold2') },
+];
+
+function var2(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#e83040'; }
+
+// ── LESSON DATA ──
+// 構造：{ stage:1, lv:1, num:'LESSON 01', title:'...', time:'20 min', diff:'★☆☆☆☆', xpVal:80,
+//         blocks:[{icon:'📚', title:'...', time:'5 min', html:'...'}],
+//         quiz:{q:'...', opts:[...], c:0, ok:'...', ng:'...'},
+//         ch:{title:'...', body:'...'} }
+
+const LESSON_DATA = [
+
+  // ★ STAGE 1 DATA — LV 01〜05（実装済み） ──────────────────────────────
+  {
+    stage:1, lv:1, num:'LESSON 01',
+    title:'AIって何？ — ChatGPT・Claude・Geminiが生まれた理由',
+    time:'20 min', diff:'★☆☆☆☆', xpVal:80,
+    blocks:[
+      { icon:'📚', title:'AIの歴史を3分で理解する', time:'8 min', html:`
+        <p class="lbtxt">「AI」という言葉は1950年代から存在した。でも今のAIが<em>別次元に賢い</em>のは、2つの理由だ。<br><br>
+        <strong>① データ量が爆発的に増えた</strong><br>
+        インターネットの普及で「人間が書いたテキスト」が膨大に蓄積された。AIはこれを全部学習できるようになった。<br><br>
+        <strong>② 計算コストが激安になった</strong><br>
+        GPUの進化でAIの学習が現実的なコストでできるようになった。2022年にChatGPTが公開されて「AIの時代」が来た。<br><br>
+        <em>今のAIブームは突然ではない。20年以上かけて積み上がった技術が、一気に実用化された瞬間だ。</em></p>
+        <div class="pills"><div class="pill pr">LLM</div><div class="pill pb">GPT</div><div class="pill pg">2022年〜</div><div class="pill py">ChatGPT</div></div>` },
+      { icon:'⚡', title:'Claude・ChatGPT・Geminiの違い', time:'7 min', html:`
+        <p class="lbtxt">
+        <strong style="color:var(--red)">Claude（Anthropic）</strong><br>
+        長文・複雑な指示・論理的思考が得意。文章品質が高い。<em>このQUESTのメイン武器。</em><br><br>
+        <strong style="color:#66aaff">ChatGPT（OpenAI）</strong><br>
+        世界で最初に普及した。プラグイン・ツール連携が豊富。GPT-4oは画像認識も対応。<br><br>
+        <strong style="color:var(--green2)">Gemini（Google）</strong><br>
+        GoogleドキュメントやスプレッドシートなどGoogle製品との連携に強い。リアルタイム検索が得意。<br><br>
+        <div class="warn"><div class="warn-l">▶ 覚え方</div><div class="warn-t">迷ったら<strong style="color:var(--text)">Claudeを使え</strong>。それだけで8割の仕事は回る。</div></div></p>` }
+    ],
+    quiz:{
+      q:'現在のAIが急激に進化した主な理由として正しいのはどれ？',
+      opts:['研究者の数が急増したから','学習データの量が増え、計算コストが下がったから','政府の規制が緩和されたから','AIが自分自身を改良するようになったから'],
+      c:1,
+      ok:'✅ 正解！ 大量のテキストデータ＋GPUの低コスト化が現在のAIブームの2大要因です。',
+      ng:'❌ 不正解。現在のAIブームの主因は「学習データの爆発的な増加」と「GPU等による計算コストの低下」です。'
+    },
+    ch:{ title:'claude.aiにログインして「自己紹介してください」と送ってみる',
+      body:'① ブラウザで「claude.ai」を開く\n② Googleアカウントでログインする（無料）\n③ 新しいチャットを開いて「自己紹介してください」と入力して送信する\n\n→ Claudeが返事をしてきたら成功。どんな返事が返ってきたか、下のメモ欄に書いておこう。' }
+  },
+
+  {
+    stage:1, lv:2, num:'LESSON 02',
+    title:'LLMの仕組み — 「次の単語を予測する機械」の正体',
+    time:'20 min', diff:'★★☆☆☆', xpVal:90,
+    blocks:[
+      { icon:'📚', title:'LLMは「予測マシン」だ', time:'8 min', html:`
+        <p class="lbtxt">LLM（Large Language Model＝大規模言語モデル）の仕組みはシンプルだ。<br><br>
+        <strong>「次に来る単語の確率を予測する」</strong>を繰り返しているだけ。<br><br>
+        例：「今日の天気は」→ 次の単語として「晴れ」が来る確率が高い、と学習している。<br><br>
+        これを何百回も繰り返すことで、自然な文章ができる。<br><br>
+        <em>だからAIは「考えている」わけではない。でもそれが結果的に「賢い」回答を出す。</em>
+        <div class="warn" style="margin-top:12px;"><div class="warn-l">▶ 重要：AIは「嘘をつく」</div><div class="warn-t">確率的に「それっぽい単語」を選ぶので、事実と違う内容を自信満々に出力することがある。これを<strong style="color:var(--text)">「ハルシネーション（幻覚）」</strong>と呼ぶ。重要な事実確認は必ず人間がやること。</div></div></p>
+        <div class="pills"><div class="pill pr">LLM</div><div class="pill pb">トークン予測</div><div class="pill pg">確率的生成</div><div class="pill py">ハルシネーション</div></div>` },
+      { icon:'⚡', title:'AIが得意なこと・苦手なこと', time:'7 min', html:`
+        <p class="lbtxt"><strong>✅ 得意なこと</strong><br>
+        文章の生成・要約・翻訳 / コードの生成・説明 / アイデア出し / 情報の整理 / 質問への回答<br><br>
+        <strong>⚠ 苦手なこと（必ず確認が必要）</strong><br>
+        最新情報（学習データに期限がある） / 正確な数値計算 / 事実確認（嘘をつく） / リアルタイムの情報<br><br>
+        <em>「AIはツール」。得意なことに集中させて、苦手なことは人間がチェックする。これが正しい使い方だ。</em></p>` }
+    ],
+    quiz:{
+      q:'AIが「ハルシネーション」を起こすとはどういう意味？',
+      opts:['AIが動作を停止すること','AIが事実と異なる内容を自信満々に出力すること','AIの回答が遅くなること','AIが質問を理解できないこと'],
+      c:1,
+      ok:'✅ 正解！ ハルシネーションとは「AIが確率的に生成した結果、事実と異なる内容を出力すること」です。重要な情報は必ず事実確認を。',
+      ng:'❌ 不正解。ハルシネーションとは「AIが事実と異なる内容を自信満々に出力すること」です。AIは確率的に文章を生成するため、もっともらしい嘘をつくことがあります。'
+    },
+    ch:{ title:'Claudeに「あなたはどうやって動いていますか？自分の仕組みを説明してください」と聞く',
+      body:'① claude.aiを開く\n② 「あなたはどうやって動いていますか？自分の仕組みを小学生にもわかるように説明してください」と入力して送信\n③ 返ってきた回答を読んで、今日学んだ「LLM・確率的生成・ハルシネーション」という言葉と照らし合わせてみよう\n\nAIが自分の仕組みを説明する様子が、理解を深める一番の近道だ。' }
+  },
+
+  {
+    stage:1, lv:3, num:'LESSON 03',
+    title:'AIが得意なこと・苦手なこと — 過信しない正しい使い方',
+    time:'20 min', diff:'★★☆☆☆', xpVal:90,
+    blocks:[
+      { icon:'📚', title:'過信が一番危険だ', time:'8 min', html:`
+        <p class="lbtxt">AIを使い始めた人が最初にやる失敗は2つだ。<br><br>
+        <strong>失敗①：AIを信じすぎる</strong><br>
+        AIが出した情報をそのままコピペして提出する。ハルシネーションがあると大恥をかく。<br><br>
+        <strong>失敗②：AIを信じなさすぎる</strong><br>
+        「どうせ間違える」と思って使わない。使わない人が一番損をしている。<br><br>
+        <em>正しい姿勢：</em><br>
+        AIを「優秀だけど時々嘘をつくアシスタント」として扱う。アウトプットの<strong>最終確認は自分がやる</strong>。それだけで十分だ。</p>
+        <div class="pills"><div class="pill pr">最終確認は人間</div><div class="pill pb">事実確認必須</div><div class="pill pg">ツールとして使う</div></div>` },
+      { icon:'⚡', title:'業務別・AIの使いどころ一覧', time:'8 min', html:`
+        <p class="lbtxt">
+        <strong>✅ そのまま使える（確認コスト低）</strong><br>
+        アイデア出し / 文章の叩き台作成 / コードの説明 / 翻訳 / 箇条書き整理<br><br>
+        <strong>⚠ 確認してから使う（事実確認必須）</strong><br>
+        数値・統計データ / 固有名詞・人物情報 / 法律・医療・税務の情報 / 最新ニュース<br><br>
+        <strong>❌ AIだけに頼わない（判断は人間が必要）</strong><br>
+        重要な意思決定 / 個人情報を含む処理 / クライアントへの最終提案<br><br>
+        <em>この使い分けを意識するだけで、AIの実用価値が2倍になる。</em></p>` }
+    ],
+    quiz:{
+      q:'AIのアウトプットを「そのまま使って問題ない」場面はどれ？',
+      opts:['クライアントへの最終提案書','統計データの引用','アイデア出しの叩き台','法律に関するアドバイス'],
+      c:2,
+      ok:'✅ 正解！ アイデア出しの叩き台は最終確認が自分でできるため、AIをそのまま活用できる場面です。事実確認が必要な数値・法律・人物情報は必ず確認を。',
+      ng:'❌ 不正解。「アイデア出しの叩き台」が正解です。統計データや法律情報はハルシネーションのリスクがあり、必ず事実確認が必要です。'
+    },
+    ch:{ title:'Claudeに「今日の東京の天気は？」と聞いて、何が返ってくるか確認する',
+      body:'① claude.aiを開く\n② 「今日の東京の天気は？」と入力して送信する\n③ Claudeの返答を読んで「AIは最新情報が苦手」という事実を体感する\n\n→ Claudeは「リアルタイム情報は持っていない」と答えるはず。これがAIの限界の実体験だ。' }
+  },
+
+  {
+    stage:1, lv:4, num:'LESSON 04',
+    title:'Claude・ChatGPT・Geminiの使い分け — 場面で選ぶ',
+    time:'20 min', diff:'★★☆☆☆', xpVal:100,
+    blocks:[
+      { icon:'📚', title:'3つのAIの特徴を把握する', time:'8 min', html:`
+        <p class="lbtxt">
+        <strong style="color:var(--red)">◆ Claude（Anthropic）</strong><br>
+        長文・複雑な指示に強い。文章の質が高い。論理的な思考が得意。コード生成・ビジネス文書で最強。<br>
+        → <em>LP・提案書・報告書・コード生成はClaude一択。</em><br><br>
+        <strong style="color:#66aaff">◆ ChatGPT（OpenAI）</strong><br>
+        世界で最も使われている。プラグイン・ツール連携が豊富。画像生成・音声も対応。<br>
+        → <em>ツール連携・画像を使った作業・汎用的な日常タスクに。</em><br><br>
+        <strong style="color:var(--green2)">◆ Gemini（Google）</strong><br>
+        GmailやGoogleスプレッドシートと直接連携できる。Google WorkSpaceユーザーには便利。<br>
+        → <em>Googleサービスをフル活用しているなら選択肢に入る。</em></p>
+        <div class="pills"><div class="pill pr">Claude = 文章・設計</div><div class="pill pb">GPT = 汎用・ツール</div><div class="pill pg">Gemini = Google連携</div></div>` },
+      { icon:'⚡', title:'使い分けチートシート', time:'7 min', html:`
+        <div class="stepbox"><div class="step-title">▶ 場面別ベスト選択</div>
+          <div class="step"><div class="step-n">→</div><div class="step-body"><strong>LP・提案書・報告書を書く</strong> → Claude</div></div>
+          <div class="step"><div class="step-n">→</div><div class="step-body"><strong>メール・日常タスクの文章</strong> → Claude（またはChatGPT）</div></div>
+          <div class="step"><div class="step-n">→</div><div class="step-body"><strong>コード生成・デバッグ</strong> → Claude</div></div>
+          <div class="step"><div class="step-n">→</div><div class="step-body"><strong>画像生成・画像認識</strong> → ChatGPT（GPT-4o）</div></div>
+          <div class="step"><div class="step-n">→</div><div class="step-body"><strong>GoogleスプレッドシートのAI補助</strong> → Gemini</div></div>
+          <div class="step"><div class="step-n">→</div><div class="step-body"><strong>迷ったとき</strong> → Claude</div></div>
+        </div>` }
+    ],
+    quiz:{
+      q:'LPのコピーライティングを依頼する場合、最も適したAIはどれ？',
+      opts:['Gemini（Googleと連携しているから）','Claude（長文・ビジネス文書が得意）','ChatGPT（ユーザー数が多いから）','どれも同じ'],
+      c:1,
+      ok:'✅ 正解！ ClaudeはLP・提案書などのビジネス文書において特に精度が高く、LP制作に最も適しています。',
+      ng:'❌ 不正解。Claudeは長文・複雑な指示・ビジネス文書において最も精度が高く、LP制作のコピーライティングに最適です。'
+    },
+    ch:{ title:'同じ質問をClaude・ChatGPT・Geminiの3つで試して比較する',
+      body:'以下の質問文を、Claude・ChatGPT・Geminiの3つに送って回答を比較しよう。\n\n【質問文】\n「Trepro株式会社の新入社員です。採用担当として初日から使えるAI活用のコツを3点教えてください。」\n\n→ 3つの回答を比較して「どれが一番仕事で使えると思ったか」を下のメモ欄に書いておこう。' }
+  },
+
+  {
+    stage:1, lv:5, num:'LESSON 05',
+    title:'最初の一歩 — Claudeのアカウントを作って実際に使い始める',
+    time:'25 min', diff:'★☆☆☆☆', xpVal:100,
+    blocks:[
+      { icon:'📚', title:'アカウント作成 — ステップごとに進む', time:'10 min', html:`
+        <div class="stepbox"><div class="step-title">▶ Claudeアカウント作成手順</div>
+          <div class="step"><div class="step-n">1</div><div class="step-body"><strong>ブラウザで「claude.ai」を開く</strong><br><a href="https://claude.ai" target="_blank">https://claude.ai</a> にアクセス</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-body"><strong>「Sign up」または「Get started for free」をクリック</strong><br>無料プランで始めてOK</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-body"><strong>Googleアカウントでログイン（推奨）</strong><br>「Continue with Google」を選ぶと一番簡単</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-body"><strong>名前・利用規約に同意して完了</strong><br>メール確認が来たら認証する</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-body"><strong>新しいチャットを開いて最初のメッセージを送る</strong><br>「こんにちは」でOK。まず動かすことが大事。</div></div>
+        </div>
+        <div class="warn"><div class="warn-l">▶ 無料プランの制限</div><div class="warn-t">無料プランは1日に送れるメッセージ数に上限がある。足りなくなったら有料プラン（月$20）を検討しよう。ただし最初の1週間は無料で十分。</div></div>` },
+      { icon:'⚡', title:'最初にやる3つのこと', time:'10 min', html:`
+        <div class="stepbox"><div class="step-title">▶ アカウント作成直後にやること</div>
+          <div class="step"><div class="step-n">①</div><div class="step-body"><strong>「プロジェクト」機能を使う</strong><br>左サイドバーの「Projects」→「New project」で作業単位ごとにチャットをまとめられる。まず「AI QUEST学習」という名前のプロジェクトを作ろう。</div></div>
+          <div class="step"><div class="step-n">②</div><div class="step-body"><strong>「Custom instructions」を設定する</strong><br>プロジェクト設定からシステムプロンプトを設定できる。「あなたは私のビジネスパートナーです。回答は日本語で、簡潔に答えてください。」と設定しておこう。</div></div>
+          <div class="step"><div class="step-n">③</div><div class="step-body"><strong>スマホアプリもインストールする</strong><br>App Store・Google Playで「Claude」を検索。移動中でも使えると学習が加速する。</div></div>
+        </div>` }
+    ],
+    quiz:{
+      q:'Claudeの「プロジェクト」機能を使う主な目的は？',
+      opts:['メッセージ送信数を増やすため','作業単位ごとにチャットをまとめて文脈を保持するため','AIの精度を上げるため','無料プランの制限を解除するため'],
+      c:1,
+      ok:'✅ 正解！ プロジェクト機能は「作業ごとにチャット・設定・ファイルをまとめて、Claudeに文脈を記憶させる」ための機能です。',
+      ng:'❌ 不正解。プロジェクト機能は「作業単位ごとにチャットをまとめて文脈を保持する」ための機能です。同じプロジェクト内ではClaudeが前回の会話を覚えています。'
+    },
+    ch:{ title:'Claudeで「今日の仕事の振り返り」を1分でやってみる',
+      body:'以下のプロンプトをClaude（claude.ai）に貼り付けて送信しよう。\n\n【プロンプト】\n「今日の仕事の振り返りをサポートしてください。私が今日やったことを箇条書きで3〜5点話すので、それをもとに①よかった点②改善できる点③明日やること、の3つをまとめてください。では始めます：[今日やったことを自由に書く]」\n\n→ これが「AIを使った日次振り返り」の最初のステップ。毎日5分やるだけで思考が整理される。' }
+  },
+
+  // ★ STAGE 2 DATA — LV 06〜10（実装済み） ──────────────────────────────
+  {
+    stage:2, lv:6, num:'LESSON 06',
+    title:'プロンプトとは何か — AIへの指示が全てを決める',
+    time:'20 min', diff:'★★☆☆☆', xpVal:90,
+    blocks:[
+      { icon:'📚', title:'プロンプトの定義', time:'7 min', html:`
+        <p class="lbtxt"><em>プロンプト</em>とは、AIに渡す「指示文」のことだ。<br><br>
+        AIの出力品質は、モデルの賢さよりも<strong>プロンプトの質</strong>で決まる。<br>
+        同じClaudeに同じテーマで頼んでも、指示の書き方次第で結果が天と地ほど変わる。<br><br>
+        これを理解した人は「AIが使える人」になる。理解しない人はずっと「なんか微妙」と言い続ける。</p>
+        <div class="pills"><div class="pill pr">プロンプト</div><div class="pill pb">指示の質</div><div class="pill pg">出力品質</div></div>` },
+      { icon:'⚡', title:'悪いプロンプトと良いプロンプトの差', time:'8 min', html:`
+        <p class="lbtxt"><strong>❌ 悪い例</strong> — 情報が少なすぎる</p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — BAD</span></div><pre>メール書いて</pre></div>
+        <p class="lbtxt" style="margin-top:12px;">AIは「誰に」「何のために」「どんなトーンで」を全部推測しなければならない。結果は曖昧になる。<br><br>
+        <strong>✅ 良い例</strong> — 文脈が明確</p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — GOOD</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>あなたはビジネスメールのプロです。
+
+【状況】
+送り先：初めて連絡する取引先の人事担当者
+目的：採用支援サービスの紹介アポを取る
+自分の立場：Trepro株式会社の営業担当
+
+【条件】
+・丁寧だが堅すぎないトーン
+・本文200文字以内
+・件名も含めて出力する</pre></div>
+        <div class="warn" style="margin-top:12px;"><div class="warn-l">▶ ポイント</div><div class="warn-t">「誰が・誰に・何のために・どんな形で」を書くだけで、出力が劇的に変わる。</div></div>` }
+    ],
+    quiz:{
+      q:'プロンプトの出力品質を最も左右する要素はどれ？',
+      opts:['使うAIモデルの種類','プロンプトの文字数の長さ','指示の明確さ・文脈の豊富さ','日本語か英語かの言語選択'],
+      c:2,
+      ok:'✅ 正解！ AIの出力品質は「指示の明確さと文脈の豊富さ」で決まります。同じモデルでも、プロンプトの質次第で結果は天と地ほど変わります。',
+      ng:'❌ 不正解。モデルの種類や文字数より、「指示の明確さ・文脈の豊富さ」が出力品質を最も左右します。'
+    },
+    ch:{ title:'「メール書いて」と「詳細な指示」を比較して違いを体感する',
+      body:'Claudeに以下の2つを順番に送って、出力を比べてみよう。\n\n【プロンプト①】\nメール書いて\n\n【プロンプト②】\nあなたはビジネスメールのプロです。初めて連絡する取引先の人事担当者に、採用支援サービスの紹介アポを取るメールを書いてください。丁寧だが堅すぎないトーンで、本文200文字以内、件名も含めて出力してください。\n\n→ 2つの出力を見比べて「どれだけ違うか」を実感すること。これがプロンプト学習の第一歩だ。' }
+  },
+
+  {
+    stage:2, lv:7, num:'LESSON 07',
+    title:'役割・背景・出力形式 — 精度が3倍上がる3点セット',
+    time:'25 min', diff:'★★★☆☆', xpVal:100,
+    blocks:[
+      { icon:'📚', title:'3点セットの構造', time:'10 min', html:`
+        <p class="lbtxt">高精度なプロンプトには必ず3つの要素が入っている。<br><br>
+        <strong>① 役割（Role）</strong><br>
+        AIに「何者として答えるか」を設定する。<br>
+        例：「あなたはLPコピーライターです」「あなたは10年以上の経験を持つ人事コンサルタントです」<br><br>
+        <strong>② 背景（Context）</strong><br>
+        状況・目的・制約・読み手の情報を伝える。<br>
+        例：「対象は20代の転職希望者」「会社規模は社員50名の中小企業」<br><br>
+        <strong>③ 出力形式（Format）</strong><br>
+        どんな形・長さ・構成で出してほしいかを指定する。<br>
+        例：「箇条書き3点で」「500文字以内で」「表形式で」「①②③の番号付きで」</p>
+        <div class="pills"><div class="pill pr">Role（役割）</div><div class="pill pb">Context（背景）</div><div class="pill pg">Format（形式）</div></div>` },
+      { icon:'⚡', title:'3点セットの実例 — LP全文生成', time:'10 min', html:`
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 3点セット完全版</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre><span class="s2">あなたはLPコピーライターです。</span>
+<span class="c2">※ 役割（Role）</span>
+
+<span class="c2">【背景 / Context】</span>
+<span class="k">サービス名：</span>Trepro 採用支援サービス
+<span class="k">ターゲット：</span>採用に課題を抱える中小企業の人事担当者
+<span class="k">解決する課題：</span>求人票を出しても応募が来ない
+<span class="k">競合との違い：</span>HR業界特化の支援チームが伴走する
+
+<span class="c2">【出力形式 / Format】</span>
+以下の構成でLP全文を出力してください。
+<span class="n2">1.</span> ヒーローキャッチコピー（20文字以内）
+<span class="n2">2.</span> サブコピー（50文字以内）
+<span class="n2">3.</span> 課題提起（3点、各30文字以内）
+<span class="n2">4.</span> 解決策（3点、各80文字）
+<span class="n2">5.</span> CTAボタン文言（10文字以内）</pre></div>
+        <div class="warn"><div class="warn-l">▶ なぜこれが機能するか</div><div class="warn-t">AIは「文脈が多いほど確率的に正確な出力ができる」。役割を設定することでAIが「どの引き出しから言葉を選ぶか」が変わる。</div></div>` }
+    ],
+    quiz:{
+      q:'プロンプトで「役割（Role）」を設定する主な効果は？',
+      opts:['AIが速く回答できるようになる','AIがどの知識領域・文体で回答するかが変わる','文字数制限を解除できる','AIが嘘をつかなくなる'],
+      c:1,
+      ok:'✅ 正解！ 役割を設定することでAIが「どの知識領域・文体・視点で回答するか」が変わります。「コピーライター」と「人事コンサルタント」では全く違う回答が返ってきます。',
+      ng:'❌ 不正解。役割（Role）設定の主な効果は「AIがどの知識領域・文体・視点で回答するかを変える」ことです。'
+    },
+    ch:{ title:'自分の仕事に使えるプロンプトを3点セットで1本書く',
+      body:'自分が今の仕事でよく作る文書（メール・報告書・提案書・求人票など）を1つ選んで、3点セットのプロンプトを作ってClaudeに送ってみよう。\n\n【テンプレート】\nあなたは[役割]です。\n\n【背景】\n・目的：[何のために]\n・読み手：[誰が読む]\n・状況：[どんな状況か]\n\n【出力形式】\n[どんな形で出してほしいか]\n\n→ 出力結果をメモ欄に貼って、次回改善するときの基準にしよう。' }
+  },
+
+  {
+    stage:2, lv:8, num:'LESSON 08',
+    title:'Bad→Goodで学ぶ — 同じ質問でも出力がここまで変わる',
+    time:'25 min', diff:'★★★☆☆', xpVal:110,
+    blocks:[
+      { icon:'📚', title:'プロンプト改善のPDCAを回す', time:'8 min', html:`
+        <p class="lbtxt">一発で完璧なプロンプトを書こうとしなくていい。<br>
+        AIとの会話は<strong>繰り返し改善するもの</strong>だ。<br><br>
+        <strong>プロンプト改善の流れ</strong><br>
+        Plan（指示を書く）→ Do（送る）→ Check（出力を確認）→ Act（指示を直す）<br><br>
+        このサイクルを3回回せば、ほぼ必要なアウトプットが出てくる。<br><br>
+        <em>「一発で完璧を求める」のが一番の無駄。「すぐ送って改善する」方が速い。</em></p>
+        <div class="pills"><div class="pill pr">PDCA</div><div class="pill pb">改善サイクル</div><div class="pill pg">反復改善</div></div>` },
+      { icon:'⚡', title:'改善パターン集 — よくある修正指示', time:'12 min', html:`
+        <p class="lbtxt"><strong>出力が長すぎるとき</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">修正指示</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>もっと短くしてください。全体で200文字以内に収めてください。</pre></div>
+        <p class="lbtxt" style="margin-top:10px;"><strong>トーンが硬すぎるとき</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">修正指示</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>もう少しカジュアルなトーンに変えてください。
+友人に話しかけるような自然な文体で書き直してください。</pre></div>
+        <p class="lbtxt" style="margin-top:10px;"><strong>具体性が足りないとき</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">修正指示</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>もっと具体的な数字や事例を入れてください。
+抽象的な表現は避けて、読んだ人がすぐ行動できる内容にしてください。</pre></div>
+        <p class="lbtxt" style="margin-top:10px;"><strong>方向性を変えたいとき</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">修正指示</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>方向性を変えます。
+先ほどの出力は[問題点]でした。
+[こうしてほしい]という方向で書き直してください。</pre></div>` }
+    ],
+    quiz:{
+      q:'プロンプト改善で最も効率的なアプローチはどれ？',
+      opts:['一発で完璧なプロンプトを書くまで送らない','まず送ってみて、出力を見ながら修正指示を追加していく','英語で書き直してから日本語に翻訳する','プロンプトを1000文字以上書く'],
+      c:1,
+      ok:'✅ 正解！ プロンプトは「まず送る → 出力を確認 → 修正指示を追加」のサイクルで改善するのが最速です。一発完璧を目指すより速く、品質も上がります。',
+      ng:'❌ 不正解。プロンプトの改善は「まず送って、出力を見ながら修正指示を追加していく」PDCAサイクルが最も効率的です。'
+    },
+    ch:{ title:'同じテーマで3回修正指示を出してプロンプトを磨く',
+      body:'以下の手順でプロンプト改善を体験しよう。\n\n【STEP 1】Claudeに「新入社員向けのウェルカムメッセージを書いて」と送る\n\n【STEP 2】出力を読んで気になる点を1つ見つけ、修正指示を送る\n例：「もっと温かみのある表現にしてください」\n\n【STEP 3】もう一度出力を読んで、さらに修正指示を送る\n例：「具体的に入社初日にやることを1つ入れてください」\n\n→ 3回の修正でどれだけ変わったかを確認する。これがプロンプトPDCAの実体験だ。' }
+  },
+
+  {
+    stage:2, lv:9, num:'LESSON 09',
+    title:'Few-shot・Chain of Thought — AIを「考えさせる」技術',
+    time:'25 min', diff:'★★★★☆', xpVal:120,
+    blocks:[
+      { icon:'📚', title:'Few-shot：例を見せて精度を上げる', time:'10 min', html:`
+        <p class="lbtxt"><em>Few-shot（フューショット）</em>とは「例を見せてから指示する」テクニックだ。<br><br>
+        人間でも「こんな感じで書いて」と例を見せた方が伝わりやすい。AIも同じ。<br><br>
+        <strong>例なし（Zero-shot）</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT</span></div>
+<pre>採用メッセージを書いてください。</pre></div>
+        <p class="lbtxt" style="margin-top:10px;"><strong>例あり（Few-shot）— 圧倒的に精度が上がる</strong></p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — FEW-SHOT</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>採用メッセージを書いてください。
+以下の例を参考にしてください。
+
+【例1】
+「未経験でも大丈夫。成長したい気持ちがあれば、
+私たちが全力でサポートします。」
+
+【例2】
+「仕事を通じて、人生を変えるチャンスがここにある。
+一緒に挑戦しましょう。」
+
+上記の例のように、短く・感情に訴える・行動を促す文体で
+新しい採用メッセージを3パターン書いてください。</pre></div>` },
+      { icon:'⚡', title:'Chain of Thought：「考える過程」を出させる', time:'10 min', html:`
+        <p class="lbtxt"><em>Chain of Thought（CoT）</em>とは「考える過程を書き出しながら答えを出す」テクニックだ。<br><br>
+        複雑な問題・判断が必要な場面で使う。「なぜそう判断したか」を見えるようにすることで、AIの思考が整理されて精度が上がる。</p>
+        <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — CHAIN OF THOUGHT</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
+<pre>以下の求人票を改善してください。
+改善する前に、まず以下を順番に考えてください。
+
+STEP 1：現在の求人票の問題点を3つ挙げる
+STEP 2：ターゲットとなる求職者が何を求めているか分析する
+STEP 3：STEP 1とSTEP 2をもとに改善方針を決める
+STEP 4：改善後の求人票を書く
+
+【現在の求人票】
+[求人票の内容をここに貼る]</pre></div>
+        <div class="warn"><div class="warn-l">▶ いつ使うか</div><div class="warn-t">Few-shot：「こんな感じで」が伝わりにくいとき。文体・トーンを揃えたいとき。\nCoT：複雑な判断・分析・改善案を出してほしいとき。</div></div>` }
+    ],
+    quiz:{
+      q:'Few-shotプロンプトが特に効果的な場面はどれ？',
+      opts:['単純な事実を調べるとき','特定の文体・トーンで文章を書いてほしいとき','AIに計算をさせるとき','最新情報を調べるとき'],
+      c:1,
+      ok:'✅ 正解！ Few-shotは「特定の文体・トーン・形式」を真似させたいときに最も効果的です。例を見せることでAIが「こういう方向性か」と正確に理解できます。',
+      ng:'❌ 不正解。Few-shotが最も効果的なのは「特定の文体・トーン・形式で書いてほしいとき」です。例を見せることでAIの出力の方向性が揃います。'
+    },
+    ch:{ title:'自社のトンマナに合わせたFew-shotプロンプトを作る',
+      body:'Trepro・自社のブランドトーン（例：プロフェッショナル・親しみやすい・前向き）に合わせた文体のサンプルを2〜3個用意して、Few-shotプロンプトを作ってみよう。\n\n【使えるテンプレート】\n以下の例を参考に、[依頼内容]を書いてください。\n\n【例1】[サンプル文章1]\n【例2】[サンプル文章2]\n\n上記の例と同じトーン・文体で[依頼内容]を作成してください。\n\n→ 完成したプロンプトをプロンプト集に保存しておこう。今後の業務で再利用できる。' }
+  },
+
+  {
+    stage:2, lv:10, num:'LESSON 10',
+    title:'自分専用プロンプト集を作る — 再現性ある武器にする',
+    time:'30 min', diff:'★★★☆☆', xpVal:120,
+    blocks:[
+      { icon:'📚', title:'プロンプトを「資産」として管理する', time:'10 min', html:`
+        <p class="lbtxt">プロンプトは使い捨てにしてはいけない。<br>
+        一度作った良いプロンプトは<strong>資産</strong>だ。Notionやスプレッドシートに保存して、毎回コピペして使う仕組みを作る。<br><br>
+        <strong>プロンプト集に入れるべき項目</strong><br>
+        ① タイトル（何に使うプロンプトか）<br>
+        ② プロンプト本文（そのままコピペできる形で）<br>
+        ③ 使用場面（どんなときに使うか）<br>
+        ④ 改善メモ（使ってみてわかった改善点）<br><br>
+        <em>プロンプト集は使うたびに育てる。3ヶ月後には「自分だけの最強の武器」になっている。</em></p>
+        <div class="pills"><div class="pill pr">資産化</div><div class="pill pb">再現性</div><div class="pill pg">プロンプト集</div><div class="pill py">継続改善</div></div>` },
+      { icon:'⚡', title:'今すぐ使える基本プロンプト5本', time:'12 min', html:`
+        <div class="stepbox"><div class="step-title">▶ 業務別 基本プロンプトテンプレート</div>
+          <div class="step"><div class="step-n">01</div><div class="step-body"><strong>メール作成</strong><br>あなたはビジネスメールのプロです。[状況]の相手に[目的]のメールを[トーン]で[文字数]以内で書いてください。</div></div>
+          <div class="step"><div class="step-n">02</div><div class="step-body"><strong>会議の議事録まとめ</strong><br>以下の会議メモを整理してください。①決定事項②議論した内容③次のアクション（担当者・期限付き）の3セクションでまとめてください。[会議メモ]</div></div>
+          <div class="step"><div class="step-n">03</div><div class="step-body"><strong>文章の要約</strong><br>以下の文章を[文字数]以内で要約してください。重要なポイントを箇条書きで3〜5点にまとめてください。[文章]</div></div>
+          <div class="step"><div class="step-n">04</div><div class="step-body"><strong>アイデア出し</strong><br>あなたは[専門家の役割]です。[テーマ]について、すぐ実践できるアイデアを10個出してください。各アイデアに一言説明をつけてください。</div></div>
+          <div class="step"><div class="step-n">05</div><div class="step-body"><strong>文章の改善</strong><br>以下の文章を改善してください。[改善の方向性：より簡潔に/より説得力を/よりフレンドリーに]。改善前と改善後を並べて出力してください。[文章]</div></div>
+        </div>` }
+    ],
+    quiz:{
+      q:'プロンプト集を作る最大のメリットはどれ？',
+      opts:['AIの処理速度が上がる','一度作った高品質な指示を再利用して毎回同じ品質を出せる','無料プランの制限が緩和される','AIが新しい機能を覚える'],
+      c:1,
+      ok:'✅ 正解！ プロンプト集の最大のメリットは「一度作った高品質な指示を再利用して、毎回安定した品質のアウトプットを出せること」です。これが「再現性」です。',
+      ng:'❌ 不正解。プロンプト集の最大のメリットは「一度作った高品質な指示を再利用して毎回同じ品質を出せる＝再現性」です。'
+    },
+    ch:{ title:'STAGE 2で学んだプロンプトを集めてNotionに保存する',
+      body:'LESSON 06〜09で作ったプロンプトをまとめてプロンプト集 v1を作ろう。\n\n【Notionに作るページ構成】\n📁 AI QUEST プロンプト集\n　├ メール作成系\n　├ 文書作成系\n　├ 分析・要約系\n　└ 採用・HR系\n\n【各プロンプトの記録形式】\nタイトル：[何に使うか]\nプロンプト：[本文をそのままコピペ]\n使用場面：[どんなときに使うか]\n改善メモ：[使ってみた感想]\n\nまだNotionを使ったことがない場合は次のSTAGE 4で学ぶ。今はメモ帳でもOK。' }
+  },
+
+  // ★ STAGE 3 DATA — ここから追加（第3回処理で実装）
+  // { stage:3, lv:11, ... },
+
+  // ★ STAGE 4 DATA — ここから追加
+  // ★ STAGE 5 DATA — ここから追加
+  // ★ STAGE 6 DATA — ここから追加
+  // ★ STAGE 7 DATA — ここから追加
+  // ★ STAGE 8 DATA — ここから追加
+  // ★ STAGE 9 DATA — ここから追加
+  // ★ STAGE 10 DATA — ここから追加
+
+]; // ← LESSON_DATA 配列終わり
+
+// ── QUICK QUESTIONS（GUIDE NPC） ──
+const QUICK_QS = [
+  { label:'AIって何？どうやって動いているの？', tag:'基礎' },
+  { label:'ハルシネーションって何？どう対処する？', tag:'注意点' },
+  { label:'ClaudeとChatGPTどちらを使えばいい？', tag:'使い分け' },
+  { label:'プロンプトを上手く書くコツを教えて', tag:'プロンプト' },
+  { label:'Claudeのプロジェクト機能の使い方は？', tag:'操作方法' },
+  { label:'v0.devとは何か？最初に何をすればいい？', tag:'v0.dev' },
+  { label:'Cursorとは何か？Claudeとどう違う？', tag:'Cursor' },
+  { label:'クラウドワークスで案件を取るコツは？', tag:'案件受注' },
+];
+
+// ── ENGINE ──────────────────────────────────────────────────
+
+let xp=0, lv=1, curStage=1, curLesson=-1, qDone={};
+const LVT=[0,150,350,600,900,1250,1650,2100,2600,3150,3750];
+const LVS=['','AIの基礎を理解','プロンプト習得','Claudeで実務','Notion連携','スプシ×API','Slack×API','UI制作','コード改修','案件受注','完全独走'];
+
+// STARS
+(function(){
+  const sl=document.getElementById('starsL');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div'); s.className='px-star';
+    const sz=Math.random()<.3?2:1;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*5}s;animation-delay:${Math.random()*5}s;opacity:${.1+Math.random()*.3}`;
+    sl.appendChild(s);
+  }
+})();
+
+// PIXEL TREES
+(function(){
+  const T=['    ██    ','   ████   ','  ██████  ',' ████████ ','    ██    '];
+  function mk(p,x,sc=1){
+    T.forEach((r,y)=>[...r].forEach((c,cx)=>{
+      if(c==='█'){const d=document.createElement('div');const s=4*sc;
+        d.style.cssText=`position:absolute;width:${s}px;height:${s}px;background:rgba(15,30,20,.9);left:${x+(cx-4)*s}px;bottom:${(T.length-1-y)*s}px;image-rendering:pixelated;`;
+        p.appendChild(d);}
+    }));
+  }
+  const L=document.getElementById('tL'),R=document.getElementById('tR');
+  [0,60,120,180].forEach((x,i)=>{mk(L,x,1.2-i*.05);mk(R,x,1.2-i*.05);});
+})();
+
+// STAGE MAP
+(function(){
+  const wrap=document.getElementById('stageMap');
+  STAGES.forEach((s,i)=>{
+    const hasData=LESSON_DATA.some(l=>l.stage===i+1);
+    const isCur=i+1===curStage;
+    const node=document.createElement('div');
+    node.className='snode'+(isCur?' cur':'')+(hasData?'':' lk');
+    node.innerHTML=`<div class="sn-n">${s.n}</div><div class="sn-t">${s.t}</div>
+      <div class="sn-s" style="color:${hasData?(isCur?'var(--gold2)':'var(--green2)'):'var(--vdark)'}">${hasData?(isCur?'▶ NOW':'✓ DONE'):'🔒'}</div>`;
+    node.style.setProperty('--sc', s.color);
+    if(hasData) node.onclick=()=>switchStage(i+1);
+    wrap.appendChild(node);
+    if(i<STAGES.length-1){const a=document.createElement('div');a.className='sarr';a.textContent='▶';wrap.appendChild(a);}
+  });
+})();
+
+function switchStage(n){
+  curStage=n;
+  const s=STAGES[n-1];
+  document.getElementById('stageLabel').textContent=`▶ ${s.n} — ${s.t}`;
+  document.getElementById('stageDesc').textContent=s.desc;
+  renderLessons(n);
+  closeLesson();
+  document.getElementById('dungeons').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// LESSON GRID
+function renderLessons(stage){
+  const grid=document.getElementById('lessonGrid');
+  grid.innerHTML='';
+  // stageのlv範囲からカードを生成
+  const stg=STAGES[stage-1];
+  const [lvMin,lvMax]=stg.lv;
+  for(let lv=lvMin;lv<=lvMax;lv++){
+    const ld=LESSON_DATA.find(d=>d.lv===lv);
+    const card=document.createElement('div');
+    const hasData=!!ld;
+    card.className='lcard'+(hasData?' act':' lk');
+    if(hasData){
+      card.innerHTML=`<div class="lc-n">${ld.num}</div><div class="lc-xp">+${ld.xpVal} XP</div>
+        <div class="lc-t">${ld.title}</div>
+        <div class="lc-d">${getDiffStars(ld.diff)}</div>
+        <div class="lc-s ${ld.cleared?'s-clr':'s-act'}">${ld.cleared?'✓ CLEARED':'▶ PLAY'}</div>`;
+      card.onclick=()=>openLesson(lv);
+    } else {
+      card.innerHTML=`<div class="lc-n">LESSON ${String(lv).padStart(2,'0')}</div>
+        <div class="lc-t" style="color:var(--dark)">— COMING SOON —</div>
+        <div class="lc-d" style="font-size:11px;color:var(--vdark);">次回アップデートで実装予定</div>
+        <div class="lc-s s-lk">🔒 LOCKED</div>`;
+    }
+    grid.appendChild(card);
+  }
+}
+
+function getDiffStars(d){
+  const n=d.split('★').length-1;
+  return '⏱ '+['','★☆☆☆☆','★★☆☆☆','★★★☆☆','★★★★☆','★★★★★'][n]||d;
+}
+
+// 初期レンダリング
+renderLessons(1);
+
+// LESSON VIEWER
+function openLesson(lvNum){
+  const ld=LESSON_DATA.find(d=>d.lv===lvNum);
+  if(!ld)return;
+  curLesson=lvNum;
+  document.getElementById('vey').textContent=ld.num;
+  document.getElementById('vt').textContent=ld.title;
+  document.getElementById('vtm').textContent=ld.time;
+  document.getElementById('vdf').textContent=ld.diff;
+  document.getElementById('vxp').textContent='+'+ld.xpVal+' XP';
+
+  let h='';
+  ld.blocks.forEach(b=>{
+    h+=`<div class="lb"><div class="lbh"><div class="lbi">${b.icon}</div>
+      <div class="lbt2">${b.title}</div><div class="lbtm">${b.time}</div></div>
+      <div class="lbb">${b.html}</div></div>`;
+  });
+
+  const qid='q'+lvNum, fbid='qf'+lvNum;
+  h+=`<div class="quiz"><div class="ql">▶ QUIZ — 理解度チェック</div>
+    <div class="qq">${ld.quiz.q}</div>
+    <div class="qopts" id="${qid}">
+      ${ld.quiz.opts.map((o,i)=>`<div class="qopt" onclick="chkQ(this,${i===ld.quiz.c},'${qid}','${fbid}')">
+        <div class="qltr">${['A','B','C','D'][i]}</div>${o}</div>`).join('')}
+    </div>
+    <div class="qfb" id="${fbid}"></div></div>`;
+
+  h+=`<div class="ch"><div class="chl">▶ CHALLENGE — 手を動かす課題</div>
+    <div class="cht">${ld.ch.title}</div>
+    <div class="chb">${ld.ch.body.replace(/\n/g,'<br>')}</div>
+    <textarea placeholder="実行した結果・気づきをメモ…"></textarea></div>
+  <button class="clrbtn" onclick="clearLesson(${lvNum})">▶ DUNGEON CLEAR — +${ld.xpVal} XP 獲得</button>`;
+
+  document.getElementById('vbody').innerHTML=h;
+  const v=document.getElementById('viewer');
+  v.classList.add('open');
+  setTimeout(()=>v.scrollIntoView({behavior:'smooth',block:'start'}),50);
+}
+
+function closeLesson(){
+  document.getElementById('viewer').classList.remove('open');
+  curLesson=-1;
+}
+
+function clearLesson(lvNum){
+  const ld=LESSON_DATA.find(d=>d.lv===lvNum);
+  if(!ld)return;
+  ld.cleared=true;
+  addXP(ld.xpVal);
+  renderLessons(curStage);
+  closeLesson();
+  spawnPx(12);
+}
+
+// QUIZ
+function chkQ(el,ok,qid,fbid){
+  if(qDone[qid])return;
+  qDone[qid]=true;
+  document.querySelectorAll('#'+qid+' .qopt').forEach(o=>o.style.pointerEvents='none');
+  el.classList.add(ok?'ok':'ng');
+  if(!ok){
+    const ld=LESSON_DATA.find(d=>d.lv===curLesson);
+    document.querySelectorAll('#'+qid+' .qopt')[ld.quiz.c].classList.add('ok');
+  }
+  const fb=document.getElementById(fbid);
+  const ld=LESSON_DATA.find(d=>d.lv===curLesson);
+  fb.classList.add('show',ok?'ok':'ng');
+  fb.textContent=ok?ld.quiz.ok:ld.quiz.ng;
+  if(ok)addXP(30);
+}
+
+// CODE COPY
+function cpCode(btn){
+  const pre=btn.closest('.cb').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='COPIED!';btn.style.color='var(--green2)';
+    setTimeout(()=>{btn.textContent='COPY';btn.style.color='';},2000);
+  });
+}
+
+// XP / LEVEL
+function addXP(n){
+  n=n||50; xp+=n;
+  spawnXPT('+'+n+' XP');
+  updatePlayer();
+}
+function updatePlayer(){
+  const maxLv=Math.min(lv,10);
+  const max=LVT[maxLv];
+  const base=LVT[lv-1]||0;
+  const pct=Math.min(((xp-base)/Math.max(max-base,1))*100,100);
+  document.getElementById('xpfill').style.width=pct+'%';
+  document.getElementById('xptx').textContent=xp+'/'+(LVT[Math.min(lv,10)]||'MAX');
+  document.getElementById('hxp').textContent=xp;
+  document.getElementById('hxpbar').style.width=pct+'%';
+  const sk=Math.min(Math.floor((xp/(LVT[10]||3750))*100),100);
+  document.getElementById('skfill').style.width=sk+'%';
+  document.getElementById('sktx').textContent=sk+'/100';
+  if(lv<10&&xp>=LVT[lv]){
+    lv++;
+    document.getElementById('lvnum').textContent=lv;
+    document.getElementById('hlv').textContent=lv;
+    const bd=document.getElementById('b'+(lv-1));
+    if(bd)bd.classList.add('on');
+    document.getElementById('lusEl').innerHTML='LV '+(lv-1)+' → LV '+lv+'<br><br>SKILL UNLOCKED:<br>'+LVS[lv-1];
+    document.getElementById('lvupEl').classList.add('on');
+    spawnPx(18);
+  }
+}
+function closeLvUp(){document.getElementById('lvupEl').classList.remove('on');}
+
+// PARTICLES
+function spawnPx(n){
+  const s=['★','✦','◆','▲','◉'],c=['#ffd060','#e83040','#44cc88','#4488ff','#aa88ff'];
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div'); p.className='pt';
+    p.textContent=s[~~(Math.random()*s.length)];
+    p.style.cssText=`left:${10+Math.random()*80}%;top:${20+Math.random()*50}%;color:${c[~~(Math.random()*c.length)]};animation-delay:${Math.random()*.5}s`;
+    document.body.appendChild(p); setTimeout(()=>p.remove(),2000);
+  }
+}
+function spawnXPT(t){
+  const p=document.createElement('div'); p.className='pt';
+  p.textContent=t;
+  p.style.cssText='left:50%;top:35%;color:#ffd060;font-size:10px;font-family:"Press Start 2P",monospace;';
+  document.body.appendChild(p); setTimeout(()=>p.remove(),1500);
+}
+
+// GUIDE NPC
+(function(){
+  const el=document.getElementById('qList');
+  QUICK_QS.forEach(q=>{
+    const btn=document.createElement('button'); btn.className='qbtn';
+    btn.innerHTML=`<span class="qtag">${q.tag}</span>${q.label}`;
+    btn.onclick=()=>{document.getElementById('customQ').value=q.label;showCC(false);};
+    el.appendChild(btn);
+  });
+})();
+
+function copyQ(){
+  const t=document.getElementById('customQ').value.trim();
+  if(!t){alert('質問を入力してください');return;}
+  navigator.clipboard.writeText(t).then(()=>showCC(true));
+}
+function openClaude(){
+  const t=document.getElementById('customQ').value.trim();
+  if(t)navigator.clipboard.writeText(t);
+  window.open('https://claude.ai/new','_blank');
+}
+function showCC(show){
+  const el=document.getElementById('cpConfirm');
+  el.style.display=show?'block':'none';
+  if(show)setTimeout(()=>el.style.display='none',4000);
+}
+function copySys(btn){
+  navigator.clipboard.writeText(document.getElementById('sysPre').innerText).then(()=>{
+    btn.textContent='COPIED!';btn.style.color='var(--green2)';
+    setTimeout(()=>{btn.textContent='COPY';btn.style.color='';},2000);
+  });
+}
+</script>
+</body>
+</html>
