@@ -587,7 +587,7 @@ body.theme-10 .pc{border-top-color:#ffd060;}
     <div class="hc">HP<span>100</span><div class="mbar"><div class="mfill mf-hp" style="width:100%"></div></div></div>
     <div class="hc">XP<span id="hxp">0</span><div class="mbar"><div class="mfill mf-xp" id="hxpbar" style="width:0%"></div></div></div>
     <div class="hc">LV<span id="hlv">1</span></div>
-    <button class="logout-btn" onclick="logout()" title="ログアウト">⏏</button>
+    <button class="logout-btn" onclick="logout()">⏏ ログアウト</button>
   </div>
 </header>
 
@@ -928,7 +928,11 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 </div>
 
 <footer class="footer">
-  <div class="footer-t">© TREPRO INC. — AI QUEST v3.0 | STAGE 1〜5 IMPLEMENTED | Supabase進捗保存対応</div>
+  <div class="footer-t">© TREPRO INC. — AI QUEST v2.0 | 全50レッスン実装済み | Supabase進捗保存対応</div>
+  <div style="margin-top:10px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <button onclick="logout()" style="background:none;border:1px solid rgba(255,255,255,.1);color:var(--dim);font-size:10px;padding:5px 12px;cursor:pointer;transition:all .2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--dim)'">⏏ ログアウト / プレイヤー切替</button>
+    <a href="admin.html" style="background:none;border:1px solid rgba(255,200,50,.2);color:rgba(255,200,50,.5);font-size:10px;padding:5px 12px;text-decoration:none;transition:all .2s;" onmouseover="this.style.color='var(--gold2)';this.style.borderColor='rgba(255,200,50,.5)'" onmouseout="this.style.color='rgba(255,200,50,.5)';this.style.borderColor='rgba(255,200,50,.2)'">⚙ 管理者ダッシュボード</a>
+  </div>
 </footer>
 </div>
 
