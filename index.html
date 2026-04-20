@@ -518,7 +518,49 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 .login-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--red2);}
 .login-err{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--red);
   margin-top:10px;min-height:16px;}
+.login-tagline{font-size:9px;color:var(--dim);letter-spacing:.08em;margin-bottom:20px;}
+.login-desc{background:rgba(255,255,255,.03);border:1px solid var(--border2);padding:14px 16px;margin-bottom:4px;text-align:left;}
+.login-desc-item{font-size:11px;color:var(--dim);padding:5px 0;line-height:1.6;}
+.login-desc-item+.login-desc-item{border-top:1px solid var(--border2);}
 .login-master-hint{font-size:10px;color:rgba(255,200,50,.35);margin-top:18px;letter-spacing:.04em;}
+/* CLEAR MODAL */
+.clear-modal{position:fixed;inset:0;background:rgba(5,8,16,.92);z-index:9998;
+  display:none;align-items:center;justify-content:center;}
+.clear-modal.show{display:flex;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.clear-box{background:linear-gradient(160deg,rgba(13,18,32,.99),rgba(8,12,24,.99));
+  border:2px solid var(--gold2);padding:44px 48px;text-align:center;max-width:420px;width:90%;
+  box-shadow:0 0 80px rgba(200,164,0,.25);}
+.clear-star-row{font-size:28px;letter-spacing:6px;margin-bottom:16px;}
+.clear-label{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--gold2);
+  letter-spacing:.12em;margin-bottom:10px;text-shadow:0 0 20px rgba(255,200,50,.5);}
+.clear-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.6;}
+.clear-xp{font-family:'Press Start 2P',monospace;font-size:20px;color:var(--green);
+  margin-bottom:10px;text-shadow:0 0 15px rgba(68,204,136,.4);}
+.clear-msg{font-size:12px;color:var(--dim);margin-bottom:28px;line-height:1.8;}
+.clear-btns{display:flex;flex-direction:column;gap:10px;}
+.clear-btn-next{padding:13px;background:linear-gradient(135deg,var(--red2),var(--red));
+  border:none;color:#fff;font-family:'Press Start 2P',monospace;font-size:8px;
+  cursor:pointer;letter-spacing:.08em;box-shadow:0 4px 0 var(--red2);transition:all .15s;}
+.clear-btn-next:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--red2);}
+.clear-btn-map{padding:10px;background:none;border:1px solid var(--border2);
+  color:var(--dim);font-size:12px;cursor:pointer;transition:all .2s;}
+.clear-btn-map:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+/* TODAY GOAL BANNER */
+.today-goal{margin:0 0 18px;padding:14px 18px;
+  background:linear-gradient(135deg,rgba(26,68,170,.18),rgba(10,20,50,.6));
+  border:1px solid rgba(68,120,220,.3);border-left:3px solid var(--gold2);
+  display:none;}
+.today-goal.show{display:block;}
+.tg-head{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold2);
+  letter-spacing:.1em;margin-bottom:10px;}
+.tg-body{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.tg-text{font-size:12px;color:var(--dim);line-height:1.7;}
+.tg-text strong{color:var(--text);}
+.tg-prog{display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;font-size:8px;color:var(--dark);}
+.tg-pbar{width:100px;height:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);}
+.tg-pfill{height:100%;background:linear-gradient(90deg,#1a6644,#44cc88);transition:width .6s ease;}
+.tg-val{color:var(--green2);}
 .logout-btn{background:none;border:1px solid rgba(255,255,255,.15);color:var(--dim);
   font-size:13px;padding:4px 8px;cursor:pointer;margin-left:8px;transition:all .2s;}
 .logout-btn:hover{border-color:var(--red);color:var(--red);}
@@ -560,8 +602,15 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box">
     <div class="login-title">⚔ AI QUEST</div>
-    <p class="login-sub">名前を入力して冒険を始めよう。<br>次回からも同じ名前で続きが再開できる。</p>
-    <input class="login-inp" id="loginName" type="text" placeholder="例：まな" maxlength="20" autocomplete="off">
+    <div class="login-tagline">TREPRO × LAKKAN — AI ONBOARDING RPG</div>
+    <div class="login-desc">
+      <div class="login-desc-item">🎮 50のレッスンをクリアして「AIで何でも作れる人材」になる</div>
+      <div class="login-desc-item">💾 名前を入れるだけ。次回も同じ名前で続きから始められる</div>
+      <div class="login-desc-item">⏱ 1レッスン15〜30分。スキマ時間に少しずつ進めてOK</div>
+    </div>
+    <p class="login-sub" style="margin-top:20px;">あなたの名前を入力してスタート</p>
+    <input class="login-inp" id="loginName" type="text" placeholder="例：まな" maxlength="20" autocomplete="off"
+      onkeydown="if(event.key==='Enter') startAdventure()">
     <button class="login-btn" onclick="startAdventure()">▶ ADVENTURE START</button>
     <div class="login-err" id="loginErr"></div>
   </div>
@@ -569,6 +618,21 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 
 <!-- SAVE INDICATOR -->
 <div class="save-ind" id="saveInd">✓ SAVED</div>
+
+<!-- CLEAR CELEBRATION MODAL -->
+<div class="clear-modal" id="clearModal">
+  <div class="clear-box">
+    <div class="clear-star-row" id="clearStars"></div>
+    <div class="clear-label">LESSON CLEAR!</div>
+    <div class="clear-title" id="clearTitle"></div>
+    <div class="clear-xp" id="clearXp"></div>
+    <div class="clear-msg" id="clearMsg"></div>
+    <div class="clear-btns">
+      <button class="clear-btn-next" id="clearBtnNext" onclick="closeClearModal()">▶ 次のレッスンへ</button>
+      <button class="clear-btn-map" onclick="closeClearModal()">マップに戻る</button>
+    </div>
+  </div>
+</div>
 
 <!-- BG -->
 <div class="sky"></div>
@@ -762,8 +826,8 @@ body.theme-10 .pc{border-top-color:#ffd060;}
         <div class="prep-item req">
           <span class="prep-tag must">必須</span>
           <div class="prep-item-body">
-            <div class="prep-item-title">Claude.ai アカウント</div>
-            <div class="prep-item-desc">claude.ai にアクセスして無料アカウントを作成。Googleアカウントで30秒で登録できる。STAGE 1からすぐ使う。</div>
+            <div class="prep-item-title">Claude.ai アカウント　<a href="https://claude.ai" target="_blank" style="font-size:10px;color:var(--red);text-decoration:none;border:1px solid rgba(232,48,64,.4);padding:2px 7px;margin-left:6px;">→ 登録する</a></div>
+            <div class="prep-item-desc">Googleアカウントで30秒で登録できる。STAGE 1からすぐ使う。無料プランでOK。</div>
           </div>
         </div>
         <div class="prep-item req">
@@ -843,6 +907,8 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 <div class="sec" id="dungeons">
   <div class="sech"><div class="secht" id="stageLabel">▶ STAGE 1 — AIとは何か</div></div>
   <p class="secsub" id="stageDesc">「AIって何？」から始める。このステージをクリアすればAIの本質を理解して自信を持って使い始められる。</p>
+  <!-- 今日の目標バナー -->
+  <div class="today-goal" id="todayGoal"></div>
   <div class="lgrid" id="lessonGrid"></div>
   <div class="viewer" id="viewer">
     <div class="vh">
@@ -2587,9 +2653,40 @@ function switchStage(n){
   document.getElementById('stageDesc').textContent=s.desc;
   renderLessons(n);
   closeLesson();
+  updateTodayGoal(n);
   document.getElementById('dungeons').scrollIntoView({behavior:'smooth',block:'start'});
   // テーマ切替
   document.body.className = n >= 6 ? 'theme-'+n : '';
+}
+
+function updateTodayGoal(stageNum){
+  const el=document.getElementById('todayGoal');
+  if(!el)return;
+  const stg=STAGES[stageNum-1];
+  if(!stg)return;
+  const [lvMin,lvMax]=stg.lv;
+  const lessons=LESSON_DATA.filter(d=>d.lv>=lvMin&&d.lv<=lvMax);
+  const cleared=lessons.filter(d=>d.cleared).length;
+  const total=lessons.length;
+  const pct=total>0?Math.round(cleared/total*100):0;
+  if(cleared>=total){
+    // stage all cleared
+    el.className='today-goal show';
+    el.innerHTML=`<div class="tg-head">★ STAGE COMPLETE</div>
+      <div class="tg-body">
+        <div class="tg-text">このステージは全レッスンクリア済み！🎉<br><strong>次のステージ</strong>へ進もう。</div>
+        <div class="tg-prog"><div class="tg-pbar"><div class="tg-pfill" style="width:100%"></div></div><span class="tg-val">100%</span></div>
+      </div>`;
+  } else {
+    const next=lessons.find(d=>!d.cleared);
+    const remaining=total-cleared;
+    el.className='today-goal show';
+    el.innerHTML=`<div class="tg-head">▶ 今日の目標</div>
+      <div class="tg-body">
+        <div class="tg-text">${next?`次は <strong>${next.num} ${next.title}</strong>`:'残り'+remaining+'レッスン'} — このステージ残り <strong>${remaining}レッスン</strong></div>
+        <div class="tg-prog"><div class="tg-pbar"><div class="tg-pfill" style="width:${pct}%"></div></div><span class="tg-val">${cleared}/${total}</span></div>
+      </div>`;
+  }
 }
 
 // LESSON GRID
@@ -2627,6 +2724,7 @@ function getDiffStars(d){
 
 // 初期レンダリング
 renderLessons(1);
+updateTodayGoal(1);
 
 // LESSON VIEWER
 function openLesson(lvNum){
@@ -2678,8 +2776,38 @@ function clearLesson(lvNum){
   ld.cleared=true;
   addXP(ld.xpVal);
   renderLessons(curStage);
+  updateTodayGoal(curStage);
   closeLesson();
-  spawnPx(12);
+  spawnPx(20);
+  showClearModal(ld);
+}
+
+function showClearModal(ld){
+  // 次のレッスンを探す
+  const next = LESSON_DATA.find(d=>d.lv===ld.lv+1);
+  // 星表示（難易度分）
+  const starCount = (ld.diff.match(/★/g)||[]).length;
+  document.getElementById('clearStars').textContent = '★'.repeat(starCount) + '☆'.repeat(5-starCount);
+  document.getElementById('clearTitle').textContent = ld.title;
+  document.getElementById('clearXp').textContent = '+' + ld.xpVal + ' XP';
+  // 励ましメッセージ
+  const msgs = [
+    'よくやった！また一歩AIクリエイターに近づいた。',
+    'チャレンジをAllenに送ることを忘れずに！',
+    'この調子で次のレッスンへ進もう。',
+    '素晴らしい！学んだことを明日の仕事で試してみよう。',
+    '完璧だ。知識は使わないと消える。今日中に実践しよう！'
+  ];
+  document.getElementById('clearMsg').textContent = msgs[ld.lv % msgs.length];
+  // 次のレッスンボタン
+  const btn = document.getElementById('clearBtnNext');
+  if(next){ btn.textContent='▶ LESSON '+(ld.lv+1)+'へ'; btn.onclick=()=>{closeClearModal();openLesson(next.lv);}; }
+  else{ btn.textContent='🏆 ステージクリア！'; btn.onclick=closeClearModal; }
+  document.getElementById('clearModal').classList.add('show');
+}
+
+function closeClearModal(){
+  document.getElementById('clearModal').classList.remove('show');
 }
 
 // QUIZ
@@ -2866,6 +2994,7 @@ async function loadProgress(){
     updatePlayer();
   }
   renderLessons(curStage);
+  updateTodayGoal(curStage);
   // ステージマップ更新
   const nodes = document.querySelectorAll('.snode');
   nodes.forEach((node,i)=>{
