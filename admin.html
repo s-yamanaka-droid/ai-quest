@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI QUEST — 管理者ダッシュボード</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#050810;--bg2:#0a0e1a;--bg3:#0d1220;
+  --red:#e83040;--red2:#a02030;--red-g:rgba(232,48,64,.3);
+  --green:#44cc88;--gold:#ffd700;--gold2:#c8a400;
+  --blue:#4488ff;--cyan:#44ddff;--purple:#aa66ff;
+  --text:#e8eaf0;--dim:#7080a0;--vdark:#1e2535;
+  --border:rgba(232,48,64,.25);--border2:rgba(255,255,255,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;
+  min-height:100vh;font-size:14px;}
+
+/* LAYOUT */
+.wrap{display:flex;min-height:100vh;}
+.sidebar{width:220px;background:var(--bg2);border-right:1px solid var(--border2);
+  position:fixed;top:0;left:0;height:100vh;overflow-y:auto;flex-shrink:0;}
+.main{margin-left:220px;padding:32px 40px;flex:1;max-width:1200px;}
+@media(max-width:768px){.sidebar{display:none;}.main{margin-left:0;padding:20px 16px;}}
+
+/* SIDEBAR */
+.sb-logo{padding:24px 20px 16px;border-bottom:1px solid var(--border2);}
+.sb-logo-t{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--red);
+  line-height:1.8;letter-spacing:.06em;}
+.sb-logo-s{font-size:10px;color:var(--dim);margin-top:4px;}
+.sb-nav{padding:16px 0;}
+.sb-sec{padding:8px 20px 4px;font-family:'Press Start 2P',monospace;font-size:6px;
+  color:var(--dim);letter-spacing:.1em;margin-top:8px;}
+.sb-item{display:block;padding:9px 20px;font-size:12px;color:var(--dim);
+  text-decoration:none;transition:all .15s;cursor:pointer;border-left:2px solid transparent;}
+.sb-item:hover,.sb-item.active{color:var(--text);background:rgba(232,48,64,.07);
+  border-left-color:var(--red);}
+.sb-item.active{color:var(--red);}
+.sb-back{display:block;padding:12px 20px;font-family:'Press Start 2P',monospace;font-size:6px;
+  color:var(--dim);text-decoration:none;border-top:1px solid var(--border2);margin-top:auto;
+  transition:color .2s;}
+.sb-back:hover{color:var(--red);}
+
+/* PAGE HEADER */
+.pg-hd{margin-bottom:32px;}
+.pg-title{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--red);
+  letter-spacing:.06em;margin-bottom:8px;}
+.pg-sub{font-size:12px;color:var(--dim);}
+.badge{display:inline-block;font-family:'Press Start 2P',monospace;font-size:6px;
+  padding:3px 8px;background:rgba(232,48,64,.15);border:1px solid var(--border);
+  color:var(--red);margin-right:6px;vertical-align:middle;}
+.badge.g{background:rgba(68,204,136,.12);border-color:rgba(68,204,136,.3);color:var(--green);}
+.badge.b{background:rgba(68,136,255,.12);border-color:rgba(68,136,255,.3);color:var(--blue);}
+.badge.y{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.25);color:var(--gold);}
+.badge.p{background:rgba(170,102,255,.12);border-color:rgba(170,102,255,.3);color:var(--purple);}
+
+/* SECTIONS */
+.section{display:none;}
+.section.active{display:block;}
+
+/* CARDS */
+.card{background:var(--bg3);border:1px solid var(--border2);padding:24px;margin-bottom:20px;}
+.card-title{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--gold2);
+  margin-bottom:16px;letter-spacing:.06em;}
+.card-grid{display:grid;gap:16px;}
+.card-grid.col2{grid-template-columns:repeat(2,1fr);}
+.card-grid.col3{grid-template-columns:repeat(3,1fr);}
+@media(max-width:900px){.card-grid.col3,.card-grid.col2{grid-template-columns:1fr;}}
+
+/* STAT BOXES */
+.stat-box{background:var(--bg2);border:1px solid var(--border2);padding:20px;text-align:center;}
+.stat-n{font-family:'Press Start 2P',monospace;font-size:22px;color:var(--red);margin-bottom:6px;}
+.stat-n.g{color:var(--green);}
+.stat-n.b{color:var(--blue);}
+.stat-n.y{color:var(--gold);}
+.stat-l{font-size:11px;color:var(--dim);}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--dim);
+  padding:10px 12px;text-align:left;border-bottom:1px solid var(--border2);letter-spacing:.06em;}
+td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+.td-mono{font-family:monospace;font-size:11px;color:var(--cyan);}
+.td-dim{color:var(--dim);}
+.td-red{color:var(--red);}
+.td-green{color:var(--green);}
+.td-gold{color:var(--gold2);}
+
+/* CODE BLOCKS */
+.cb{background:rgba(0,0,0,.5);border:1px solid var(--border2);padding:16px;margin:12px 0;}
+.cb pre{font-family:monospace;font-size:11px;color:var(--cyan);line-height:1.8;white-space:pre-wrap;}
+
+/* ARCH DIAGRAM */
+.arch{display:flex;flex-direction:column;gap:12px;padding:8px 0;}
+.arch-layer{background:var(--bg2);border:1px solid var(--border2);padding:16px 20px;}
+.arch-layer-title{font-family:'Press Start 2P',monospace;font-size:7px;margin-bottom:10px;letter-spacing:.06em;}
+.arch-items{display:flex;flex-wrap:wrap;gap:8px;}
+.arch-item{padding:6px 12px;font-size:11px;border:1px solid;}
+.arch-arr{text-align:center;font-size:18px;color:var(--vdark);}
+
+/* PROGRESS BAR */
+.pbar-wrap{display:flex;align-items:center;gap:10px;}
+.pbar{flex:1;height:6px;background:var(--vdark);overflow:hidden;}
+.pbar-fill{height:100%;background:var(--red);transition:width .5s;}
+.pbar-fill.g{background:var(--green);}
+.pbar-txt{font-size:11px;color:var(--dim);min-width:36px;text-align:right;}
+
+/* PLAYER ROWS */
+.player-row{display:flex;align-items:center;gap:12px;padding:12px 16px;
+  border-bottom:1px solid rgba(255,255,255,.04);}
+.player-row:last-child{border-bottom:none;}
+.player-avatar{font-size:22px;min-width:32px;}
+.player-name{font-weight:700;font-size:13px;flex:1;}
+.player-lv{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold2);
+  background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.2);padding:3px 7px;}
+.player-xp{font-size:11px;color:var(--dim);}
+.player-prog{font-size:11px;color:var(--green);}
+
+/* STAGE BREAKDOWN */
+.stage-row{display:flex;align-items:center;gap:12px;padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);}
+.stage-row:last-child{border-bottom:none;}
+.stage-tag{font-family:'Press Start 2P',monospace;font-size:6px;padding:3px 7px;
+  min-width:72px;text-align:center;}
+
+/* LOADING */
+.loading{text-align:center;padding:40px;color:var(--dim);
+  font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.06em;}
+.loading::after{content:'...';animation:dots 1.2s steps(3,end) infinite;}
+@keyframes dots{0%,100%{content:'.';}33%{content:'..';}66%{content:'...';}}</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-t">AI QUEST<br>ADMIN</div>
+    <div class="sb-logo-s">管理者ダッシュボード</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-sec">OVERVIEW</div>
+    <a class="sb-item active" onclick="nav('overview')">📊 ダッシュボード</a>
+    <a class="sb-item" onclick="nav('players')">👥 プレイヤー管理</a>
+
+    <div class="sb-sec">SYSTEM</div>
+    <a class="sb-item" onclick="nav('architecture')">🏗 システム構造</a>
+    <a class="sb-item" onclick="nav('environment')">⚙ 環境・インフラ</a>
+    <a class="sb-item" onclick="nav('database')">🗄 データベース</a>
+
+    <div class="sb-sec">CONTENT</div>
+    <a class="sb-item" onclick="nav('lessons')">📚 レッスン一覧</a>
+    <a class="sb-item" onclick="nav('growth')">📈 成長の仕組み</a>
+  </div>
+  <a class="sb-back" href="index.html">← AI QUEST に戻る</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <div class="section active" id="sec-overview">
+    <div class="pg-hd">
+      <div class="pg-title">📊 ダッシュボード</div>
+      <div class="pg-sub">AI QUEST — Trepro × Lakkan オンボーディングRPG の管理画面</div>
+    </div>
+
+    <div class="card-grid col3" style="margin-bottom:20px;">
+      <div class="stat-box">
+        <div class="stat-n" id="stat-players">—</div>
+        <div class="stat-l">総プレイヤー数</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n g" id="stat-clears">—</div>
+        <div class="stat-l">総クリア数</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n y" id="stat-xp">—</div>
+        <div class="stat-l">総獲得XP</div>
+      </div>
+    </div>
+
+    <div class="card-grid col2">
+      <div class="card">
+        <div class="card-title">👥 最近のプレイヤー</div>
+        <div id="recent-players"><div class="loading">読み込み中</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📈 STAGE別クリア状況</div>
+        <div id="stage-stats"><div class="loading">読み込み中</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYERS -->
+  <div class="section" id="sec-players">
+    <div class="pg-hd">
+      <div class="pg-title">👥 プレイヤー管理</div>
+      <div class="pg-sub">登録プレイヤーの進捗状況一覧</div>
+    </div>
+    <div class="card">
+      <div id="players-table"><div class="loading">読み込み中</div></div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section" id="sec-architecture">
+    <div class="pg-hd">
+      <div class="pg-title">🏗 システム構造</div>
+      <div class="pg-sub">AI QUESTの全体アーキテクチャ</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">全体像</div>
+      <div class="arch">
+        <div class="arch-layer" style="border-color:rgba(68,136,255,.3);">
+          <div class="arch-layer-title" style="color:var(--blue);">👤 ユーザー層</div>
+          <div class="arch-items">
+            <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">Trepro 社員</div>
+            <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">Lakkan インターン</div>
+            <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">新入社員・まなさん</div>
+          </div>
+        </div>
+        <div class="arch-arr">↓</div>
+        <div class="arch-layer" style="border-color:rgba(232,48,64,.3);">
+          <div class="arch-layer-title" style="color:var(--red);">🌐 フロントエンド（Vercel）</div>
+          <div class="arch-items">
+            <div class="arch-item" style="color:var(--red);border-color:rgba(232,48,64,.3);">index.html（シングルページ）</div>
+            <div class="arch-item" style="color:var(--red);border-color:rgba(232,48,64,.3);">Vanilla JS + CSS</div>
+            <div class="arch-item" style="color:var(--red);border-color:rgba(232,48,64,.3);">Press Start 2P フォント</div>
+            <div class="arch-item" style="color:var(--red);border-color:rgba(232,48,64,.3);">50レッスンデータ（インライン）</div>
+          </div>
+        </div>
+        <div class="arch-arr">↓ Supabase JS SDK v2</div>
+        <div class="arch-layer" style="border-color:rgba(68,204,136,.3);">
+          <div class="arch-layer-title" style="color:var(--green);">🗄 バックエンド（Supabase）</div>
+          <div class="arch-items">
+            <div class="arch-item" style="color:var(--green);border-color:rgba(68,204,136,.3);">players テーブル</div>
+            <div class="arch-item" style="color:var(--green);border-color:rgba(68,204,136,.3);">progress テーブル</div>
+            <div class="arch-item" style="color:var(--green);border-color:rgba(68,204,136,.3);">RLS（全許可）</div>
+            <div class="arch-item" style="color:var(--green);border-color:rgba(68,204,136,.3);">Anon Key認証</div>
+          </div>
+        </div>
+        <div class="arch-arr">↕ Git push → 自動デプロイ</div>
+        <div class="arch-layer" style="border-color:rgba(255,215,0,.25);">
+          <div class="arch-layer-title" style="color:var(--gold2);">🚀 デプロイ・CI</div>
+          <div class="arch-items">
+            <div class="arch-item" style="color:var(--gold2);border-color:rgba(255,215,0,.25);">GitHub: s-yamanaka-droid/ai-quest</div>
+            <div class="arch-item" style="color:var(--gold2);border-color:rgba(255,215,0,.25);">Vercel: s-yamanaka-droids-projects</div>
+            <div class="arch-item" style="color:var(--gold2);border-color:rgba(255,215,0,.25);">push → 自動ビルド → 公開</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ゲームループ設計</div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>フェーズ</th><th>内容</th><th>技術</th></tr></thead>
+          <tbody>
+            <tr><td>ログイン</td><td>名前を入力 → players テーブルにupsert → localStorageに保存</td><td class="td-mono">Supabase upsert</td></tr>
+            <tr><td>進捗復元</td><td>player_id で progress を fetch → cleared フラグを立てる → XP/LV再計算</td><td class="td-mono">Supabase select</td></tr>
+            <tr><td>レッスン受講</td><td>PLAY → 学習ブロック → 4択クイズ → チャレンジ → クリア！</td><td class="td-mono">純粋JS</td></tr>
+            <tr><td>進捗保存</td><td>クリア時に progress テーブルへ upsert（player_id + lesson_lv で UNIQUE）</td><td class="td-mono">Supabase upsert</td></tr>
+            <tr><td>XP・レベル</td><td>累積XP → LVT配列でレベル計算 → バッジ点灯</td><td class="td-mono">純粋JS</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENVIRONMENT -->
+  <div class="section" id="sec-environment">
+    <div class="pg-hd">
+      <div class="pg-title">⚙ 環境・インフラ</div>
+      <div class="pg-sub">本番環境・開発環境の設定情報</div>
+    </div>
+
+    <div class="card-grid col2">
+      <div class="card">
+        <div class="card-title">🌐 本番環境（Vercel）</div>
+        <table>
+          <tbody>
+            <tr><td class="td-dim">本番URL</td><td><a href="https://ai-quest-delta.vercel.app" target="_blank" style="color:var(--cyan);">ai-quest-delta.vercel.app</a></td></tr>
+            <tr><td class="td-dim">スコープ</td><td class="td-mono">s-yamanaka-droids-projects</td></tr>
+            <tr><td class="td-dim">プロジェクト名</td><td class="td-mono">ai-quest</td></tr>
+            <tr><td class="td-dim">ビルド方式</td><td>静的HTML（ビルド不要）</td></tr>
+            <tr><td class="td-dim">デプロイ方法</td><td class="td-mono">vercel --prod</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🐙 GitHub</div>
+        <table>
+          <tbody>
+            <tr><td class="td-dim">リポジトリ</td><td><a href="https://github.com/s-yamanaka-droid/ai-quest" target="_blank" style="color:var(--cyan);">s-yamanaka-droid/ai-quest</a></td></tr>
+            <tr><td class="td-dim">ブランチ</td><td class="td-mono">main</td></tr>
+            <tr><td class="td-dim">ローカルパス</td><td class="td-mono">~/apps/ai-quest/</td></tr>
+            <tr><td class="td-dim">主要ファイル</td><td class="td-mono">index.html, admin.html</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🗄 Supabase</div>
+        <table>
+          <tbody>
+            <tr><td class="td-dim">プロジェクト</td><td class="td-mono">jjlqkxuncqnbbbgtrpci</td></tr>
+            <tr><td class="td-dim">URL</td><td><a href="https://supabase.com/dashboard/project/jjlqkxuncqnbbbgtrpci" target="_blank" style="color:var(--cyan);">Supabase Dashboard</a></td></tr>
+            <tr><td class="td-dim">認証方式</td><td>Anon Key（名前ベースログイン）</td></tr>
+            <tr><td class="td-dim">RLS設定</td><td>全許可（allow_all）</td></tr>
+            <tr><td class="td-dim">テーブル数</td><td>2（players / progress）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔑 特殊ログイン</div>
+        <table>
+          <tbody>
+            <tr><td class="td-dim">MASTERモード</td><td>名前欄に <span class="td-mono">MASTER</span> と入力</td></tr>
+            <tr><td class="td-dim">効果</td><td>全50レッスンをクリア済み表示、DB書き込みなし</td></tr>
+            <tr><td class="td-dim">ログアウト</td><td>ヘッダー右端の ⏏ ボタン</td></tr>
+            <tr><td class="td-dim">admin URL</td><td class="td-mono">/admin.html</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💻 開発コマンド</div>
+      <div class="cb"><pre># ローカルで起動
+cd ~/apps/ai-quest
+python3 -m http.server 7780
+# → http://localhost:7780
+
+# 本番デプロイ
+cd ~/apps/ai-quest
+git add -A && git commit -m "変更内容"
+git push origin main
+vercel --prod --scope s-yamanaka-droids-projects
+
+# プレビュー確認（Claude Code）
+# .claude/launch.json の ai-quest エントリを使用</pre></div>
+    </div>
+  </div>
+
+  <!-- DATABASE -->
+  <div class="section" id="sec-database">
+    <div class="pg-hd">
+      <div class="pg-title">🗄 データベース設計</div>
+      <div class="pg-sub">Supabase PostgreSQL — テーブル構成とスキーマ</div>
+    </div>
+
+    <div class="card-grid col2">
+      <div class="card">
+        <div class="card-title">players テーブル</div>
+        <div class="cb"><pre>CREATE TABLE players (
+  id          uuid PRIMARY KEY
+              DEFAULT gen_random_uuid(),
+  name        text NOT NULL,
+  created_at  timestamptz DEFAULT now(),
+  last_seen_at timestamptz DEFAULT now()
+);</pre></div>
+        <table style="margin-top:12px;">
+          <thead><tr><th>カラム</th><th>型</th><th>説明</th></tr></thead>
+          <tbody>
+            <tr><td class="td-mono">id</td><td class="td-dim">uuid</td><td>プレイヤーID（PK）</td></tr>
+            <tr><td class="td-mono">name</td><td class="td-dim">text</td><td>ログイン名（まな 等）</td></tr>
+            <tr><td class="td-mono">created_at</td><td class="td-dim">timestamptz</td><td>初回登録日時</td></tr>
+            <tr><td class="td-mono">last_seen_at</td><td class="td-dim">timestamptz</td><td>最終アクセス日時</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">progress テーブル</div>
+        <div class="cb"><pre>CREATE TABLE progress (
+  id         uuid PRIMARY KEY
+             DEFAULT gen_random_uuid(),
+  player_id  uuid REFERENCES players(id)
+             ON DELETE CASCADE,
+  lesson_lv  integer NOT NULL,
+  xp_gained  integer NOT NULL DEFAULT 0,
+  cleared_at timestamptz DEFAULT now(),
+  UNIQUE(player_id, lesson_lv)
+);</pre></div>
+        <table style="margin-top:12px;">
+          <thead><tr><th>カラム</th><th>型</th><th>説明</th></tr></thead>
+          <tbody>
+            <tr><td class="td-mono">player_id</td><td class="td-dim">uuid FK</td><td>players.id への外部キー</td></tr>
+            <tr><td class="td-mono">lesson_lv</td><td class="td-dim">integer</td><td>レッスン番号（1〜50）</td></tr>
+            <tr><td class="td-mono">xp_gained</td><td class="td-dim">integer</td><td>獲得XP</td></tr>
+            <tr><td class="td-mono">cleared_at</td><td class="td-dim">timestamptz</td><td>クリア日時</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ER図</div>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:8px 0;">
+        <div style="background:var(--bg2);border:2px solid rgba(68,136,255,.4);padding:16px 24px;min-width:200px;">
+          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--blue);margin-bottom:12px;">players</div>
+          <div style="font-size:11px;line-height:2;color:var(--text);">
+            <span style="color:var(--gold2);">PK</span> id : uuid<br>
+            name : text<br>
+            created_at : timestamp<br>
+            last_seen_at : timestamp
+          </div>
+        </div>
+        <div style="font-size:24px;color:var(--dim);">1 ──── ∞</div>
+        <div style="background:var(--bg2);border:2px solid rgba(68,204,136,.4);padding:16px 24px;min-width:200px;">
+          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--green);margin-bottom:12px;">progress</div>
+          <div style="font-size:11px;line-height:2;color:var(--text);">
+            <span style="color:var(--gold2);">PK</span> id : uuid<br>
+            <span style="color:var(--red);">FK</span> player_id : uuid<br>
+            lesson_lv : integer<br>
+            xp_gained : integer<br>
+            cleared_at : timestamp
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:var(--dim);">UNIQUE制約：(player_id, lesson_lv) — 同一プレイヤーが同じレッスンを二重登録できない</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">よく使うクエリ</div>
+      <div class="cb"><pre>-- プレイヤー一覧と進捗数
+SELECT p.name, COUNT(pr.id) as cleared, SUM(pr.xp_gained) as total_xp
+FROM players p
+LEFT JOIN progress pr ON p.id = pr.player_id
+GROUP BY p.id, p.name
+ORDER BY total_xp DESC;
+
+-- 特定プレイヤーの進捗詳細
+SELECT lesson_lv, xp_gained, cleared_at
+FROM progress
+WHERE player_id = '...'
+ORDER BY lesson_lv;
+
+-- STAGE別クリア率
+SELECT
+  CEIL(lesson_lv / 5.0) as stage,
+  COUNT(*) as total_clears
+FROM progress
+GROUP BY stage
+ORDER BY stage;</pre></div>
+    </div>
+  </div>
+
+  <!-- LESSONS -->
+  <div class="section" id="sec-lessons">
+    <div class="pg-hd">
+      <div class="pg-title">📚 レッスン一覧</div>
+      <div class="pg-sub">全50レッスンの構成・XP・難易度</div>
+    </div>
+    <div class="card">
+      <div style="overflow-x:auto;">
+        <table id="lessons-table">
+          <thead>
+            <tr>
+              <th>LV</th><th>STAGE</th><th>タイトル</th><th>時間</th><th>難易度</th><th>XP</th>
+            </tr>
+          </thead>
+          <tbody id="lessons-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROWTH -->
+  <div class="section" id="sec-growth">
+    <div class="pg-hd">
+      <div class="pg-title">📈 成長の仕組み</div>
+      <div class="pg-sub">XP・レベル・バッジの設計思想</div>
+    </div>
+
+    <div class="card-grid col2">
+      <div class="card">
+        <div class="card-title">XP設計</div>
+        <table>
+          <thead><tr><th>難易度</th><th>XP</th><th>対象STAGE</th></tr></thead>
+          <tbody>
+            <tr><td>★☆☆☆☆</td><td class="td-green">80 XP</td><td class="td-dim">STAGE 1</td></tr>
+            <tr><td>★★☆☆☆</td><td class="td-green">90〜100 XP</td><td class="td-dim">STAGE 1〜2</td></tr>
+            <tr><td>★★★☆☆</td><td class="td-green">100〜120 XP</td><td class="td-dim">STAGE 2〜3</td></tr>
+            <tr><td>★★★★☆</td><td class="td-gold">120〜140 XP</td><td class="td-dim">STAGE 4〜8</td></tr>
+            <tr><td>★★★★★</td><td class="td-red">140〜200 XP</td><td class="td-dim">STAGE 6〜10</td></tr>
+            <tr><td><strong>FINAL BOSS (LV50)</strong></td><td class="td-red">200 XP</td><td class="td-dim">STAGE 10</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:14px;padding:12px;background:var(--bg2);border:1px solid var(--border2);">
+          <div style="font-size:11px;color:var(--dim);">全50レッスン合計XP</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:16px;color:var(--gold2);margin-top:4px;" id="total-xp-disp">計算中...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">レベルアップ閾値</div>
+        <table id="lvt-table">
+          <thead><tr><th>レベル</th><th>必要累積XP</th><th>バッジ</th></tr></thead>
+          <tbody>
+            <tr><td class="td-mono">LV 1</td><td>0 XP〜</td><td>🌱 入門</td></tr>
+            <tr><td class="td-mono">LV 2</td><td>300 XP〜</td><td>🤖 AI理解</td></tr>
+            <tr><td class="td-mono">LV 3</td><td>700 XP〜</td><td>✍ プロンプト</td></tr>
+            <tr><td class="td-mono">LV 4</td><td>1200 XP〜</td><td>💼 実務</td></tr>
+            <tr><td class="td-mono">LV 5</td><td>1800 XP〜</td><td>📱 Notion</td></tr>
+            <tr><td class="td-mono">LV 6</td><td>2500 XP〜</td><td>📊 スプシ</td></tr>
+            <tr><td class="td-mono">LV 7</td><td>3300 XP〜</td><td>💬 Slack</td></tr>
+            <tr><td class="td-mono">LV 8</td><td>4200 XP〜</td><td>🎨 UI制作</td></tr>
+            <tr><td class="td-mono">LV 9</td><td>5000 XP〜</td><td>🛠 改修</td></tr>
+            <tr><td class="td-mono">LV 10</td><td>5800 XP〜</td><td>👑 独走</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">STAGEと成長の対応</div>
+      <div id="stage-growth">
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(232,48,64,.15);color:var(--red);border:1px solid rgba(232,48,64,.3);">STAGE 1</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">AIとは何か</div>
+            <div style="font-size:11px;color:var(--dim);">LV1〜5 / 合計約460XP / 目標：AIに自信を持って触れる状態になる</div>
+          </div>
+          <span class="badge">LV 1→2</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(170,102,255,.12);color:var(--purple);border:1px solid rgba(170,102,255,.3);">STAGE 2</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">プロンプト設計</div>
+            <div style="font-size:11px;color:var(--dim);">LV6〜10 / 合計約530XP / 目標：精度3倍のプロンプトが書ける</div>
+          </div>
+          <span class="badge p">LV 2→3</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(68,136,255,.12);color:var(--blue);border:1px solid rgba(68,136,255,.3);">STAGE 3</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">Claudeで仕事する</div>
+            <div style="font-size:11px;color:var(--dim);">LV11〜15 / 合計約600XP / 目標：実業務をClaude一本でこなせる</div>
+          </div>
+          <span class="badge b">LV 3→4</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(68,204,136,.12);color:var(--green);border:1px solid rgba(68,204,136,.3);">STAGE 4</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">Notionと連携する</div>
+            <div style="font-size:11px;color:var(--dim);">LV16〜20 / 合計約630XP / 目標：Notion×AI で情報管理を自動化</div>
+          </div>
+          <span class="badge g">LV 4→5</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(255,215,0,.1);color:var(--gold2);border:1px solid rgba(255,215,0,.25);">STAGE 5</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">スプシ × AI</div>
+            <div style="font-size:11px;color:var(--dim);">LV21〜25 / 合計約650XP / 目標：データ分析・レポートをAIで自動化</div>
+          </div>
+          <span class="badge y">LV 5→6</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(68,221,255,.1);color:var(--cyan);border:1px solid rgba(68,221,255,.25);">STAGE 6</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">Slack × AI</div>
+            <div style="font-size:11px;color:var(--dim);">LV26〜30 / 合計約680XP / 目標：チームのAI活用フローを設計できる</div>
+          </div>
+          <span class="badge" style="background:rgba(68,221,255,.1);color:var(--cyan);border-color:rgba(68,221,255,.3);">LV 6→7</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(255,153,102,.1);color:#ff9966;border:1px solid rgba(255,153,102,.3);">STAGE 7</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">v0.dev × Vercel</div>
+            <div style="font-size:11px;color:var(--dim);">LV31〜35 / 合計約660XP / 目標：アイデアから公開まで1時間で完結</div>
+          </div>
+          <span class="badge" style="background:rgba(255,153,102,.1);color:#ff9966;border-color:rgba(255,153,102,.3);">LV 7→8</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(170,102,255,.12);color:var(--purple);border:1px solid rgba(170,102,255,.3);">STAGE 8</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">Cursorで改修する</div>
+            <div style="font-size:11px;color:var(--dim);">LV36〜40 / 合計約680XP / 目標：AIペアプログラミングをマスター</div>
+          </div>
+          <span class="badge p">LV 8→9</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(232,48,64,.15);color:var(--red);border:1px solid rgba(232,48,64,.3);">STAGE 9</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">案件受注・DXを回す</div>
+            <div style="font-size:11px;color:var(--dim);">LV41〜45 / 合計約700XP / 目標：実務DXプロデューサーとして動ける</div>
+          </div>
+          <span class="badge">LV 9→10</span>
+        </div>
+        <div class="stage-row">
+          <span class="stage-tag" style="background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.4);">STAGE 10</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;margin-bottom:2px;">完全独走・量産</div>
+            <div style="font-size:11px;color:var(--dim);">LV46〜50 / 合計約780XP（FINAL BOSS 200XP含む） / 目標：AIクリエイターとして独走</div>
+          </div>
+          <span class="badge y">👑 CREATOR</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">設計思想</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" class="card-grid col3">
+        <div style="padding:16px;background:var(--bg2);border-left:3px solid var(--red);">
+          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--red);margin-bottom:8px;">WHY RPG?</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.8;">学習完了率を高めるため。通常の研修資料の完了率は30〜40%だが、ゲーミフィケーションで85%以上を目指す。XPとバッジが「続けたい」という動機を作る。</div>
+        </div>
+        <div style="padding:16px;background:var(--bg2);border-left:3px solid var(--green);">
+          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--green);margin-bottom:8px;">3ブロック構成</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.8;">「読む→解く→やる」の順が最も記憶定着率が高い（ブルームのタキソノミー）。チャレンジをAllenに提出することでアウトプットを強制し、曖昧な理解を防ぐ。</div>
+        </div>
+        <div style="padding:16px;background:var(--bg2);border-left:3px solid var(--gold2);">
+          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold2);margin-bottom:8px;">順番固定の理由</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.8;">STAGE 1〜5でAI基礎・実務スキルを固める。STAGE 6〜10で自動化・開発・案件獲得へと発展。前のSTAGEが基礎になるため、スキップ不可の設計にしている。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+const SUPA_URL = 'https://jjlqkxuncqnbbbgtrpci.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqbHFreHVuY3FuYmJiZ3RycGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzIzOTEsImV4cCI6MjA5MTk0ODM5MX0.lr5Ly1hTWbSKyiQFu0UH5j0rHj_t-Hr4F6VdTDrwMOQ';
+const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// ----- NAV -----
+function nav(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(a=>a.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ----- LESSON DATA (50レッスン分のタイトル・XP・難易度) -----
+const LESSONS = [
+  {lv:1,stage:1,title:'AIって何？ — ChatGPT・Claude・Geminiが生まれた理由',time:'20 min',diff:'★☆☆☆☆',xp:80},
+  {lv:2,stage:1,title:'LLMの仕組み — 「次の単語を予測する機械」の正体',time:'20 min',diff:'★★☆☆☆',xp:90},
+  {lv:3,stage:1,title:'AIが得意なこと・苦手なこと — 過信しない正しい使い方',time:'20 min',diff:'★★☆☆☆',xp:90},
+  {lv:4,stage:1,title:'Claude・ChatGPT・Geminiの使い分け — 場面で選ぶ',time:'20 min',diff:'★★☆☆☆',xp:100},
+  {lv:5,stage:1,title:'最初の一歩 — Claudeのアカウントを作って実際に使い始める',time:'15 min',diff:'★☆☆☆☆',xp:100},
+  {lv:6,stage:2,title:'プロンプトの基本構造 — 役割・背景・指示・制約・出力',time:'20 min',diff:'★★☆☆☆',xp:100},
+  {lv:7,stage:2,title:'Few-shot prompting — 例を見せて精度を3倍上げる',time:'20 min',diff:'★★★☆☆',xp:110},
+  {lv:8,stage:2,title:'Chain of Thought — 「考えてから答えて」で推論を強化する',time:'25 min',diff:'★★★☆☆',xp:110},
+  {lv:9,stage:2,title:'システムプロンプトの設計 — AIの人格と制約を固定する',time:'25 min',diff:'★★★★☆',xp:120},
+  {lv:10,stage:2,title:'プロンプトのイテレーション — 改善サイクルで品質を上げる',time:'25 min',diff:'★★★★☆',xp:120},
+  {lv:11,stage:3,title:'議事録を10倍速で作る — 音声テキストからの構造化',time:'20 min',diff:'★★☆☆☆',xp:110},
+  {lv:12,stage:3,title:'企画書・提案書をClaudeで下書きする実務フロー',time:'25 min',diff:'★★★☆☆',xp:120},
+  {lv:13,stage:3,title:'Claudeとのチャットを「仕事の記憶」にする管理術',time:'20 min',diff:'★★★☆☆',xp:120},
+  {lv:14,stage:3,title:'LPコピーライティングをAIで量産する',time:'25 min',diff:'★★★★☆',xp:130},
+  {lv:15,stage:3,title:'営業メール・フォローアップをClaudeで自動化する',time:'25 min',diff:'★★★★☆',xp:130},
+  {lv:16,stage:4,title:'Notionの基本設計 — ページ・DB・ビューの関係を理解する',time:'20 min',diff:'★★☆☆☆',xp:110},
+  {lv:17,stage:4,title:'ClaudeでNotionページを構造化する — テンプレート活用',time:'20 min',diff:'★★★☆☆',xp:120},
+  {lv:18,stage:4,title:'Notion API入門 — 外部からDBを操作する仕組み',time:'25 min',diff:'★★★★☆',xp:130},
+  {lv:19,stage:4,title:'Claudeが書いたコードでNotionに自動書き込みする',time:'30 min',diff:'★★★★☆',xp:140},
+  {lv:20,stage:4,title:'Notion × Claude — 議事録をDBに自動格納するフローを作る',time:'30 min',diff:'★★★★★',xp:150},
+  {lv:21,stage:5,title:'スプレッドシートとは何か — データ管理の基本構造',time:'15 min',diff:'★★☆☆☆',xp:100},
+  {lv:22,stage:5,title:'Google Sheets API入門 — Claudeにコードを書かせて連携する',time:'25 min',diff:'★★★☆☆',xp:120},
+  {lv:23,stage:5,title:'データをClaudeに渡して分析・要約・グラフ提案させる',time:'25 min',diff:'★★★★☆',xp:130},
+  {lv:24,stage:5,title:'月次レポートをAIで自動生成する完全フロー',time:'30 min',diff:'★★★★★',xp:150},
+  {lv:25,stage:5,title:'実際の業務データで月次レポートを1本作ってAllenに提出する',time:'30 min',diff:'★★★★★',xp:150},
+  {lv:26,stage:6,title:'Slackとは何か — チームコミュニケーションの構造',time:'15 min',diff:'★★☆☆☆',xp:100},
+  {lv:27,stage:6,title:'Slack APIとは何か — Slackを外から動かす仕組み',time:'20 min',diff:'★★★☆☆',xp:120},
+  {lv:28,stage:6,title:'ClaudeにSlack APIコードを書かせて通知を自動送信する',time:'25 min',diff:'★★★★☆',xp:140},
+  {lv:29,stage:6,title:'Slack × Claude API — チャンネルでAIを呼び出す',time:'30 min',diff:'★★★★★',xp:160},
+  {lv:30,stage:6,title:'チーム全体のAI活用フローを設計する',time:'25 min',diff:'★★★★★',xp:160},
+  {lv:31,stage:7,title:'v0.devとは何か — AIがUIを生成する時代',time:'15 min',diff:'★★☆☆☆',xp:100},
+  {lv:32,stage:7,title:'Vercelとは何か — 10秒でWebを世界公開する',time:'15 min',diff:'★★☆☆☆',xp:100},
+  {lv:33,stage:7,title:'v0.devで作ったUIをNext.jsプロジェクトに組み込む',time:'25 min',diff:'★★★☆☆',xp:120},
+  {lv:34,stage:7,title:'ドメイン取得からVercel連携まで — 本番環境を作る',time:'20 min',diff:'★★★★☆',xp:140},
+  {lv:35,stage:7,title:'v0.dev → Cursor → Vercelの爆速開発フロー',time:'25 min',diff:'★★★★★',xp:160},
+  {lv:36,stage:8,title:'Cursorとは何か — AIペアプログラマーの使い方',time:'20 min',diff:'★★★☆☆',xp:120},
+  {lv:37,stage:8,title:'@コンテキストでCursorをプロジェクト全体に賢くする',time:'20 min',diff:'★★★☆☆',xp:120},
+  {lv:38,stage:8,title:'既存サービスをCursorで改修 — バグ修正から機能追加まで',time:'25 min',diff:'★★★★☆',xp:140},
+  {lv:39,stage:8,title:'Cursor × Claude API — コード内にAIを組み込む',time:'25 min',diff:'★★★★☆',xp:140},
+  {lv:40,stage:8,title:'コードレビューとリファクタリング — AIで品質を上げる',time:'20 min',diff:'★★★★★',xp:160},
+  {lv:41,stage:9,title:'案件の取り方 — 営業からクロージングまでのAI活用',time:'25 min',diff:'★★★☆☆',xp:120},
+  {lv:42,stage:9,title:'DXプロジェクトの進め方 — 要件定義からリリースまで',time:'25 min',diff:'★★★★☆',xp:140},
+  {lv:43,stage:9,title:'クライアントへのAI導入支援 — 研修と定着化',time:'20 min',diff:'★★★★☆',xp:140},
+  {lv:44,stage:9,title:'プロジェクト管理とコミュニケーション — AIで効率化',time:'20 min',diff:'★★★★☆',xp:140},
+  {lv:45,stage:9,title:'収益化と価格設定 — AI案件の値付け戦略',time:'25 min',diff:'★★★★★',xp:160},
+  {lv:46,stage:10,title:'個人ブランドの作り方 — AIクリエイターとして発信する',time:'25 min',diff:'★★★☆☆',xp:120},
+  {lv:47,stage:10,title:'ポートフォリオサイトをAIで量産する',time:'30 min',diff:'★★★★☆',xp:140},
+  {lv:48,stage:10,title:'AIエージェントを自分でゼロから作る',time:'35 min',diff:'★★★★★',xp:160},
+  {lv:49,stage:10,title:'量産の仕組み — AIで10倍速く価値を生み出す',time:'25 min',diff:'★★★★★',xp:160},
+  {lv:50,stage:10,title:'FINAL BOSS — 自分だけのAIプロダクトを世界に公開せよ',time:'60 min',diff:'★★★★★',xp:200},
+];
+
+const STAGE_COLORS = {
+  1:'rgba(232,48,64,.7)',2:'rgba(170,102,255,.7)',3:'rgba(68,136,255,.7)',
+  4:'rgba(68,204,136,.7)',5:'rgba(255,200,50,.7)',6:'rgba(68,221,255,.7)',
+  7:'rgba(255,153,102,.7)',8:'rgba(170,102,255,.7)',9:'rgba(232,48,64,.7)',
+  10:'rgba(255,215,0,.9)'
+};
+
+// ----- INIT -----
+async function init(){
+  renderLessonsTable();
+  calcTotalXP();
+  await loadStats();
+}
+
+function renderLessonsTable(){
+  const tbody = document.getElementById('lessons-tbody');
+  tbody.innerHTML = LESSONS.map(l=>{
+    const stars = l.diff.replace(/★/g,'<span style="color:var(--gold2)">★</span>').replace(/☆/g,'<span style="color:var(--vdark)">★</span>');
+    const color = STAGE_COLORS[l.stage];
+    return `<tr>
+      <td><span style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--text);">LV ${String(l.lv).padStart(2,'0')}</span></td>
+      <td><span style="font-family:'Press Start 2P',monospace;font-size:6px;padding:2px 6px;background:${color.replace('.7','.15')};border:1px solid ${color};color:${color.replace('rgba','rgb').replace(/,[\d.]+\)$/,')')}">S${l.stage}</span></td>
+      <td style="max-width:360px;">${l.title}</td>
+      <td class="td-dim" style="white-space:nowrap;">${l.time}</td>
+      <td style="white-space:nowrap;">${stars}</td>
+      <td style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--green);white-space:nowrap;">+${l.xp}</td>
+    </tr>`;
+  }).join('');
+}
+
+function calcTotalXP(){
+  const total = LESSONS.reduce((s,l)=>s+l.xp,0);
+  document.getElementById('total-xp-disp').textContent = total.toLocaleString() + ' XP';
+}
+
+async function loadStats(){
+  // プレイヤー一覧
+  const { data: players } = await supa.from('players').select('id,name,created_at,last_seen_at').order('last_seen_at',{ascending:false});
+  // 全進捗
+  const { data: progress } = await supa.from('progress').select('player_id,lesson_lv,xp_gained,cleared_at');
+
+  if(!players){ return; }
+
+  const totalPlayers = players.length;
+  const totalClears = progress ? progress.length : 0;
+  const totalXP = progress ? progress.reduce((s,r)=>s+r.xp_gained,0) : 0;
+
+  document.getElementById('stat-players').textContent = totalPlayers;
+  document.getElementById('stat-clears').textContent = totalClears;
+  document.getElementById('stat-xp').textContent = totalXP.toLocaleString();
+
+  // 最近のプレイヤー
+  const recentHTML = players.slice(0,8).map(p=>{
+    const prog = progress ? progress.filter(r=>r.player_id===p.id) : [];
+    const xp = prog.reduce((s,r)=>s+r.xp_gained,0);
+    const lv = calcLv(xp);
+    const pct = Math.round(prog.length/50*100);
+    return `<div class="player-row">
+      <div class="player-avatar">🧑‍💻</div>
+      <div style="flex:1;">
+        <div class="player-name">${p.name}</div>
+        <div class="pbar-wrap" style="margin-top:4px;">
+          <div class="pbar" style="height:4px;"><div class="pbar-fill g" style="width:${pct}%"></div></div>
+          <div class="pbar-txt">${prog.length}/50</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="player-lv">LV ${lv}</div>
+        <div class="player-xp" style="margin-top:4px;">${xp.toLocaleString()} XP</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('recent-players').innerHTML = recentHTML || '<div class="loading" style="animation:none;">プレイヤーなし</div>';
+
+  // STAGE別クリア状況
+  const stageCounts = {};
+  for(let s=1;s<=10;s++) stageCounts[s]=0;
+  if(progress){
+    progress.forEach(r=>{
+      const stage = Math.ceil(r.lesson_lv/5);
+      if(stageCounts[stage]!==undefined) stageCounts[stage]++;
+    });
+  }
+  const maxClears = totalPlayers * 5 || 1;
+  const stageHTML = Object.entries(stageCounts).map(([s,c])=>{
+    const pct = Math.min(100,Math.round(c/maxClears*100));
+    const color = STAGE_COLORS[+s];
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);">
+      <span style="font-family:'Press Start 2P',monospace;font-size:6px;min-width:56px;color:${color.replace('rgba','rgb').replace(/,[\d.]+\)$/,')')}">STAGE ${s}</span>
+      <div class="pbar" style="flex:1;"><div class="pbar-fill" style="width:${pct}%;background:${color.replace('rgba','rgb').replace(/,[\d.]+\)$/,')')}"></div></div>
+      <span style="font-size:11px;color:var(--dim);min-width:36px;text-align:right;">${c}クリア</span>
+    </div>`;
+  }).join('');
+  document.getElementById('stage-stats').innerHTML = stageHTML;
+
+  // プレイヤー詳細テーブル
+  const tableHTML = `<div style="overflow-x:auto;"><table>
+    <thead><tr>
+      <th>プレイヤー</th><th>LV</th><th>XP</th><th>クリア数</th><th>進捗</th><th>最終アクセス</th>
+    </tr></thead>
+    <tbody>${players.map(p=>{
+      const prog = progress ? progress.filter(r=>r.player_id===p.id) : [];
+      const xp = prog.reduce((s,r)=>s+r.xp_gained,0);
+      const lv = calcLv(xp);
+      const pct = Math.round(prog.length/50*100);
+      const last = new Date(p.last_seen_at).toLocaleDateString('ja-JP');
+      return `<tr>
+        <td><strong>${p.name}</strong></td>
+        <td><span class="player-lv">LV ${lv}</span></td>
+        <td class="td-green" style="font-family:'Press Start 2P',monospace;font-size:8px;">${xp.toLocaleString()}</td>
+        <td>${prog.length} / 50</td>
+        <td style="min-width:120px;">
+          <div class="pbar-wrap">
+            <div class="pbar"><div class="pbar-fill g" style="width:${pct}%"></div></div>
+            <div class="pbar-txt">${pct}%</div>
+          </div>
+        </td>
+        <td class="td-dim">${last}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+  document.getElementById('players-table').innerHTML = tableHTML;
+}
+
+function calcLv(xp){
+  const LVT=[0,300,700,1200,1800,2500,3300,4200,5000,5800];
+  let lv=1;
+  for(let i=1;i<LVT.length;i++){ if(xp>=LVT[i]) lv=i+1; else break; }
+  return Math.min(lv,10);
+}
+
+init();
+</script>
+</body>
+</html>
