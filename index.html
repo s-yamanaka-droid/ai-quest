@@ -19,7 +19,7 @@
   --green:#2a5a3a; --green2:#44cc88;
   --gold:#c8a040; --gold2:#ffd060;
   --purple:#6644aa; --purple2:#aa88ff;
-  --text:#e8f0fc; --dim:#a8b8d0; --dark:#6688aa; --vdark:#3a4a6a;
+  --text:#e8f0fc; --dim:#a8b8d0; --dark:#6688aa; --vdark:#7a90b0;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -594,6 +594,30 @@ body.theme-10 .pc{border-top-color:#ffd060;}
   .lgrid{grid-template-columns:1fr;}
   .btn-row{flex-direction:column;}
 }
+
+/* ── アクセシビリティ補強（v2 監査受け） ───────────────────────── */
+/* キーボード操作者のための focus アウトライン（マウス操作には出ない） */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible{
+  outline:2px solid #78c8ff !important;
+  outline-offset:2px;
+  box-shadow:0 0 0 4px rgba(120,200,255,.25);
+}
+/* スクリーンリーダー専用テキスト（視覚的には非表示） */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+/* 前庭障害ユーザー配慮：アニメーション最小化 */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -604,13 +628,26 @@ body.theme-10 .pc{border-top-color:#ffd060;}
     <div class="login-title">⚔ AI QUEST</div>
     <div class="login-tagline">TREPRO × LAKKAN — AI ONBOARDING RPG</div>
     <div class="login-desc">
-      <div class="login-desc-item">🎮 50のレッスンをクリアして「AIで何でも作れる人材」になる</div>
+      <div class="login-desc-item">🎮 50のレッスンをクリアして「AI を使いこなして自走できる人材」になる</div>
       <div class="login-desc-item">💾 名前を入れるだけ。次回も同じ名前で続きから始められる</div>
       <div class="login-desc-item">⏱ 1レッスン15〜30分。スキマ時間に少しずつ進めてOK</div>
     </div>
     <p class="login-sub" style="margin-top:20px;">あなたの名前を入力してスタート</p>
+    <label for="loginName" class="sr-only">プレイヤー名</label>
     <input class="login-inp" id="loginName" type="text" placeholder="例：まな" maxlength="20" autocomplete="off"
+      aria-label="プレイヤー名"
       onkeydown="if(event.key==='Enter') startAdventure()">
+    <div class="login-consent" style="margin:14px 0 6px;font-size:11px;color:rgba(255,255,255,.7);line-height:1.6;text-align:left;">
+      <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="loginConsent" style="margin-top:3px;flex-shrink:0;cursor:pointer;">
+        <span>
+          <a href="/privacy.html" target="_blank" style="color:rgba(120,200,255,.9);text-decoration:underline;">プライバシーポリシー</a>
+          および
+          <a href="/terms.html" target="_blank" style="color:rgba(120,200,255,.9);text-decoration:underline;">利用規約</a>
+          に同意します（受講者名・進捗・XP を学習目的でのみ保存します）
+        </span>
+      </label>
+    </div>
     <button class="login-btn" onclick="startAdventure()">▶ ADVENTURE START</button>
     <div class="login-err" id="loginErr"></div>
   </div>
@@ -662,7 +699,7 @@ body.theme-10 .pc{border-top-color:#ffd060;}
   <div class="hero-cont">
     <div class="h-badge">⚔ TREPRO × LAKKAN — AI ONBOARDING RPG</div>
     <div class="h-title">AI QUEST<br>ZERO TO CREATOR</div>
-    <p class="h-sub">AIの基礎の基礎から学び、50のダンジョンをクリアして「AIで何でも作れる人材」になる。コードは書かない。AIに書かせる。</p>
+    <p class="h-sub">AIの基礎の基礎から学び、50のダンジョンをクリアして「AI を使いこなして自走できる人材」になる。コードは書かない。AIに書かせる。</p>
     <div class="h-stats">
       <div class="hs"><div class="hs-n">50</div><div class="hs-l">DUNGEONS</div></div>
       <div class="hs"><div class="hs-n">10</div><div class="hs-l">STAGES</div></div>
@@ -899,7 +936,7 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 <!-- ① STAGE MAP -->
 <div class="sec">
   <div class="sech"><div class="secht">▶ STAGE MAP — 全50ダンジョン</div></div>
-  <p class="secsub">10のステージ、各5つのダンジョン。順番にクリアすることで「AIで何でも作れる人材」になる。</p>
+  <p class="secsub">10のステージ、各5つのダンジョン。順番にクリアすることで「AI を使いこなして自走できる人材」になる。</p>
   <div class="smap" id="stageMap"></div>
 </div>
 
@@ -996,6 +1033,11 @@ body.theme-10 .pc{border-top-color:#ffd060;}
 <footer class="footer">
   <div class="footer-t">© TREPRO INC. — AI QUEST v2.0 | STAGE 1〜5 公開中 / STAGE 6〜10 v2「Claude Code era」近日公開 | Supabase進捗保存対応</div>
   <div class="footer-t" style="margin-top:6px;font-size:10px;opacity:.6;">powered by <strong style="color:rgba(255,200,50,.7);">Vigil AI Academy</strong> — 育つ第二の脳・Vigil AI が提供する学習トラック</div>
+  <div class="footer-t" style="margin-top:8px;font-size:10px;">
+    <a href="/privacy.html" style="color:rgba(120,200,255,.7);text-decoration:none;margin:0 8px;">プライバシーポリシー</a>
+    <span style="opacity:.4;">|</span>
+    <a href="/terms.html" style="color:rgba(120,200,255,.7);text-decoration:none;margin:0 8px;">利用規約</a>
+  </div>
   <div style="margin-top:10px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
     <button onclick="logout()" style="background:none;border:1px solid rgba(255,255,255,.1);color:var(--dim);font-size:10px;padding:5px 12px;cursor:pointer;transition:all .2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--dim)'">⏏ ログアウト / プレイヤー切替</button>
     <a href="admin.html" style="background:none;border:1px solid rgba(255,200,50,.2);color:rgba(255,200,50,.5);font-size:10px;padding:5px 12px;text-decoration:none;transition:all .2s;" onmouseover="this.style.color='var(--gold2)';this.style.borderColor='rgba(255,200,50,.5)'" onmouseout="this.style.color='rgba(255,200,50,.5)';this.style.borderColor='rgba(255,200,50,.2)'">⚙ 管理者ダッシュボード</a>
@@ -2108,7 +2150,8 @@ SlackのWebhook URL：[YOUR_WEBHOOK_URL]
   // ★ STAGE 6 DATA — Claude Code 入門（LV26〜30）
   { stage:6, lv:26, num:'LESSON 26', title:'Claude Code とは何か — ブラウザ版との違い、10倍速の正体', time:'25 min', diff:'★★☆☆☆', xpVal:100,
     blocks:[
-      { icon:'📚', title:'ブラウザ版 Claude と Claude Code の決定的な違い', time:'10 min', html:`<p class="lbtxt">これまで学んできた <strong>claude.ai</strong> はブラウザの中で会話する AI だ。便利だが「会話しかできない」。<br><br>
+      { icon:'📚', title:'ブラウザ版 Claude と Claude Code の決定的な違い', time:'10 min', html:`<div class="warn" style="margin-bottom:14px;"><div class="warn-l">▶ STAGE 5 までクリアした受講者へ</div><div class="warn-t">ここから扱う領域が変わります。STAGE 1〜5 は「ブラウザの中で Claude と話す」スキル。STAGE 6 からは「PC のターミナル（黒い画面）を使って Claude を動かす」世界に入ります。<br><br>「ターミナル？コマンド？怖い…」と感じるのは普通です。<strong>大丈夫、ここからは AI が代わりにコマンドを打ちます</strong>。あなたは日本語で頼むだけ。詰まったらすぐ Allen に Slack で聞いてください。<br><br>① まず Node.js が PC に入っているか確認 → ② Claude Code をインストール → ③ ターミナルで <code>claude</code> と打って起動。ここまで来れば STAGE 6 後半は全部「AI に頼むだけ」になります。</div></div>
+<p class="lbtxt">これまで学んできた <strong>claude.ai</strong> はブラウザの中で会話する AI だ。便利だが「会話しかできない」。<br><br>
 <strong>Claude Code</strong> は同じ Claude が、あなたの PC の中で直接動くツールだ。ファイルを読む・書く・編集する、ターミナルでコマンドを叩く、git で push する、Web を検索する、ぜんぶ AI 自身がやる。</p>
 <div class="stepbox"><div class="step">ブラウザ版：会話だけ。コードもらってもコピペが必要</div><div class="step">Claude Code：AI が直接ファイル編集・コマンド実行する</div><div class="step">結果：作業時間が体感10分の1になる</div></div>
 <p class="lbtxt"><strong>なぜ10倍速なのか</strong>。ブラウザ版で「LP を1ページ作って」と頼むと、HTML を出してくる→コピー→保存→開く→確認→修正点を伝える→また出してくる、というループが必ず発生する。Claude Code はこのループ全部を自分でやる。あなたは「LP 作って」と1回言うだけで完成品が手元に残る。</p>
@@ -3425,10 +3468,18 @@ let currentPlayerName = null;
 async function startAdventure(){
   const name = document.getElementById('loginName').value.trim();
   if(!name){ document.getElementById('loginErr').textContent='名前を入力してください'; return; }
+
+  // 同意チェック（MASTER モードは除外）
+  const consentEl = document.getElementById('loginConsent');
+  const isMaster = name.toUpperCase() === 'MASTER';
+  if(!isMaster && consentEl && !consentEl.checked){
+    document.getElementById('loginErr').textContent='プライバシーポリシー・利用規約への同意が必要です';
+    return;
+  }
   document.getElementById('loginErr').textContent = '';
 
   // MASTER モード判定
-  if(name.toUpperCase() === 'MASTER'){
+  if(isMaster){
     document.getElementById('loginOverlay').classList.add('hide');
     setHeaderName('MASTER');
     document.getElementById('masterBadge').classList.add('show');

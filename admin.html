@@ -636,6 +636,35 @@ ORDER BY stage;</pre></div>
 </div>
 
 <script>
+// ── 管理者ゲート（簡易・フロント保護のみ） ─────────────────────────────
+// Note: これは「URL を踏み逃げされた時の即時遮断」用途。
+// 本来の保護は Supabase RLS と Vercel Password Protection に依存する。
+(function adminGate(){
+  const AUTH_KEY = 'aiq_admin_auth_v2';
+  const PASS_HASH = '2645b26a31462d6afe5ab2af38ec9c3383473a327e91e045c4f588bc39b221a8'; // SHA-256 of "VigilAcademy2026!"
+  async function sha256(s){
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  // 認証済みかチェック（24時間で失効）
+  const cached = sessionStorage.getItem(AUTH_KEY);
+  if(cached){
+    const ts = parseInt(cached, 10);
+    if(!isNaN(ts) && Date.now() - ts < 24*60*60*1000) return; // OK
+  }
+  // パスワードプロンプト
+  const pw = prompt('🔒 AI QUEST 管理画面\\n\\n管理者パスワードを入力してください（Allen に確認）');
+  if(pw === null){ window.location.href = '/'; return; }
+  sha256(pw).then(h => {
+    if(h === PASS_HASH){
+      sessionStorage.setItem(AUTH_KEY, Date.now().toString());
+    } else {
+      alert('パスワードが違います');
+      window.location.href = '/';
+    }
+  });
+})();
+
 // vigil-playbook DB (aiq_* テーブル) — v2 リブランド 2026-05-22
 const SUPA_URL = 'https://uuznttfwayafrvzqtjwo.supabase.co';
 const SUPA_KEY = 'sb_publishable_1iJsNvSPfMTQKVC1HtMMng__lkvOq8c';
