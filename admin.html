@@ -316,11 +316,11 @@ tr:hover td{background:rgba(255,255,255,.03);}
         <div class="card-title">🗄 Supabase</div>
         <table>
           <tbody>
-            <tr><td class="td-dim">プロジェクト</td><td class="td-mono">jjlqkxuncqnbbbgtrpci</td></tr>
-            <tr><td class="td-dim">URL</td><td><a href="https://supabase.com/dashboard/project/jjlqkxuncqnbbbgtrpci" target="_blank" style="color:var(--cyan);">Supabase Dashboard</a></td></tr>
-            <tr><td class="td-dim">認証方式</td><td>Anon Key（名前ベースログイン）</td></tr>
-            <tr><td class="td-dim">RLS設定</td><td>全許可（allow_all）</td></tr>
-            <tr><td class="td-dim">テーブル数</td><td>2（players / progress）</td></tr>
+            <tr><td class="td-dim">プロジェクト</td><td class="td-mono">vigil-playbook (uuznttfwayafrvzqtjwo)</td></tr>
+            <tr><td class="td-dim">URL</td><td><a href="https://supabase.com/dashboard/project/uuznttfwayafrvzqtjwo" target="_blank" style="color:var(--cyan);">Supabase Dashboard</a></td></tr>
+            <tr><td class="td-dim">認証方式</td><td>Publishable Key（名前ベースログイン）</td></tr>
+            <tr><td class="td-dim">RLS設定</td><td>有効（aiq_players / aiq_progress）</td></tr>
+            <tr><td class="td-dim">テーブル数</td><td>2（aiq_players / aiq_progress）</td></tr>
           </tbody>
         </table>
       </div>
@@ -636,8 +636,9 @@ ORDER BY stage;</pre></div>
 </div>
 
 <script>
-const SUPA_URL = 'https://jjlqkxuncqnbbbgtrpci.supabase.co';
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqbHFreHVuY3FuYmJiZ3RycGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzIzOTEsImV4cCI6MjA5MTk0ODM5MX0.lr5Ly1hTWbSKyiQFu0UH5j0rHj_t-Hr4F6VdTDrwMOQ';
+// vigil-playbook DB (aiq_* テーブル) — v2 リブランド 2026-05-22
+const SUPA_URL = 'https://uuznttfwayafrvzqtjwo.supabase.co';
+const SUPA_KEY = 'sb_publishable_1iJsNvSPfMTQKVC1HtMMng__lkvOq8c';
 const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 
 // ----- NAV -----
@@ -740,9 +741,9 @@ function calcTotalXP(){
 
 async function loadStats(){
   // プレイヤー一覧
-  const { data: players } = await supa.from('players').select('id,name,created_at,last_seen_at').order('last_seen_at',{ascending:false});
+  const { data: players } = await supa.from('aiq_players').select('id,name,created_at,last_seen_at').order('last_seen_at',{ascending:false});
   // 全進捗
-  const { data: progress } = await supa.from('progress').select('player_id,lesson_lv,xp_gained,cleared_at');
+  const { data: progress } = await supa.from('aiq_progress').select('player_id,lesson_lv,xp_gained,cleared_at');
 
   if(!players){ return; }
 

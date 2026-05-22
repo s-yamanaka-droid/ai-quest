@@ -2716,9 +2716,10 @@ function spawnXPT(t){
   document.body.appendChild(p); setTimeout(()=>p.remove(),1500);
 }
 
-// ── SUPABASE ─────────────────────────────────────────────────
-const SUPA_URL = 'https://jjlqkxuncqnbbbgtrpci.supabase.co';
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqbHFreHVuY3FuYmJiZ3RycGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzIzOTEsImV4cCI6MjA5MTk0ODM5MX0.lr5Ly1hTWbSKyiQFu0UH5j0rHj_t-Hr4F6VdTDrwMOQ';
+// ── SUPABASE (vigil-playbook DB — aiq_* テーブル) ───────────────────────
+// v2 リブランド (2026-05-22): 旧 jjlqkxuncqnbbbgtrpci は削除、データは vigil-playbook 配下に統合済み
+const SUPA_URL = 'https://uuznttfwayafrvzqtjwo.supabase.co';
+const SUPA_KEY = 'sb_publishable_1iJsNvSPfMTQKVC1HtMMng__lkvOq8c';
 const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 
 let currentPlayerId = null;
@@ -2729,7 +2730,7 @@ let currentPlayerName = null;
   const savedId = localStorage.getItem('aq_player_id');
   const savedName = localStorage.getItem('aq_player_name');
   if(savedId && savedName){
-    const { data } = await supa.from('players').select('id,name').eq('id',savedId).single();
+    const { data } = await supa.from('aiq_players').select('id,name').eq('id',savedId).single();
     if(data){
       currentPlayerId = data.id;
       currentPlayerName = data.name;
@@ -2758,12 +2759,12 @@ async function startAdventure(){
     return;
   }
   // 新規プレイヤーなら準備セクションを開く（既存は閉じたまま）
-  const isNew = !(await supa.from('players').select('id').eq('name',name).maybeSingle()).data;
+  const isNew = !(await supa.from('aiq_players').select('id').eq('name',name).maybeSingle()).data;
 
   // 同名プレイヤーがいれば再利用、いなければ新規作成
-  let { data: existing } = await supa.from('players').select('id,name').eq('name',name).maybeSingle();
+  let { data: existing } = await supa.from('aiq_players').select('id,name').eq('name',name).maybeSingle();
   if(!existing){
-    const { data: created, error } = await supa.from('players').insert({name}).select().single();
+    const { data: created, error } = await supa.from('aiq_players').insert({name}).select().single();
     if(error){ document.getElementById('loginErr').textContent='エラーが発生しました'; return; }
     existing = created;
   }
@@ -2774,7 +2775,7 @@ async function startAdventure(){
   localStorage.setItem('aq_player_name', existing.name);
 
   // last_seen_at 更新
-  await supa.from('players').update({last_seen_at: new Date().toISOString()}).eq('id', existing.id);
+  await supa.from('aiq_players').update({last_seen_at: new Date().toISOString()}).eq('id', existing.id);
 
   document.getElementById('loginOverlay').classList.add('hide');
   setHeaderName(existing.name);
@@ -2805,7 +2806,7 @@ function setHeaderName(name){
 
 async function loadProgress(){
   if(!currentPlayerId) return;
-  const { data } = await supa.from('progress').select('lesson_lv,xp_gained').eq('player_id', currentPlayerId);
+  const { data } = await supa.from('aiq_progress').select('lesson_lv,xp_gained').eq('player_id', currentPlayerId);
   if(!data) return;
   let totalXP = 0;
   data.forEach(row => {
@@ -2866,7 +2867,7 @@ function loadMasterMode(){
 
 async function saveProgress(lvNum, xpVal){
   if(!currentPlayerId) return;
-  await supa.from('progress').upsert({
+  await supa.from('aiq_progress').upsert({
     player_id: currentPlayerId,
     lesson_lv: lvNum,
     xp_gained: xpVal
