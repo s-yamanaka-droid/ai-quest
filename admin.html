@@ -151,6 +151,7 @@ tr:hover td{background:rgba(255,255,255,.03);}
     <div class="sb-sec">OVERVIEW</div>
     <a class="sb-item active" onclick="nav('overview')">📊 ダッシュボード</a>
     <a class="sb-item" onclick="nav('players')">👥 プレイヤー管理</a>
+    <a class="sb-item" onclick="nav('insights')">📡 一次情報インサイト</a>
 
     <div class="sb-sec">SYSTEM</div>
     <a class="sb-item" onclick="nav('architecture')">🏗 システム構造</a>
@@ -209,6 +210,30 @@ tr:hover td{background:rgba(255,255,255,.03);}
     </div>
     <div class="card">
       <div id="players-table"><div class="loading">読み込み中</div></div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS — 一次情報集計 -->
+  <div class="section" id="sec-insights">
+    <div class="pg-hd">
+      <div class="pg-title">📡 一次情報インサイト</div>
+      <div class="pg-sub">受講者の属性分布・会社別・業務内容・期待値の生データ。AI QUEST に集まる一次情報を可視化。</div>
+    </div>
+    <div class="card">
+      <div class="card-title">属性分布（Q1）</div>
+      <div id="insights-persona"><div class="loading">読み込み中</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">受講者プロフィール一覧</div>
+      <div id="insights-table"><div class="loading">読み込み中</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">業務内容の生データ（Q3）</div>
+      <div id="insights-jobs"><div class="loading">読み込み中</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">AI QUEST への期待（Q4）</div>
+      <div id="insights-motivations"><div class="loading">読み込み中</div></div>
     </div>
   </div>
 
@@ -745,6 +770,98 @@ async function init(){
   renderLessonsTable();
   calcTotalXP();
   await loadStats();
+  await loadInsights();
+}
+
+// ── 一次情報インサイト ───────────────────────────────────────────────
+async function loadInsights(){
+  const PERSONA_LABEL = {
+    individual: '個人事業主・フリーランス',
+    employee: '会社員（一般社員）',
+    executive: '経営者・役員',
+    student: '学生',
+    jobseeker: '求職中・転職活動中',
+    other: 'その他'
+  };
+  const PERSONA_COLOR = {
+    individual: '#ff9966', employee: '#78c8ff', executive: '#ffd060',
+    student: '#aa88ff', jobseeker: '#44cc88', other: '#a8b8d0'
+  };
+
+  // プレイヤー＋プロフィールを結合
+  const { data: profiles } = await supa.from('aiq_player_profile').select('*');
+  const { data: players } = await supa.from('aiq_players').select('id,name,created_at,last_seen_at');
+
+  if(!profiles){
+    document.getElementById('insights-persona').innerHTML = '<div class="td-dim" style="padding:20px;text-align:center;">読み込み失敗</div>';
+    return;
+  }
+
+  // ─ 属性分布 ─
+  const counts = {};
+  profiles.forEach(p => { counts[p.persona_type] = (counts[p.persona_type] || 0) + 1; });
+  const total = profiles.length;
+  const personaHTML = Object.entries(PERSONA_LABEL).map(([key, label]) => {
+    const n = counts[key] || 0;
+    const pct = total ? Math.round(n / total * 100) : 0;
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="width:160px;font-size:12px;color:var(--text);">${label}</div>
+      <div style="flex:1;background:rgba(255,255,255,.04);height:18px;border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:${PERSONA_COLOR[key]};transition:width .3s;"></div>
+      </div>
+      <div style="width:80px;text-align:right;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--text);">${n} (${pct}%)</div>
+    </div>`;
+  }).join('');
+  document.getElementById('insights-persona').innerHTML = personaHTML + `<div style="margin-top:12px;color:var(--dim);font-size:11px;">合計 ${total} 人がプロフィールを登録 / 全 ${players?.length || 0} 人中</div>`;
+
+  // ─ プロフィール一覧 ─
+  const playerMap = {};
+  (players || []).forEach(p => { playerMap[p.id] = p; });
+  const tableHTML = `<div class="t-wrap"><table>
+    <thead><tr><th>名前</th><th>属性</th><th>会社</th><th>登録日</th></tr></thead>
+    <tbody>${profiles.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).map(p => {
+      const pl = playerMap[p.player_id];
+      const name = pl ? pl.name : '(削除済)';
+      const personaColor = PERSONA_COLOR[p.persona_type] || '#a8b8d0';
+      return `<tr>
+        <td style="color:var(--text);">${name}</td>
+        <td><span style="font-size:10px;padding:2px 7px;background:${personaColor}22;border:1px solid ${personaColor};color:${personaColor};border-radius:3px;">${PERSONA_LABEL[p.persona_type] || p.persona_type}</span></td>
+        <td class="td-dim">${p.company_name || '—'}</td>
+        <td class="td-dim">${new Date(p.created_at).toLocaleDateString('ja-JP')}</td>
+      </tr>`;
+    }).join('')}</tbody></table></div>`;
+  document.getElementById('insights-table').innerHTML = tableHTML || '<div class="td-dim" style="padding:20px;text-align:center;">まだプロフィール未登録</div>';
+
+  // ─ 業務内容 生データ ─
+  const jobs = profiles.filter(p => p.job_description).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  document.getElementById('insights-jobs').innerHTML = jobs.length
+    ? jobs.map(p => {
+        const pl = playerMap[p.player_id];
+        const name = pl ? pl.name : '(削除済)';
+        return `<div style="padding:14px 0;border-bottom:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--dim);margin-bottom:6px;">${name} <span style="opacity:.5;">|</span> ${p.company_name || '—'} <span style="opacity:.5;">|</span> ${PERSONA_LABEL[p.persona_type] || p.persona_type}</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.7;">${escapeHTML(p.job_description)}</div>
+        </div>`;
+      }).join('')
+    : '<div class="td-dim" style="padding:20px;text-align:center;">まだ業務内容の入力なし</div>';
+
+  // ─ 期待値 生データ ─
+  const motivations = profiles.filter(p => p.motivation).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  document.getElementById('insights-motivations').innerHTML = motivations.length
+    ? motivations.map(p => {
+        const pl = playerMap[p.player_id];
+        const name = pl ? pl.name : '(削除済)';
+        return `<div style="padding:14px 0;border-bottom:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--dim);margin-bottom:6px;">${name} <span style="opacity:.5;">|</span> ${PERSONA_LABEL[p.persona_type] || p.persona_type}</div>
+          <div style="font-size:13px;color:var(--cyan);line-height:1.7;">${escapeHTML(p.motivation)}</div>
+        </div>`;
+      }).join('')
+    : '<div class="td-dim" style="padding:20px;text-align:center;">まだ期待値の入力なし</div>';
+}
+
+function escapeHTML(s){
+  if(!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 function renderLessonsTable(){
