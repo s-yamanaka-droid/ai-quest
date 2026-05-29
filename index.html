@@ -12,6 +12,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- LESSON_DATA は別ファイルに外部化（初回ロード軽量化のため・2026-05-22）-->
 <script src="/lessons.js"></script>
+<!-- ジムバッジ（GYM BADGES）— SVG生成 -->
+<script src="/badges.js"></script>
 <style>
 /* ============================================================
    AI QUEST — DARK FANTASY PIXEL RPG
@@ -214,6 +216,38 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
   background:linear-gradient(135deg,var(--red2),var(--red));border:none;color:#fff;
   cursor:pointer;letter-spacing:.06em;box-shadow:0 3px 0 var(--red2);transition:all .15s;}
 .prep-start-btn:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--red2);}
+/* GYM BADGES 棚 */
+.badge-shelf{background:linear-gradient(160deg,rgba(15,20,36,.7),rgba(10,14,28,.7));border:1px solid var(--border);border-radius:8px;padding:24px 20px;margin-bottom:18px;}
+.badge-shelf-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:10px;justify-items:center;}
+.badge-cell{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:default;transition:transform .2s;}
+.badge-cell:hover{transform:translateY(-3px);}
+.badge-cell .bc-name{font-size:9px;color:var(--text);text-align:center;line-height:1.3;min-height:22px;}
+.badge-cell.lk .bc-name{color:var(--vdark);}
+.badge-cell .bc-st{font-size:8px;color:var(--dark);font-family:'Press Start 2P',monospace;}
+.badge-count{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--gold2);text-shadow:0 0 12px rgba(255,200,50,.4);}
+@media(max-width:760px){.badge-shelf-grid{grid-template-columns:repeat(5,1fr);}}
+/* 従えAI ツリー */
+.ctrl-tree{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.ctrl-tier{display:flex;gap:14px;align-items:flex-start;padding:11px 16px;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,.02);transition:all .25s;opacity:.45;}
+.ctrl-tier.unlocked{opacity:1;border-color:var(--cyan);background:rgba(120,200,255,.07);box-shadow:0 0 16px rgba(120,200,255,.12);}
+.ctrl-tier.current{border-color:var(--gold2);background:rgba(255,200,50,.08);box-shadow:0 0 20px rgba(255,200,50,.2);}
+.ct-badge{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--gold2);min-width:70px;padding-top:2px;}
+.ct-lock{font-size:14px;min-width:20px;}
+.ct-ai{font-size:13px;font-weight:700;color:var(--text);}
+.ct-desc{font-size:11px;color:var(--dim);line-height:1.6;margin-top:3px;}
+.ct-now{font-size:8px;color:var(--gold2);font-family:'Press Start 2P',monospace;margin-left:8px;}
+/* バッジ獲得演出 */
+.badge-get-modal{position:fixed;inset:0;background:rgba(5,8,16,.95);z-index:9999;display:none;align-items:center;justify-content:center;}
+.badge-get-modal.show{display:flex;animation:fadeIn .3s ease;}
+.badge-get-box{text-align:center;}
+.badge-get-label{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--gold2);letter-spacing:.1em;margin-bottom:24px;text-shadow:0 0 24px rgba(255,200,50,.6);animation:bgpulse 1s ease infinite;}
+@keyframes bgpulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+.badge-get-svg{animation:bgspin 1.2s cubic-bezier(.2,.8,.3,1);}
+@keyframes bgspin{0%{transform:scale(0) rotate(-180deg);opacity:0;}60%{transform:scale(1.2) rotate(10deg);opacity:1;}100%{transform:scale(1) rotate(0);}}
+.badge-get-name{font-size:18px;font-weight:700;color:var(--text);margin-top:20px;}
+.badge-get-ai{font-size:12px;color:var(--cyan);margin-top:12px;line-height:1.6;}
+.badge-get-btn{margin-top:28px;padding:13px 32px;background:linear-gradient(135deg,var(--gold2),#d4a017);border:none;color:#1a1a1a;font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;letter-spacing:.06em;box-shadow:0 4px 0 #a87c00;}
+.badge-get-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 #a87c00;}
 /* STAGE MAP */
 .smap{display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:8px;}
 .snode{background:linear-gradient(135deg,var(--card),rgba(11,15,26,.9));
@@ -759,6 +793,17 @@ a:focus-visible,
   </div>
 </div>
 
+<!-- GYM BADGE GET MODAL -->
+<div class="badge-get-modal" id="badgeGetModal">
+  <div class="badge-get-box">
+    <div class="badge-get-label">★ GYM BADGE GET! ★</div>
+    <div class="badge-get-svg" id="badgeGetSvg"></div>
+    <div class="badge-get-name" id="badgeGetName"></div>
+    <div class="badge-get-ai" id="badgeGetAi"></div>
+    <button class="badge-get-btn" onclick="closeBadgeGet()">▶ 受け取る</button>
+  </div>
+</div>
+
 <!-- CLEAR CELEBRATION MODAL -->
 <div class="clear-modal" id="clearModal">
   <div class="clear-box">
@@ -1036,6 +1081,22 @@ a:focus-visible,
   </div><!-- /prep-body -->
 </div>
 
+<!-- ① GYM BADGES 棚 -->
+<div class="sec">
+  <div class="sech"><div class="secht">🏅 GYM BADGES — <span id="badgeCount" class="badge-count">0</span> / 10</div></div>
+  <p class="secsub">各STAGEをクリアするとジムバッジを獲得。バッジを集めるほど「従えられるAI」が解放される。<br>STAGEが進むほどバッジはリッチに——ブロンズ → シルバー → ゴールド → そして最終のレジェンド。</p>
+  <div class="badge-shelf">
+    <div class="badge-shelf-grid" id="badgeShelf"></div>
+  </div>
+</div>
+
+<!-- ① AI CONTROL — 従えられるAI -->
+<div class="sec">
+  <div class="sech"><div class="secht">⚔ AI CONTROL — 従えられるAI</div></div>
+  <p class="secsub">ポケモンのジムバッジと同じ。基礎レベルが上がらないと、強いAIは言うことを聞いてくれない。<br>バッジを集めて、より高度なAIを従えられる人材へ。</p>
+  <div class="ctrl-tree" id="ctrlTree"></div>
+</div>
+
 <!-- ① STAGE MAP -->
 <div class="sec">
   <div class="sech"><div class="secht">▶ STAGE MAP — 全50ダンジョン</div></div>
@@ -1240,6 +1301,11 @@ const LVS=['','AIの基礎を理解','プロンプト習得','Claudeで実務','
   });
 })();
 
+// GYM BADGES 棚・従えAIツリーの初期描画（未ログインでも全シルエット表示）
+(function(){
+  if(typeof renderBadgeShelf==='function'){ renderBadgeShelf(); renderControlTree(); }
+})();
+
 function switchStage(n){
   curStage=n;
   const s=STAGES[n-1];
@@ -1398,10 +1464,29 @@ function showClearModal(ld){
   if(next){ btn.textContent='▶ LESSON '+(ld.lv+1)+'へ'; btn.onclick=()=>{closeClearModal();openLesson(next.lv);}; }
   else{ btn.textContent='🏆 ステージクリア！'; btn.onclick=closeClearModal; }
   document.getElementById('clearModal').classList.add('show');
+
+  // STAGE 最終LV（5,10,...50）かつ STAGE 全クリアなら、バッジ獲得を予約
+  _pendingBadgeStage = null;
+  if(ld.lv % 5 === 0){
+    const stage = ld.lv / 5;
+    const lessons = LESSON_DATA.filter(l=>l.stage===stage);
+    if(lessons.length>0 && lessons.every(l=>l.cleared)){
+      _pendingBadgeStage = stage;
+    }
+  }
 }
 
+let _pendingBadgeStage = null;
 function closeClearModal(){
   document.getElementById('clearModal').classList.remove('show');
+  // 棚と従えツリーを更新
+  if(typeof renderBadgeShelf==='function'){ renderBadgeShelf(); renderControlTree(); }
+  // バッジ獲得演出（予約があれば）
+  if(_pendingBadgeStage){
+    const stage = _pendingBadgeStage;
+    _pendingBadgeStage = null;
+    setTimeout(()=>showBadgeGet(stage), 350);
+  }
 }
 
 // QUIZ
@@ -1691,6 +1776,8 @@ async function loadProgress(){
     const allCleared = hasData && LESSON_DATA.filter(l=>l.stage===i+1).every(l=>l.cleared);
     if(allCleared){ node.querySelector('.sn-s').textContent='✓ DONE'; node.querySelector('.sn-s').style.color='var(--green2)'; }
   });
+  renderBadgeShelf();
+  renderControlTree();
 }
 
 function loadMasterMode(){
@@ -1717,6 +1804,76 @@ function loadMasterMode(){
   });
   // ステージ10の背景にする
   switchStage(10);
+  renderBadgeShelf();
+  renderControlTree();
+}
+
+// ── GYM BADGES ────────────────────────────────────────────────
+// 各STAGEの全レッスンがクリア済みか判定して、獲得STAGE配列を返す
+function getEarnedStages(){
+  const earned = [];
+  for(let s=1;s<=10;s++){
+    const lessons = LESSON_DATA.filter(l=>l.stage===s);
+    if(lessons.length>0 && lessons.every(l=>l.cleared)) earned.push(s);
+  }
+  return earned;
+}
+
+function renderBadgeShelf(){
+  const shelf = document.getElementById('badgeShelf');
+  if(!shelf || typeof renderBadge !== 'function') return;
+  const earned = getEarnedStages();
+  const cntEl = document.getElementById('badgeCount');
+  if(cntEl) cntEl.textContent = earned.length;
+  let html = '';
+  for(let s=1;s<=10;s++){
+    const isEarned = earned.includes(s);
+    const b = window.AIQ_BADGES[s];
+    html += `<div class="badge-cell ${isEarned?'':'lk'}">
+      ${renderBadge(s, isEarned, 72)}
+      <div class="bc-name">${isEarned ? b.name : '？？？'}</div>
+      <div class="bc-st">S${s}</div>
+    </div>`;
+  }
+  shelf.innerHTML = html;
+}
+
+function renderControlTree(){
+  const tree = document.getElementById('ctrlTree');
+  if(!tree || !window.AIQ_CONTROL_TIERS) return;
+  const count = getEarnedStages().length;
+  const current = getControlLevel(count);
+  let html = '';
+  window.AIQ_CONTROL_TIERS.forEach(t => {
+    const unlocked = count >= t.min;
+    const isCurrent = (t === current);
+    html += `<div class="ctrl-tier ${unlocked?'unlocked':''} ${isCurrent?'current':''}">
+      <div class="ct-badge">バッジ${t.min}+</div>
+      <div class="ct-lock">${unlocked?'⚔':'🔒'}</div>
+      <div style="flex:1;">
+        <div class="ct-ai">${t.ai}${isCurrent?'<span class="ct-now">◀ いまここ</span>':''}</div>
+        <div class="ct-desc">${t.desc}</div>
+      </div>
+    </div>`;
+  });
+  tree.innerHTML = html;
+}
+
+// バッジ獲得演出
+let _badgeGetQueue = [];
+function showBadgeGet(stage){
+  const b = window.AIQ_BADGES[stage];
+  if(!b) return;
+  document.getElementById('badgeGetSvg').innerHTML = renderBadge(stage, true, 140);
+  document.getElementById('badgeGetName').textContent = b.name + ' を獲得！';
+  const count = getEarnedStages().length;
+  const ctrl = getControlLevel(count);
+  document.getElementById('badgeGetAi').innerHTML = `🏅 バッジ ${count}/10 ｜ いま従えられるAI：<strong>${ctrl.ai}</strong>`;
+  document.getElementById('badgeGetModal').classList.add('show');
+  spawnPx(28);
+}
+function closeBadgeGet(){
+  document.getElementById('badgeGetModal').classList.remove('show');
 }
 
 async function saveProgress(lvNum, xpVal){
