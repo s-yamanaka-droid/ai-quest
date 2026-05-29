@@ -140,7 +140,7 @@ window.LESSON_DATA = [
       ng:'❌ 不正解。Claudeは長文・複雑な指示・ビジネス文書において最も精度が高く、LP制作のコピーライティングに最適です。'
     },
     ch:{ title:'同じ質問をClaude・ChatGPT・Geminiの3つで試して比較する',
-      body:'以下の質問文を、Claude・ChatGPT・Geminiの3つに送って回答を比較しよう。\n\n【質問文】\n「Trepro株式会社の新入社員です。採用担当として初日から使えるAI活用のコツを3点教えてください。」\n\n→ 3つの回答を比較して「どれが一番仕事で使えると思ったか」を下のメモ欄に書いておこう。' }
+      body:'以下の質問文を、Claude・ChatGPT・Geminiの3つに送って回答を比較しよう。\n\n【質問文】\n「ある採用支援企業の新入社員です。採用担当として初日から使えるAI活用のコツを3点教えてください。」\n\n→ 3つの回答を比較して「どれが一番仕事で使えると思ったか」を下のメモ欄に書いておこう。' }
   },
 
   {
@@ -198,7 +198,7 @@ window.LESSON_DATA = [
 【状況】
 送り先：初めて連絡する取引先の人事担当者
 目的：採用支援サービスの紹介アポを取る
-自分の立場：Trepro株式会社の営業担当
+自分の立場：ある採用支援企業の営業担当
 
 【条件】
 ・丁寧だが堅すぎないトーン
@@ -240,7 +240,7 @@ window.LESSON_DATA = [
 <span class="c2">※ 役割（Role）</span>
 
 <span class="c2">【背景 / Context】</span>
-<span class="k">サービス名：</span>Trepro 採用支援サービス
+<span class="k">サービス名：</span>採用支援サービス（例）
 <span class="k">ターゲット：</span>採用に課題を抱える中小企業の人事担当者
 <span class="k">解決する課題：</span>求人票を出しても応募が来ない
 <span class="k">競合との違い：</span>HR業界特化の支援チームが伴走する
@@ -357,7 +357,7 @@ STEP 4：改善後の求人票を書く
       ng:'❌ 不正解。Few-shotが最も効果的なのは「特定の文体・トーン・形式で書いてほしいとき」です。例を見せることでAIの出力の方向性が揃います。'
     },
     ch:{ title:'自社のトンマナに合わせたFew-shotプロンプトを作る',
-      body:'Trepro・自社のブランドトーン（例：プロフェッショナル・親しみやすい・前向き）に合わせた文体のサンプルを2〜3個用意して、Few-shotプロンプトを作ってみよう。\n\n【使えるテンプレート】\n以下の例を参考に、[依頼内容]を書いてください。\n\n【例1】[サンプル文章1]\n【例2】[サンプル文章2]\n\n上記の例と同じトーン・文体で[依頼内容]を作成してください。\n\n→ 完成したプロンプトをプロンプト集に保存しておこう。今後の業務で再利用できる。' }
+      body:'自社のブランドトーン（例：プロフェッショナル・親しみやすい・前向き）に合わせた文体のサンプルを2〜3個用意して、Few-shotプロンプトを作ってみよう。\n\n【使えるテンプレート】\n以下の例を参考に、[依頼内容]を書いてください。\n\n【例1】[サンプル文章1]\n【例2】[サンプル文章2]\n\n上記の例と同じトーン・文体で[依頼内容]を作成してください。\n\n→ 完成したプロンプトをプロンプト集に保存しておこう。今後の業務で再利用できる。' }
   },
 
   {
@@ -419,7 +419,7 @@ STEP 4：改善後の求人票を書く
 <pre>あなたはビジネスメールのプロです。
 【相手】初めて連絡する企業の採用担当者
 【目的】採用支援サービスの紹介アポを取る
-【自社】Trepro株式会社 採用支援事業部
+【自社】ある採用支援企業 採用支援事業部
 【条件】丁寧だが堅すぎない。本文150文字以内。件名も出力。</pre></div>
         <p class="lbtxt" style="margin-top:12px;"><strong>② 議事録→報告書</strong></p>
         <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 報告書</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
@@ -430,7 +430,7 @@ STEP 4：改善後の求人票を書く
         <p class="lbtxt" style="margin-top:12px;"><strong>③ 提案書ひな形生成</strong></p>
         <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 提案書</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>あなたはBtoB営業の提案書ライターです。
-【サービス】Trepro採用支援（HR特化の採用代行）
+【サービス】採用支援サービス（例）（HR特化の採用代行）
 【課題】応募数が少なく採用に3ヶ月以上かかっている
 【強み】HR業界特化チームが伴走。費用は成果報酬型
 提案書の構成と各セクションの文章を出力してください。</pre></div>` }
@@ -528,7 +528,7 @@ STEP 4：改善後の求人票を書く
 4. 解決策（各80文字、3点）
 5. 選ばれる理由（3点・数字を入れる）
 6. CTAボタン文言（2パターン）</pre></div>
-        <div class="warn"><div class="warn-l">▶ Trepro向けカスタマイズ</div><div class="warn-t">サービス名に「Trepro採用支援」「Solve」「Lakkan」を入れて試してみよう。実際の業務に使えるコピーが出てくる。</div></div>` }
+        <div class="warn"><div class="warn-l">▶ 自社向けカスタマイズ</div><div class="warn-t">サービス名に自社の商品・サービス名を入れて試してみよう。実際の業務に使えるコピーが出てくる。</div></div>` }
     ],
     quiz:{
       q:'LPのヒーローコピーを作る際、Claudeへの指示で最も重要な要素はどれ？',
@@ -537,8 +537,8 @@ STEP 4：改善後の求人票を書く
       ok:'✅ 正解！ ターゲットの課題とサービスの強みを伝えることで、Claudeが「誰の・どんな問題を・どう解決するか」を理解して刺さるコピーを生成できます。',
       ng:'❌ 不正解。ヒーローコピーの精度を上げる最重要要素は「ターゲットが抱える課題」と「サービスがどう解決するか」の情報です。'
     },
-    ch:{ title:'Trepro or Lakkanのサービスを使ってLP全文生成プロンプトを試す',
-      body:'上のプロンプトテンプレートを使って、Trepro採用支援またはLakkanのLP全文をClaudeに生成させてみよう。\n\n【入力情報の例（Trepro採用支援）】\nサービス名：Trepro採用支援\nターゲット：採用に課題を抱える中小企業の経営者・人事担当者\n解決する課題：求人を出しても応募が来ない・採用に時間がかかりすぎる\n強み：HR業界特化チームが完全伴走・成果報酬型で初期費用ゼロ\n実績：導入後平均3ヶ月で採用目標達成\n\n→ 生成されたコピーを読んで「使えそうか」「どこを直せばいいか」を考えてみよう。' }
+    ch:{ title:'自社のサービスを使ってLP全文生成プロンプトを試す',
+      body:'上のプロンプトテンプレートを使って、自社のサービスのLP全文をClaudeに生成させてみよう。\n\n【入力情報の例（採用支援サービス）】\nサービス名：採用支援サービス（例）\nターゲット：採用に課題を抱える中小企業の経営者・人事担当者\n解決する課題：求人を出しても応募が来ない・採用に時間がかかりすぎる\n強み：HR業界特化チームが完全伴走・成果報酬型で初期費用ゼロ\n実績：導入後平均3ヶ月で採用目標達成\n\n→ 生成されたコピーを読んで「使えそうか」「どこを直せばいいか」を考えてみよう。' }
   },
 
   {
@@ -559,9 +559,9 @@ STEP 4：改善後の求人票を書く
       { icon:'⚡', title:'業務別プロジェクト設計 — 作り方と活用例', time:'10 min', html:`
         <div class="stepbox"><div class="step-title">▶ プロジェクト作成手順</div>
           <div class="step"><div class="step-n">1</div><div class="step-body"><strong>claude.aiの左サイドバー「Projects」→「New project」</strong><br>名前は「採用支援業務」「LP制作」など業務単位で付ける</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-body"><strong>「Custom instructions」にシステムプロンプトを設定</strong><br>例：「あなたはTrepro採用支援の担当アシスタントです。回答は日本語で簡潔に。」</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-body"><strong>「Custom instructions」にシステムプロンプトを設定</strong><br>例：「あなたは採用支援サービスの担当アシスタントです。回答は日本語で簡潔に。」</div></div>
           <div class="step"><div class="step-n">3</div><div class="step-body"><strong>ファイルをアップロードして参照させる</strong><br>サービス資料・求人票テンプレ・ブランドガイドをPDF/テキストで渡す</div></div>
-          <div class="step"><div class="step-n">4</div><div class="step-body"><strong>プロジェクト内でチャットを開始する</strong><br>以降は毎回「Trepro採用支援の担当者として」の文脈で動いてくれる</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-body"><strong>プロジェクト内でチャットを開始する</strong><br>以降は毎回「採用支援サービスの担当者として」の文脈で動いてくれる</div></div>
         </div>
         <div class="warn"><div class="warn-l">▶ 活用例</div><div class="warn-t">
         「採用業務」プロジェクト → 求人票・面接質問・フィードバック生成<br>
@@ -576,7 +576,7 @@ STEP 4：改善後の求人票を書く
       ng:'❌ 不正解。プロジェクト機能の最大メリットは「毎回の背景説明が不要になること＝文脈を記憶させること」です。'
     },
     ch:{ title:'claude.aiに「AI QUEST学習」プロジェクトを作って設定する',
-      body:'① claude.aiを開いて左サイドバーの「Projects」から「New project」を作成\n② 名前：「AI QUEST学習」\n③ Custom instructionsに以下を設定：\n「私はTrepro株式会社の新入社員でAI QUESTというカリキュラムを学習中です。AIの基礎からLP制作・DXまでを学んでいます。質問に対して初心者向けに丁寧に、かつ具体的な操作手順も含めて答えてください。」\n④ このプロジェクト内で「今日学んだことを3点教えて」と送ってみる\n\n→ 次からはこのプロジェクト内で質問するだけで、毎回文脈を引き継いだ回答が返ってくる。' }
+      body:'① claude.aiを開いて左サイドバーの「Projects」から「New project」を作成\n② 名前：「AI QUEST学習」\n③ Custom instructionsに以下を設定：\n「私はAI QUESTというカリキュラムを学習中の新入社員です。AIの基礎からLP制作・DXまでを学んでいます。質問に対して初心者向けに丁寧に、かつ具体的な操作手順も含めて答えてください。」\n④ このプロジェクト内で「今日学んだことを3点教えて」と送ってみる\n\n→ 次からはこのプロジェクト内で質問するだけで、毎回文脈を引き継いだ回答が返ってくる。' }
   },
 
   {
@@ -618,7 +618,7 @@ STEP 4：改善後の求人票を書く
 5. 期待効果（工数削減・コスト削減を数字で）
 6. 投資対効果（ROI概算）
 7. 次のアクション（3点）</pre></div>
-        <div class="warn"><div class="warn-l">▶ STAGE 3 BOSS CHALLENGE</div><div class="warn-t">このレッスンがSTAGE 3のボス戦。実際に社内の誰かの業務をDX化する提案書を1枚Claudeで作ってみよう。完成したらAllenに見せること。</div></div>` }
+        <div class="warn"><div class="warn-l">▶ STAGE 3 BOSS CHALLENGE</div><div class="warn-t">このレッスンがSTAGE 3のボス戦。実際に社内の誰かの業務をDX化する提案書を1枚Claudeで作ってみよう。完成したらメンターに見せること。</div></div>` }
     ],
     quiz:{
       q:'DX提案書で「相手が判断しやすい」構成として正しいのはどれ？',
@@ -628,7 +628,7 @@ STEP 4：改善後の求人票を書く
       ng:'❌ 不正解。「現状課題→リスク→解決策→期待効果→次のアクション」の順が相手に判断してもらいやすい構成です。相手の思考の流れに沿って設計することが重要です。'
     },
     ch:{ title:'社内の誰かの業務をDX化するミニ提案書をClaudeで作る',
-      body:'Trepro or Lakkanの社内で「まだアナログな業務」を1つ見つけて、そのDX化提案書をClaudeに作らせよう。\n\n【ヒント：よくあるアナログ業務】\n・議事録を毎回Wordで手書き\n・求人票をゼロから毎回書いている\n・報告書をメールで送ってExcelで管理\n・スケジュール調整を手動でSlack\n\n提案書が完成したら社内の誰かに読んでもらうか、Allenに共有しよう。\n「これ、ClaudeとLESSON 15で作りました」と言えたら本物のスキルだ。' }
+      body:'自社の中で「まだアナログな業務」を1つ見つけて、そのDX化提案書をClaudeに作らせよう。\n\n【ヒント：よくあるアナログ業務】\n・議事録を毎回Wordで手書き\n・求人票をゼロから毎回書いている\n・報告書をメールで送ってExcelで管理\n・スケジュール調整を手動でSlack\n\n提案書が完成したら社内の誰かに読んでもらうか、メンターに共有しよう。\n「これ、ClaudeとLESSON 15で作りました」と言えたら本物のスキルだ。' }
   },
 
   // ★ STAGE 4 DATA — LV 16〜20（実装済み） ──────────────────────────────
@@ -652,7 +652,7 @@ STEP 4：改善後の求人票を書く
           <div class="step"><div class="step-n">3</div><div class="step-body"><strong>「/」コマンドでブロックを追加</strong><br>/table → テーブル / /todo → チェックリスト / /h1 → 大見出し</div></div>
           <div class="step"><div class="step-n">4</div><div class="step-body"><strong>右上「Share」→「Invite」でチームメンバーを招待</strong><br>メールアドレスを入力して権限（Edit/View）を設定</div></div>
         </div>
-        <div class="warn"><div class="warn-l">▶ Trepro Notion Hub</div><div class="warn-t">社内NotionのURLは入社時に共有されます。まずは自分の個人ページを作ってNotionに慣れることから始めよう。</div></div>` }
+        <div class="warn"><div class="warn-l">▶ 社内 Notion Hub</div><div class="warn-t">社内NotionのURLは入社時に共有されます。まずは自分の個人ページを作ってNotionに慣れることから始めよう。</div></div>` }
     ],
     quiz:{
       q:'Notionが他のツール（メモ帳・Trello・Google Drive）と最も異なる点は？',
@@ -696,7 +696,7 @@ STEP 4：改善後の求人票を書く
       ng:'❌ 不正解。「ビュー」機能が正解です。同じデータベースに複数のビューを追加することで、テーブル・カンバン・カレンダーなど用途に合わせた表示ができます。'
     },
     ch:{ title:'Notionに簡単な「タスク管理DB」を作ってみる',
-      body:'① Notionで新規ページを作成\n② /database → Table を挿入\n③ 以下のプロパティを追加：\n　・タスク名（Title）\n　・ステータス（Select：未着手 / 進行中 / 完了）\n　・期限（Date）\n　・担当者（Text）\n④ タスクを5件入力してみる\n⑤ 「+ Add view」からBoard表示に切り替えてカンバンで確認\n\n→ これがTreproで実際に使っているタスク管理の基本形だ。' }
+      body:'① Notionで新規ページを作成\n② /database → Table を挿入\n③ 以下のプロパティを追加：\n　・タスク名（Title）\n　・ステータス（Select：未着手 / 進行中 / 完了）\n　・期限（Date）\n　・担当者（Text）\n④ タスクを5件入力してみる\n⑤ 「+ Add view」からBoard表示に切り替えてカンバンで確認\n\n→ これが実務で使われているタスク管理の基本形だ。' }
   },
 
   {
@@ -718,7 +718,7 @@ STEP 4：改善後の求人票を書く
         <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — Wiki記事</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>以下のテーマについてNotionの社内Wiki記事を作成してください。
 テーマ：[記事のテーマ]
-読み手：Trepro/Lakkanの新入社員
+読み手：自社の新入社員
 構成：
 # タイトル
 ## 概要（3行以内）
@@ -742,7 +742,7 @@ Notionのデータベースに貼れる形式で出力してください。</pre
       ng:'❌ 不正解。最もシンプルで効果的なのは「Claudeでコンテンツを生成してNotionにコピペする」方法です。API連携は不要です。'
     },
     ch:{ title:'Claude × Notionで社内ルールのWikiページを1本作る',
-      body:'Trepro or Lakkanの「新入社員が最初に知るべきルール」を1つ選んで、WikiページをClaudeで生成してNotionに貼ろう。\n\n【例：テーマ候補】\n・Slackの使い方ルール\n・会議の進め方\n・タスク管理の方法\n・顧客対応のマナー\n\n① 上のWiki記事プロンプトにテーマを入れてClaudeで生成\n② 生成された内容をコピー\n③ Notionの「AI QUEST 学習ノート」内に新しいページを作って貼り付け\n\n→ これが「AIで会社の知識を体系化する」第一歩だ。' }
+      body:'自社の「新入社員が最初に知るべきルール」を1つ選んで、WikiページをClaudeで生成してNotionに貼ろう。\n\n【例：テーマ候補】\n・Slackの使い方ルール\n・会議の進め方\n・タスク管理の方法\n・顧客対応のマナー\n\n① 上のWiki記事プロンプトにテーマを入れてClaudeで生成\n② 生成された内容をコピー\n③ Notionの「AI QUEST 学習ノート」内に新しいページを作って貼り付け\n\n→ これが「AIで会社の知識を体系化する」第一歩だ。' }
   },
 
   {
@@ -794,7 +794,7 @@ Notionのデータベースに貼れる形式で出力してください。</pre
       ng:'❌ 不正解。このフローでのClaudeの役割は「走り書きメモを構造化された議事録フォーマットに変換する」ことです。Notionへの書き込みは人間がコピペします。'
     },
     ch:{ title:'直近の会議の走り書きを議事録に変換してNotionに貼る',
-      body:'① 最近出席した会議のメモ（どんな形でもOK）を用意\n② 上の変換プロンプトにメモを貼ってClaudeに送信\n③ 出力をコピー\n④ Notionの議事録DBに新しい行を追加してページを開き貼り付ける\n\n【走り書きがない場合の練習用メモ】\n・週次MTG、参加：山中・まな・Claudeくん\n・今週の進捗：AI QUEST STAGE 3完成、Vercelデプロイ済み\n・課題：STAGE 4〜5まだ未完成\n・来週まで：STAGE 4を完成させる、担当：まな\n\nこのメモをそのまま使って試してみよう。' }
+      body:'① 最近出席した会議のメモ（どんな形でもOK）を用意\n② 上の変換プロンプトにメモを貼ってClaudeに送信\n③ 出力をコピー\n④ Notionの議事録DBに新しい行を追加してページを開き貼り付ける\n\n【走り書きがない場合の練習用メモ】\n・週次MTG、参加：リーダー・まな・Claudeくん\n・今週の進捗：AI QUEST STAGE 3完成、Vercelデプロイ済み\n・課題：STAGE 4〜5まだ未完成\n・来週まで：STAGE 4を完成させる、担当：まな\n\nこのメモをそのまま使って試してみよう。' }
   },
 
   {
@@ -805,7 +805,7 @@ Notionのデータベースに貼れる形式で出力してください。</pre
       { icon:'📚', title:'プロジェクト管理の設計思想', time:'10 min', html:`
         <p class="lbtxt">「タスクをNotionに入れる」だけでは管理とは言わない。<br>
         本当の管理とは<strong>「誰が・何を・いつまでに・どの状態か」が一目でわかる状態を作ること</strong>だ。<br><br>
-        <strong>Trepro流プロジェクト管理の4層構造</strong><br>
+        <strong>実務で使えるプロジェクト管理の4層構造</strong><br>
         ① プロジェクトDB（案件・プロジェクト単位）<br>
         ② タスクDB（プロジェクトに紐づくタスク）<br>
         ③ 担当者ビュー（自分のタスクだけ表示）<br>
@@ -828,7 +828,7 @@ Notionのデータベースに貼れる形式で出力してください。</pre
 ・推奨ビューの種類と設定方法
 ・週次レビューの進め方（所要時間・確認項目）
 ・新メンバーが使い始めるための手順（3ステップ）</pre></div>
-        <div class="warn"><div class="warn-l">▶ STAGE 4 BOSS CHALLENGE</div><div class="warn-t">Trepro or Lakkanの実際のプロジェクト管理をNotionで設計してClaudeに作らせよう。完成したらチームに共有すること。</div></div>` }
+        <div class="warn"><div class="warn-l">▶ STAGE 4 BOSS CHALLENGE</div><div class="warn-t">自社の実際のプロジェクト管理をNotionで設計してClaudeに作らせよう。完成したらチームに共有すること。</div></div>` }
     ],
     quiz:{
       q:'プロジェクト管理で「本当に管理できている状態」の定義として正しいのはどれ？',
@@ -837,8 +837,8 @@ Notionのデータベースに貼れる形式で出力してください。</pre
       ok:'✅ 正解！ プロジェクト管理の本質は「誰が・何を・いつまでに・どの状態か」が一目でわかる状態を作ること。ツールや報告書の量は関係ありません。',
       ng:'❌ 不正解。「誰が・何を・いつまでに・どの状態かが一目でわかる」状態こそが真の管理です。ツールの種類や報告頻度ではなく、可視性が重要です。'
     },
-    ch:{ title:'Claudeに「Trepro向けプロジェクト管理システム」を設計させてNotionに実装する',
-      body:'① 上のプロンプトにTreproの情報を入れてClaudeに送る\n② 出力されたDB構造をもとにNotionでデータベースを2つ作る\n　・プロジェクトDB（案件管理）\n　・タスクDB（プロジェクトに紐づけ）\n③ RelationでプロジェクトDBとタスクDBを紐づける\n④ 自分のタスクだけフィルタリングするビューを作る\n\n→ 完成したらAllenに「Notion設計しました」とSlackで報告しよう。' }
+    ch:{ title:'Claudeに「自社向けプロジェクト管理システム」を設計させてNotionに実装する',
+      body:'① 上のプロンプトに自社の情報を入れてClaudeに送る\n② 出力されたDB構造をもとにNotionでデータベースを2つ作る\n　・プロジェクトDB（案件管理）\n　・タスクDB（プロジェクトに紐づけ）\n③ RelationでプロジェクトDBとタスクDBを紐づける\n④ 自分のタスクだけフィルタリングするビューを作る\n\n→ 完成したらメンターに「Notion設計しました」とSlackで報告しよう。' }
   },
 
   // ★ STAGE 5 DATA — LV 21〜25（実装済み） ──────────────────────────────
@@ -1010,7 +1010,7 @@ SlackのWebhook URLに以下の形式で通知を送る。
 
 SlackのWebhook URL：[YOUR_WEBHOOK_URL]
 スプレッドシートのシート名：「フォーム回答」</pre></div>
-        <div class="warn"><div class="warn-l">▶ Slack Webhook URLの取得方法</div><div class="warn-t">Slack → 管理者設定 → Incoming Webhooks → Add New Webhook でURLが発行される。Allenに聞けば設定してもらえる。</div></div>` }
+        <div class="warn"><div class="warn-l">▶ Slack Webhook URLの取得方法</div><div class="warn-t">Slack → 管理者設定 → Incoming Webhooks → Add New Webhook でURLが発行される。メンターに聞けば設定してもらえる。</div></div>` }
     ],
     quiz:{
       q:'「Googleフォームの回答が届いたら自動でSlackに通知」を実現するために必要なものは？',
@@ -1061,7 +1061,7 @@ SlackのWebhook URL：[YOUR_WEBHOOK_URL]
 
 読み手：経営者・マネージャー
 トーン：簡潔・数字ベース・具体的</pre></div>
-        <div class="warn"><div class="warn-l">▶ STAGE 5 BOSS CHALLENGE</div><div class="warn-t">実際の業務データ（採用・営業・SNS運用など）を使って月次レポートを1本Claudeで作り、Allenに提出すること。これがSTAGE 5クリアの証明だ。</div></div>` }
+        <div class="warn"><div class="warn-l">▶ STAGE 5 BOSS CHALLENGE</div><div class="warn-t">実際の業務データ（採用・営業・SNS運用など）を使って月次レポートを1本Claudeで作り、メンターに提出すること。これがSTAGE 5クリアの証明だ。</div></div>` }
     ],
     quiz:{
       q:'月次レポートをClaudeで作る場合、最も重要な準備はどれ？',
@@ -1070,20 +1070,20 @@ SlackのWebhook URL：[YOUR_WEBHOOK_URL]
       ok:'✅ 正解！ データを整理してClaudeに渡せる状態にすることが最重要です。数値さえあれば、分析・コメント・提案まで全部Claudeが書いてくれます。',
       ng:'❌ 不正解。最重要なのは「数値データを整理してClaudeに渡せる状態にすること」です。デザインやフォーマットはClaudeが対応します。'
     },
-    ch:{ title:'実際の業務データで月次レポートを1本Claudeで作りAllenに提出する',
-      body:'【STAGE 5 ボス戦】\n\n実際に使える月次レポートを1本完成させよう。\n\n① 自分が担当している業務の先月・今月のデータを集める\n　（採用数・営業件数・SNS数値・問い合わせ数など何でもOK）\n② 上のプロンプトにデータを入れてClaudeに送信\n③ 出力を読んで必要な修正を加える\n④ 完成したレポートをAllenにSlackで送る\n\nこれができたなら「データ × AI」の実務スキルは本物だ。\nSTAGE 6（Slack×AI）でさらに加速しよう。' }
+    ch:{ title:'実際の業務データで月次レポートを1本Claudeで作りメンターに提出する',
+      body:'【STAGE 5 ボス戦】\n\n実際に使える月次レポートを1本完成させよう。\n\n① 自分が担当している業務の先月・今月のデータを集める\n　（採用数・営業件数・SNS数値・問い合わせ数など何でもOK）\n② 上のプロンプトにデータを入れてClaudeに送信\n③ 出力を読んで必要な修正を加える\n④ 完成したレポートをメンターにSlackで送る\n\nこれができたなら「データ × AI」の実務スキルは本物だ。\nSTAGE 6（Slack×AI）でさらに加速しよう。' }
   },
 
 
   // ★ STAGE 6 DATA — Claude Code 入門（LV26〜30）
   { stage:6, lv:26, num:'LESSON 26', title:'Claude Code とは何か — ブラウザ版との違い、10倍速の正体', time:'25 min', diff:'★★☆☆☆', xpVal:100,
     blocks:[
-      { icon:'📚', title:'ブラウザ版 Claude と Claude Code の決定的な違い', time:'10 min', html:`<div class="warn" style="margin-bottom:14px;"><div class="warn-l">▶ STAGE 5 までクリアした受講者へ</div><div class="warn-t">ここから扱う領域が変わります。STAGE 1〜5 は「ブラウザの中で Claude と話す」スキル。STAGE 6 からは「PC のターミナル（黒い画面）を使って Claude を動かす」世界に入ります。<br><br>「ターミナル？コマンド？怖い…」と感じるのは普通です。<strong>大丈夫、ここからは AI が代わりにコマンドを打ちます</strong>。あなたは日本語で頼むだけ。詰まったらすぐ Allen に Slack で聞いてください。<br><br>① まず Node.js が PC に入っているか確認 → ② Claude Code をインストール → ③ ターミナルで <code>claude</code> と打って起動。ここまで来れば STAGE 6 後半は全部「AI に頼むだけ」になります。</div></div>
+      { icon:'📚', title:'ブラウザ版 Claude と Claude Code の決定的な違い', time:'10 min', html:`<div class="warn" style="margin-bottom:14px;"><div class="warn-l">▶ STAGE 5 までクリアした受講者へ</div><div class="warn-t">ここから扱う領域が変わります。STAGE 1〜5 は「ブラウザの中で Claude と話す」スキル。STAGE 6 からは「PC のターミナル（黒い画面）を使って Claude を動かす」世界に入ります。<br><br>「ターミナル？コマンド？怖い…」と感じるのは普通です。<strong>大丈夫、ここからは AI が代わりにコマンドを打ちます</strong>。あなたは日本語で頼むだけ。詰まったらすぐ メンターに Slack で聞いてください。<br><br>① まず Node.js が PC に入っているか確認 → ② Claude Code をインストール → ③ ターミナルで <code>claude</code> と打って起動。ここまで来れば STAGE 6 後半は全部「AI に頼むだけ」になります。</div></div>
 <p class="lbtxt">これまで学んできた <strong>claude.ai</strong> はブラウザの中で会話する AI だ。便利だが「会話しかできない」。<br><br>
 <strong>Claude Code</strong> は同じ Claude が、あなたの PC の中で直接動くツールだ。ファイルを読む・書く・編集する、ターミナルでコマンドを叩く、git で push する、Web を検索する、ぜんぶ AI 自身がやる。</p>
 <div class="stepbox"><div class="step">ブラウザ版：会話だけ。コードもらってもコピペが必要</div><div class="step">Claude Code：AI が直接ファイル編集・コマンド実行する</div><div class="step">結果：作業時間が体感10分の1になる</div></div>
 <p class="lbtxt"><strong>なぜ10倍速なのか</strong>。ブラウザ版で「LP を1ページ作って」と頼むと、HTML を出してくる→コピー→保存→開く→確認→修正点を伝える→また出してくる、というループが必ず発生する。Claude Code はこのループ全部を自分でやる。あなたは「LP 作って」と1回言うだけで完成品が手元に残る。</p>
-<div class="warn">💡 Trepro・Lakkan の山中（Allen）は1日の業務の8割を Claude Code で回している。提案資料・LP・SaaS のプロトタイプ・社内ツール改修、全部これ1本。</div>` },
+<div class="warn">💡 あるベテラン実践者は1日の業務の8割を Claude Code で回している。提案資料・LP・SaaS のプロトタイプ・社内ツール改修、全部これ1本。</div>` },
       { icon:'⚡', title:'インストールと最初の起動 — 5分で動かす', time:'10 min', html:`<p class="lbtxt">Claude Code は <strong>Node.js</strong> が入っていれば1コマンドで入る。Mac でも Windows でも同じ。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TERMINAL — インストール手順</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># Node.js が入っていなければ先に nodejs.org からインストール
@@ -1100,13 +1100,13 @@ mkdir my-first-claude
 cd my-first-claude
 claude</pre></div>
 <div class="stepbox"><div class="step">①「Node.js v20 以上」が入っているか node -v で確認</div><div class="step">② npm install -g @anthropic-ai/claude-code で本体を入れる</div><div class="step">③ claude コマンドが通れば成功。Anthropic アカウントでログイン</div><div class="step">④ 任意のフォルダで claude を起動すると、そのフォルダが作業領域になる</div></div>
-<div class="warn">💡 最初のログインは「Claude Max プラン」または「Anthropic Console（API キー）」のどちらかを選ぶ。Allen に相談すればチーム枠を案内する。個人で試すなら無料枠もある。</div>` }
+<div class="warn">💡 最初のログインは「Claude Max プラン」または「Anthropic Console（API キー）」のどちらかを選ぶ。メンターに相談すればチーム枠を案内する。個人で試すなら無料枠もある。</div>` }
     ],
     quiz:{ q:'Claude Code がブラウザ版 Claude と決定的に違う点はどれ？', opts:['対応言語が日本語だけになる','AI が直接ファイル編集・コマンド実行・git 操作を行える','ブラウザ版より回答が短くなる','API キーが不要になる'], c:1,
       ok:'✅ 正解！ Claude Code の本質は「会話ではなく実行」。ファイル・ターミナル・git を AI が直接触れることで、作業時間が劇的に短縮される。',
       ng:'❌ 不正解。Claude Code の核心は「AI が直接ファイル・コマンド・git を実行できる」点。会話だけのブラウザ版とは作業速度が桁違いになる。' },
     ch:{ title:'Claude Code をインストールして claude --version を実行・スクショを送れ',
-      body:'【ハンズオン】\n\n① nodejs.org から Node.js v20 以上をインストール（既にあればスキップ）\n② ターミナルを開いて npm install -g @anthropic-ai/claude-code\n③ claude --version でバージョンが表示されることを確認\n④ そのターミナル画面のスクショを Allen に Slack で送る\n\nうまく入らない場合は、エラーメッセージをそのまま Allen に送る。「動かない」より「このエラーが出た」の方が早く解決する。' }
+      body:'【ハンズオン】\n\n① nodejs.org から Node.js v20 以上をインストール（既にあればスキップ）\n② ターミナルを開いて npm install -g @anthropic-ai/claude-code\n③ claude --version でバージョンが表示されることを確認\n④ そのターミナル画面のスクショを メンターに Slack で送る\n\nうまく入らない場合は、エラーメッセージをそのまま メンターに送る。「動かない」より「このエラーが出た」の方が早く解決する。' }
   },
   { stage:6, lv:27, num:'LESSON 27', title:'最初の対話 — Read / Write / Edit / Bash の感覚を掴む', time:'25 min', diff:'★★☆☆☆', xpVal:110,
     blocks:[
@@ -1136,7 +1136,7 @@ hello.html をブラウザで開いて確認して。</pre></div>
       ok:'✅ 正解！ Claude Code は依頼内容を読み取って、自動で必要なツールを選ぶ。今回は Write が中心だが、状況によっては Read や Bash も組み合わせる。あなたはツール名を意識しなくていい。',
       ng:'❌ 不正解。正解は「すべて自動判断される」。Claude Code は依頼を読み取って Read / Write / Edit / Bash を自動で使い分ける。コマンドを覚える必要はない。' },
     ch:{ title:'hello.html を AI に作らせ、自分の名前バージョンに編集させてブラウザで開け',
-      body:'【ハンズオン】\n\n① claude 起動状態で「hello.html を作ってシンプルな Hello Claude Code ページにして」と頼む\n② 作成されたら「Hello を 私は◯◯です に変えて」と頼む\n③ 「ブラウザで開いて」と頼む\n④ 自動で開いた hello.html のスクショを Allen に送る\n\n→ コードを1行も書かずに HTML を作れた体験が、これからの全ての基礎になる。' }
+      body:'【ハンズオン】\n\n① claude 起動状態で「hello.html を作ってシンプルな Hello Claude Code ページにして」と頼む\n② 作成されたら「Hello を 私は◯◯です に変えて」と頼む\n③ 「ブラウザで開いて」と頼む\n④ 自動で開いた hello.html のスクショを メンターに送る\n\n→ コードを1行も書かずに HTML を作れた体験が、これからの全ての基礎になる。' }
   },
   { stage:6, lv:28, num:'LESSON 28', title:'git も npm も覚えない — コマンドは全部 AI に任せる', time:'30 min', diff:'★★★☆☆', xpVal:120,
     blocks:[
@@ -1158,26 +1158,26 @@ Claude Code 以降、これは <strong>全部 AI に任せる</strong>。あな�
 3. 最初のコミットを「初期化」というメッセージで作る
 4. gh コマンドを使って my-first-claude という名前で GitHub に新規 public リポジトリを作って push する</pre></div>
 <div class="stepbox"><div class="step">① 日本語で「やりたいこと」を箇条書きで伝える</div><div class="step">② AI が必要なコマンド（git init / git add / git commit / gh repo create / git push）を順番に実行</div><div class="step">③ 認証が必要な場合は AI が「ブラウザでログインして」と案内してくれる</div><div class="step">④ 完了したら GitHub にあなたのリポジトリが世界公開される</div></div>
-<div class="warn">⚠️ 重要：個人情報や API キーが入ったファイルは絶対 GitHub に上げない。AI に頼む時も「機密ファイル（.env など）は除外して」と一言添えると安全。Allen も山中の CLAUDE.md でこの絶対ルールを守っている。</div>` }
+<div class="warn">⚠️ 重要：個人情報や API キーが入ったファイルは絶対 GitHub に上げない。AI に頼む時も「機密ファイル（.env など）は除外して」と一言添えると安全。メンターも自身の CLAUDE.md でこの絶対ルールを守っている。</div>` }
     ],
     quiz:{ q:'Claude Code 時代の「やりたいこと」を AI に伝える正しい方法はどれ？', opts:['英語で1行にまとめる','git のコマンドを正確に書いて渡す','日本語で箇条書きで「やりたいこと」を伝える','プログラミング用語で説明する'], c:2,
       ok:'✅ 正解！ 箇条書きで「やりたいこと」を日本語で具体的に書くのがベスト。コマンドや英語は不要。AI が必要な処理を自動で組み立てる。',
       ng:'❌ 不正解。日本語で箇条書きにして「やりたいこと」を具体的に伝えるのが正解。コマンドや英語の精度は不要。' },
     ch:{ title:'Claude Code に頼んで GitHub 公開リポジトリを1本作って URL を提出せよ',
-      body:'【ハンズオン】\n\n① github.com で無料アカウントを作る（既にあればスキップ）\n② Claude Code に「my-first-claude フォルダを GitHub の新規 public リポジトリにして push して」と頼む\n③ 必要な認証は AI の指示通りブラウザで完了する\n④ GitHub に表示されたリポジトリ URL を Allen に Slack で送る\n\n→ 「コマンド1行も覚えずに GitHub デビュー」を達成できれば、もうエンジニアと同じ土俵に立っている。' }
+      body:'【ハンズオン】\n\n① github.com で無料アカウントを作る（既にあればスキップ）\n② Claude Code に「my-first-claude フォルダを GitHub の新規 public リポジトリにして push して」と頼む\n③ 必要な認証は AI の指示通りブラウザで完了する\n④ GitHub に表示されたリポジトリ URL を メンターに Slack で送る\n\n→ 「コマンド1行も覚えずに GitHub デビュー」を達成できれば、もうエンジニアと同じ土俵に立っている。' }
   },
   { stage:6, lv:29, num:'LESSON 29', title:'CLAUDE.md — プロジェクトに「ルール」を刻む', time:'25 min', diff:'★★★☆☆', xpVal:130,
     blocks:[
       { icon:'📚', title:'CLAUDE.md が「AI の憲法」になる', time:'10 min', html:`<p class="lbtxt">Claude Code には強力な仕組みがある。プロジェクトのルートに <strong>CLAUDE.md</strong> というファイルを置くと、Claude Code は起動時に毎回それを読み込む。<br><br>
 これが <strong>そのプロジェクト専用の憲法</strong> になる。「このプロジェクトでは日本語でコメントを書く」「黒背景は使わない」「git push 前に必ず確認」など、あなたが指示しなくても毎回守ってくれる。</p>
 <div class="stepbox"><div class="step">プロジェクト/CLAUDE.md：そのプロジェクトだけのルール</div><div class="step">~/.claude/CLAUDE.md：全プロジェクト共通のあなた個人ルール</div><div class="step">起動するたびに自動で読み込まれて、AI の判断基準になる</div></div>
-<div class="warn">💡 Allen（山中）の ~/.claude/CLAUDE.md は「絵文字最小」「ライトテーマ厳守」「シークレットファイル絶対 commit 禁止」「会社コンテキスト確認」など、自分が嫌うパターンと譲れないルールを書き溜めている。これにより全プロジェクトの Claude が同じ価値観で動く。</div>` },
+<div class="warn">💡 ベテラン実践者の ~/.claude/CLAUDE.md は「絵文字最小」「ライトテーマ厳守」「シークレットファイル絶対 commit 禁止」「会社コンテキスト確認」など、自分が嫌うパターンと譲れないルールを書き溜めている。これにより全プロジェクトの Claude が同じ価値観で動く。</div>` },
       { icon:'⚡', title:'初めての CLAUDE.md を書く — テンプレ付き', time:'12 min', html:`<p class="lbtxt">最初は短くていい。プロジェクトルートに <code>CLAUDE.md</code> を作って、以下のテンプレを貼って、自分用に書き換える。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TEMPLATE — CLAUDE.md スターター</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># プロジェクト名 — 引き継ぎ書
 
 ## このプロジェクトの目的
-1行で書く：例「Trepro 採用 LP の制作」
+1行で書く：例「採用 LP の制作」
 
 ## 使うべき技術
 - HTML / CSS / JavaScript（軽量重視）
@@ -1202,7 +1202,7 @@ Claude Code 以降、これは <strong>全部 AI に任せる</strong>。あな�
       ok:'✅ 正解！ CLAUDE.md は AI の憲法。起動時に毎回読み込まれて、書かれたルールが AI の判断基準になる。指示しなくても自動で守られる。',
       ng:'❌ 不正解。CLAUDE.md は AI が起動時に自動で読み込み、書かれたルールに従う「プロジェクトの憲法」だ。' },
     ch:{ title:'自分のプロジェクトに CLAUDE.md を書いて、ルールが実際に守られるか確認せよ',
-      body:'【ハンズオン】\n\n① 自分のプロジェクトフォルダで Claude Code に「このプロジェクト用の CLAUDE.md を作って」と頼む\n② テンプレを貼って自分用に編集（最低3つルールを書く：「日本語コメント必須」「黒背景禁止」など）\n③ claude を終了して再起動\n④ 「サンプル HTML 作って」と頼んで、ルールが守られているか確認\n⑤ CLAUDE.md ファイルと AI の出力を Allen に共有\n\n→ これで AI に「自分の好み」を覚えさせる力を手に入れた。チーム配布時にも CLAUDE.md ごと共有すれば、全員が同じ基準で動ける。' }
+      body:'【ハンズオン】\n\n① 自分のプロジェクトフォルダで Claude Code に「このプロジェクト用の CLAUDE.md を作って」と頼む\n② テンプレを貼って自分用に編集（最低3つルールを書く：「日本語コメント必須」「黒背景禁止」など）\n③ claude を終了して再起動\n④ 「サンプル HTML 作って」と頼んで、ルールが守られているか確認\n⑤ CLAUDE.md ファイルと AI の出力を メンターに共有\n\n→ これで AI に「自分の好み」を覚えさせる力を手に入れた。チーム配布時にも CLAUDE.md ごと共有すれば、全員が同じ基準で動ける。' }
   },
   { stage:6, lv:30, num:'LESSON 30', title:'Plan モードと安全運用 — 暴走させない境界線', time:'25 min', diff:'★★★☆☆', xpVal:130,
     blocks:[
@@ -1210,7 +1210,7 @@ Claude Code 以降、これは <strong>全部 AI に任せる</strong>。あな�
 例：「重複ファイル整理して」と頼んだら、消してほしくないファイルまで <code>rm</code> で削除された。「データベース整えて」で本番テーブルが書き換わった。実例ある。<br><br>
 これを防ぐのが <strong>Plan モード</strong>と <strong>Permissions</strong>（権限制御）だ。</p>
 <div class="stepbox"><div class="step">Plan モード：実行前に「やる手順」だけ提案させ、承認後に実行</div><div class="step">Permissions：Bash / Write / Edit など危険操作を毎回確認させる</div><div class="step">Hooks：ファイル保存時・コミット時に自動チェックを走らせる</div></div>
-<div class="warn">⚠️ Allen は「Plan モードで先に計画を出してから実行」を業務で必須にしている。サブエージェントに委譲する時もまず計画を確認する。これが「AI 暴走事故」を防ぐ唯一の方法。</div>` },
+<div class="warn">⚠️ メンターは「Plan モードで先に計画を出してから実行」を業務で必須にしている。サブエージェントに委譲する時もまず計画を確認する。これが「AI 暴走事故」を防ぐ唯一の方法。</div>` },
       { icon:'⚡', title:'Plan モードの起動と「危険コマンド拒否」設定', time:'13 min', html:`<p class="lbtxt">Plan モードは <strong>Shift+Tab</strong> でいつでも切替可能（Claude Code の右下にモード表示が出る）。複雑なタスクは Plan モードで始める習慣をつける。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">設定例 — .claude/settings.local.json で危険コマンドを禁止</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>{
@@ -1230,13 +1230,13 @@ Claude Code 以降、これは <strong>全部 AI に任せる</strong>。あな�
   }
 }</pre></div>
 <div class="stepbox"><div class="step">deny：絶対に実行させない（即拒否）</div><div class="step">ask：実行前に必ず確認する（毎回 Y/N を聞かれる）</div><div class="step">allow：暗黙で許可（基本入れない）</div></div>
-<div class="warn"><div class="warn-l">▶ STAGE 6 BOSS CHALLENGE</div><div class="warn-t">自分の業務1つを完全に Claude Code 一本で完結させ、所要時間・使ったツール・気づきを Allen にレポート提出すること。これが STAGE 6 クリアの証明になる。</div></div>` }
+<div class="warn"><div class="warn-l">▶ STAGE 6 BOSS CHALLENGE</div><div class="warn-t">自分の業務1つを完全に Claude Code 一本で完結させ、所要時間・使ったツール・気づきを メンターにレポート提出すること。これが STAGE 6 クリアの証明になる。</div></div>` }
     ],
     quiz:{ q:'Claude Code で「複雑なタスクを安全に進めたい」時、まず使うべき機能は？', opts:['Plan モード（実行前に計画を提案させる）','Bash モード（即実行）','Auto モード（全自動）','Quiet モード（確認なし）'], c:0,
       ok:'✅ 正解！ Plan モード（Shift+Tab で切替）は、AI に「何をするつもりか」を先に提案させ、人間の承認後に実行する仕組み。複雑タスクの暴走を防ぐ最重要機能。',
       ng:'❌ 不正解。Plan モードが正解。実行前に手順を確認できるので、意図しない削除・上書きを防げる。Shift+Tab で切替可能。' },
     ch:{ title:'【STAGE 6 ボス戦】自分の業務1つを Claude Code 一本で完結させレポート提出',
-      body:'【STAGE 6 BOSS — Claude Code 実戦】\n\n自分が普段やっている業務を1つ選んで、Claude Code だけで完結させよう。\n\n例：\n・社内 Wiki ページ1本を Claude Code で書いて Notion にコピペ\n・採用 LP のたたき台を1ページ作って GitHub に上げる\n・先週の数値を集計するスクリプトを書いて実行\n\n【レポート項目】\n① 何の業務をやったか\n② 所要時間（Claude Code 起動から完了まで）\n③ どんなツール（Read / Write / Edit / Bash）を AI が使ったか\n④ 詰まったところ・気づき\n⑤ 従来のやり方と比べて何倍速くなったか\n\nレポートを Slack で Allen に送れば STAGE 6 クリア。STAGE 7（Skills — 作業を資産化）に進める。' }
+      body:'【STAGE 6 BOSS — Claude Code 実戦】\n\n自分が普段やっている業務を1つ選んで、Claude Code だけで完結させよう。\n\n例：\n・社内 Wiki ページ1本を Claude Code で書いて Notion にコピペ\n・採用 LP のたたき台を1ページ作って GitHub に上げる\n・先週の数値を集計するスクリプトを書いて実行\n\n【レポート項目】\n① 何の業務をやったか\n② 所要時間（Claude Code 起動から完了まで）\n③ どんなツール（Read / Write / Edit / Bash）を AI が使ったか\n④ 詰まったところ・気づき\n⑤ 従来のやり方と比べて何倍速くなったか\n\nレポートを Slack で メンターに送れば STAGE 6 クリア。STAGE 7（Skills — 作業を資産化）に進める。' }
   },
 
   // ★ STAGE 7 DATA — Skills — 自分の作業を資産化（LV31〜35）
@@ -1246,12 +1246,12 @@ Claude Code 以降、これは <strong>全部 AI に任せる</strong>。あな�
 そこで登場するのが <strong>Skills（スキル）</strong> という仕組み。プロンプトと指示書を <code>~/.claude/skills/&lt;name&gt;/SKILL.md</code> に置いておくと、Claude Code がそれを「自分が持っている能力」として認識する。あとは <strong>「商談前リサーチして」</strong>と日本語で言うだけで、毎回同じ品質の出力が出る。</p>
 <div class="stepbox"><div class="step">プロンプト集：メモアプリに貼り溜める → 毎回コピペが必要</div><div class="step">Skill：~/.claude/skills/ に置く → Claude が自動で見つけて起動</div><div class="step">結果：同じ作業を「言葉ひとつ」で呼び出せる資産になる</div></div>
 <div class="pills"><span class="pill pr">YAML frontmatter</span><span class="pill pb">トリガーワード</span><span class="pill pg">再利用</span><span class="pill py">資産化</span></div>` },
-      { icon:'⚡', title:'山中（Allen）の実 Skill を覗いてみる', time:'12 min', html:`<p class="lbtxt">Allen の Mac には今 <strong>20本以上の Skill</strong> が並んでいる。商談・提案・デザイン・公開前チェック、業務のほぼ全工程が Skill 化されている。<br><br>
+      { icon:'⚡', title:'ベテラン実践者の実 Skill を覗いてみる', time:'12 min', html:`<p class="lbtxt">メンターの Mac には今 <strong>20本以上の Skill</strong> が並んでいる。商談・提案・デザイン・公開前チェック、業務のほぼ全工程が Skill 化されている。<br><br>
 一例として <code>a-debate</code>（3人で議論させる Skill）の構造を見てみよう。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">~/.claude/skills/a-debate/SKILL.md（抜粋）</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>---
 name: a-debate
-description: Karpathy・Grove・山中の3人を召喚して議論させ
+description: Karpathy・Grove・実践者の3人を召喚して議論させ
   優先順位付き改善案を出力。トリガー：「議論して」「3人で」
   「どっちがいい」「悩んでる」「方針相談」など。
 ---
@@ -1263,7 +1263,7 @@ description: Karpathy・Grove・山中の3人を召喚して議論させ
 |---|---|
 | Karpathy | AIシステム設計・シンプル原則 |
 | Grove    | OKR・成果測定 |
-| 山中     | 現場・毎日使う人間 |
+| 実践者   | 現場・毎日使う人間 |
 
 ## 実行フロー
 Step 1: 直近の議論ログを読み込む
@@ -1277,7 +1277,7 @@ Step 4: Slack #shuto_agents に投稿</pre></div>
       ok:'✅ 正解！Skill は ~/.claude/skills/&lt;name&gt;/SKILL.md に置くだけで Claude Code が自動認識し、YAML に書かれたトリガーワードで起動できる。毎回コピペする必要がなく、業務手順そのものを資産化できる。',
       ng:'❌ 不正解。Skill の本質は「~/.claude/skills/ に置けば Claude が自動で見つけて、トリガーワードで起動できる」点。プロンプトを毎回コピペする必要がなくなる。' },
     ch:{ title:'~/.claude/skills/ を覗いて、既存 Skill の構造を1本読む',
-      body:'【ハンズオン】\n\n① ターミナルで ls ~/.claude/skills/ を実行して、既に入っている Skill 一覧を表示\n② どれか1本（a-debate / a-deal / calendar-event など）を選び、cat ~/.claude/skills/&lt;名前&gt;/SKILL.md で中身を読む\n③ 「YAML frontmatter には何が書いてあるか」「指示書本文は何ステップで書かれているか」を Allen に Slack で報告\n\n→ 既存 Skill の構造を真似るのが、自分の Skill を作る最短ルート。' }
+      body:'【ハンズオン】\n\n① ターミナルで ls ~/.claude/skills/ を実行して、既に入っている Skill 一覧を表示\n② どれか1本（a-debate / a-deal / calendar-event など）を選び、cat ~/.claude/skills/&lt;名前&gt;/SKILL.md で中身を読む\n③ 「YAML frontmatter には何が書いてあるか」「指示書本文は何ステップで書かれているか」を メンターに Slack で報告\n\n→ 既存 Skill の構造を真似るのが、自分の Skill を作る最短ルート。' }
   },
   { stage:7, lv:32, num:'LESSON 32', title:'自分の Skill を作る — YAML frontmatter とトリガー設計', time:'30 min', diff:'★★★★', xpVal:140,
     blocks:[
@@ -1316,21 +1316,21 @@ allowed-tools: Read Bash
 - 数字は具体的に
 - ネガティブな内容も正直に書く</pre></div>
 <div class="stepbox"><div class="step">① Claude Code に上のプロンプトをそのまま投げる</div><div class="step">② Write ツールでファイルが作られる</div><div class="step">③ Claude Code を一度終了して再起動（Skill 認識のため）</div><div class="step">④ 新規セッションで「日報書いて」と言うだけで自動起動する</div></div>
-<div class="warn">⚠️ トリガーワードは多めに書く。「日報書いて」だけだと、ある日「業務報告まとめて」と言ったら起動しない。山中の a-debate Skill は <strong>20個近くのトリガーワード</strong>を description に書いている。これが「いつ使っても発動する Skill」の正体だ。</div>` }
+<div class="warn">⚠️ トリガーワードは多めに書く。「日報書いて」だけだと、ある日「業務報告まとめて」と言ったら起動しない。ある実践者の a-debate Skill は <strong>20個近くのトリガーワード</strong>を description に書いている。これが「いつ使っても発動する Skill」の正体だ。</div>` }
     ],
     quiz:{ q:'自分の Skill を作る時、YAML frontmatter の description に必ず書くべきものは？', opts:['Skill を作った日付','トリガーワード（起動の合言葉）を多めにリストアップする','作者の名前と連絡先','使用する AI モデルのバージョン'], c:1,
       ok:'✅ 正解！description にはトリガーワードを 10〜20 個並べるのが鉄則。Claude Code はこの言葉を見て自動起動を判断する。書き方が貧弱だといつまでも発動しない。',
       ng:'❌ 不正解。description の主役はトリガーワード。「○○して」「○○準備」など、普段の言い回しを多めに書くほど Skill が確実に発動する。' },
     ch:{ title:'自分の業務に直結する Skill を1本作って、新規セッションで発動させる',
-      body:'【ハンズオン】\n\n① 自分が毎週繰り返している作業を1つ選ぶ（日報・週報・商談メモまとめ・Slack 下書き 何でも可）\n② Claude Code に「~/.claude/skills/&lt;名前&gt;/SKILL.md を作って」と頼む\n③ YAML frontmatter にトリガーワードを最低10個書く\n④ Claude Code を終了→再起動\n⑤ 新セッションで自分のトリガーワードを言ってみる\n⑥ 起動したら、Skill ファイルの中身と発動の様子を Allen に共有\n\n→ これで「自分専用 AI 機能」を1本追加したことになる。同じ作業を二度と書かなくていい。' }
+      body:'【ハンズオン】\n\n① 自分が毎週繰り返している作業を1つ選ぶ（日報・週報・商談メモまとめ・Slack 下書き 何でも可）\n② Claude Code に「~/.claude/skills/&lt;名前&gt;/SKILL.md を作って」と頼む\n③ YAML frontmatter にトリガーワードを最低10個書く\n④ Claude Code を終了→再起動\n⑤ 新セッションで自分のトリガーワードを言ってみる\n⑥ 起動したら、Skill ファイルの中身と発動の様子を メンターに共有\n\n→ これで「自分専用 AI 機能」を1本追加したことになる。同じ作業を二度と書かなくていい。' }
   },
   { stage:7, lv:33, num:'LESSON 33', title:'引数モードで分岐 — /skill prep /skill review を設計', time:'30 min', diff:'★★★★', xpVal:140,
     blocks:[
       { icon:'📚', title:'1つの Skill に「複数の機能」を持たせる', time:'12 min', html:`<p class="lbtxt">Skill を作り始めると、すぐぶつかる壁がある。<strong>「商談前リサーチ」と「商談後フォロー」、どっちも作りたいけど、Skill が増えすぎる</strong>。<br><br>
-山中（Allen）の答えは <strong>「1つの Skill に引数モードを持たせる」</strong>。例えば <code>a-deal</code>（案件統合スキル）はこう設計されている：</p>
+ベテラン実践者の答えは <strong>「1つの Skill に引数モードを持たせる」</strong>。例えば <code>a-deal</code>（案件統合スキル）はこう設計されている：</p>
 <div class="stepbox"><div class="step"><code>/a-deal prep &lt;会社名&gt;</code> → 商談前リサーチ</div><div class="step"><code>/a-deal pitch</code> → 提案構成・PR 勝ち筋設計</div><div class="step"><code>/a-deal price</code> → 見積妥当性チェック・赤字検知</div><div class="step"><code>/a-deal followup</code> → 商談後フォロー・キックオフ整理</div></div>
 <p class="lbtxt">案件は時系列で「商談前→提案→価格→商談後」と動く。それを1つの Skill にまとめ、<strong>モードで分岐</strong>させる。これで Skill 数が爆発せず、関連業務をひとまとめに管理できる。</p>
-<div class="warn">💡 山中の a-compliance も同じ思想：security / iso / legal / all の4モードで分岐。a-design は pick / brand / redesign / wcag / ux の5モード。1スキルで業務領域を「面」でカバーする発想だ。</div>` },
+<div class="warn">💡 ある実践者の a-compliance も同じ思想：security / iso / legal / all の4モードで分岐。a-design は pick / brand / redesign / wcag / ux の5モード。1スキルで業務領域を「面」でカバーする発想だ。</div>` },
       { icon:'⚡', title:'引数モード付き Skill を書く — meeting-prep の例', time:'13 min', html:`<p class="lbtxt">「商談前/商談後」を1つの Skill にまとめた例を、自分用に書いてみよう。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">~/.claude/skills/meeting/SKILL.md</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>---
@@ -1363,21 +1363,21 @@ allowed-tools: Read Write Bash WebSearch
 3. Slack #商談ログ への投稿本文を整形
 4. 次アクションを3つ明示する</pre></div>
 <div class="stepbox"><div class="step">① <code>argument-hint</code> で引数の渡し方を明示</div><div class="step">② 本文を <strong>「## モード」セクション</strong> でモードごとに分岐</div><div class="step">③ Claude は第1引数（prep / review）を読んで、該当セクションだけを実行</div><div class="step">④ 引数なしで起動された場合は文脈から自動判定させる（description に「自動判定」と書く）</div></div>
-<div class="warn">💡 山中の a-deal は「引数を渡さなくても、ユーザーの発言から prep/pitch/price/followup を自動判定」する設計。description に「デフォルトは文脈から自動判定」と一行入れるだけでこの挙動になる。手抜きと親切のバランス、これが上手い Skill の作り方。</div>` }
+<div class="warn">💡 ある実践者の a-deal は「引数を渡さなくても、ユーザーの発言から prep/pitch/price/followup を自動判定」する設計。description に「デフォルトは文脈から自動判定」と一行入れるだけでこの挙動になる。手抜きと親切のバランス、これが上手い Skill の作り方。</div>` }
     ],
     quiz:{ q:'1つの Skill に複数モードを持たせる利点として最も正しいのは？', opts:['Claude Code の動作が速くなる','関連業務を1スキルでまとめられ、スキル数の爆発を防げる','API 料金が安くなる','Skill が自動でテストされる'], c:1,
-      ok:'✅ 正解！関連業務（商談前/中/後など）を1つの Skill にまとめると、Skill 数が増えすぎず、業務領域を「面」でカバーできる。山中の a-deal / a-design / a-compliance がこの設計。',
+      ok:'✅ 正解！関連業務（商談前/中/後など）を1つの Skill にまとめると、Skill 数が増えすぎず、業務領域を「面」でカバーできる。ある実践者の a-deal / a-design / a-compliance がこの設計。',
       ng:'❌ 不正解。引数モードの本質は「関連業務をまとめてスキル爆発を防ぐ」こと。1スキルで業務領域を面でカバーするための設計テクニックだ。' },
     ch:{ title:'自分の業務領域から「2モード以上」の Skill を1本設計する',
-      body:'【ハンズオン】\n\n① 自分の業務で時系列に分かれている領域を1つ選ぶ（採用：書類選考→面接→内定 / 営業：リスト→商談→クロージング 等）\n② ~/.claude/skills/&lt;名前&gt;/SKILL.md を作る\n③ description に argument-hint を書き、本文に「## モード」セクションを最低2つ作る\n④ 各モードで「やること」を3〜5ステップで書く\n⑤ Claude Code を再起動し、それぞれのモードを発動させてみる\n⑥ 結果と Skill ファイルを Allen に共有\n\n→ 「商談1セット」を Skill 1本で扱えるようになる。これが業務の AI 化。' }
+      body:'【ハンズオン】\n\n① 自分の業務で時系列に分かれている領域を1つ選ぶ（採用：書類選考→面接→内定 / 営業：リスト→商談→クロージング 等）\n② ~/.claude/skills/&lt;名前&gt;/SKILL.md を作る\n③ description に argument-hint を書き、本文に「## モード」セクションを最低2つ作る\n④ 各モードで「やること」を3〜5ステップで書く\n⑤ Claude Code を再起動し、それぞれのモードを発動させてみる\n⑥ 結果と Skill ファイルを メンターに共有\n\n→ 「商談1セット」を Skill 1本で扱えるようになる。これが業務の AI 化。' }
   },
   { stage:7, lv:34, num:'LESSON 34', title:'Skill を組み合わせる — /proposal → /site-audit チェーン', time:'30 min', diff:'★★★★', xpVal:150,
     blocks:[
-      { icon:'📚', title:'Skill は「単体」ではなく「連鎖」で真価を発揮する', time:'12 min', html:`<p class="lbtxt">山中（Allen）は1日に Skill を何回も呼ぶ。だが本当に強いのは <strong>Skill を Skill から呼び出す</strong>連鎖だ。<br><br>
+      { icon:'📚', title:'Skill は「単体」ではなく「連鎖」で真価を発揮する', time:'12 min', html:`<p class="lbtxt">ベテラン実践者は1日に Skill を何回も呼ぶ。だが本当に強いのは <strong>Skill を Skill から呼び出す</strong>連鎖だ。<br><br>
 代表例が <code>a-launch</code>（公開前最終チェック）。これは単体の Skill ではなく、<strong>他の4つの Skill を並列で呼び出すラッパー</strong>だ：</p>
 <div class="stepbox"><div class="step"><code>a-launch</code> 起動 → 内部で並列実行</div><div class="step">├ <code>a-compliance --all</code>（OWASP / ISO / 法務チェック）</div><div class="step">├ <code>a-design wcag + ux</code>（アクセシビリティ + UX）</div><div class="step">├ <code>a-audit</code>（8観点総合診断）</div><div class="step">└ <code>a-verify</code>（30秒デプロイ検証）</div><div class="step">↓ Critical が出たら → <code>a-debate</code> を自動連携（3者議論）</div></div>
 <p class="lbtxt">人間が「公開前チェックして」と言うだけで、<strong>5本の Skill が動いて統合レポートが出る</strong>。これが Skill チェーンの威力だ。</p>
-<div class="warn">💡 山中の業務フローでは「提案書作成 → 議論で叩く → デザイン監査 → 公開前チェック」が a-deal pitch → a-debate → a-design → a-launch の4連鎖で自動化されている。1コマンドで完結する。</div>` },
+<div class="warn">💡 ある実践者の業務フローでは「提案書作成 → 議論で叩く → デザイン監査 → 公開前チェック」が a-deal pitch → a-debate → a-design → a-launch の4連鎖で自動化されている。1コマンドで完結する。</div>` },
       { icon:'⚡', title:'自分の Skill チェーンを設計する', time:'13 min', html:`<p class="lbtxt">「提案書を1本仕上げる」業務をチェーン化してみよう。やることは2つ：<strong>連鎖の指示を Skill 本文に書く</strong>こと、そして <strong>allowed-tools に Agent を入れる</strong>こと。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">~/.claude/skills/proposal-flow/SKILL.md</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>---
@@ -1398,7 +1398,7 @@ allowed-tools: Read Write Bash Agent
 
 ### Step 2: 3者議論で叩く（a-debate を呼ぶ）
 - Step 1 の出力をテーマに a-debate を起動
-- Karpathy・Grove・山中の視点で改善点を抽出
+- Karpathy・Grove・実践者の視点で改善点を抽出
 - 出力：優先順位付き修正リスト
 
 ### Step 3: デザイン監査（a-design ux を呼ぶ）
@@ -1414,32 +1414,32 @@ allowed-tools: Read Write Bash Agent
 3段の出力を1つの Markdown にまとめて
 ~/agents/data/output/proposals/ に保存する。</pre></div>
 <div class="stepbox"><div class="step">① 本文に「Step 1 では ○○ Skill を呼ぶ」と明示する</div><div class="step">② allowed-tools に Agent を必ず入れる（サブエージェント経由で他 Skill を呼ぶため）</div><div class="step">③ 「## 連携先」セクションを書いて依存関係を明示</div><div class="step">④ 最後に「出力統合」セクションで結果のまとめ方を指示</div></div>
-<div class="warn">⚠️ Skill チェーンは便利だが暴走リスクも上がる。山中は <strong>subagent-delegation スキル</strong>で「委譲時のブリーフィング作法・必須検証フロー」を別途定義している。チェーン Skill を作る時は、必ず「結果検証」のステップを最後に入れる。</div>` }
+<div class="warn">⚠️ Skill チェーンは便利だが暴走リスクも上がる。ある実践者は <strong>subagent-delegation スキル</strong>で「委譲時のブリーフィング作法・必須検証フロー」を別途定義している。チェーン Skill を作る時は、必ず「結果検証」のステップを最後に入れる。</div>` }
     ],
     quiz:{ q:'a-launch のような「Skill チェーン」を作る時、SKILL.md に必ず書くべきことは？', opts:['呼び出す他 Skill 名と、その実行順序','使用する AI モデルの料金表','Slack のチャンネル ID 全て','GitHub のリポジトリ URL'], c:0,
       ok:'✅ 正解！チェーン Skill は「どの Skill を、どんな順序で呼ぶか」を本文に明示するのが核心。allowed-tools に Agent を入れることも必須。',
       ng:'❌ 不正解。チェーン Skill の核心は「呼ぶ Skill 名と実行順序を本文に書く」こと。これがないと連鎖が起きない。' },
     ch:{ title:'自分の業務フローを2スキル以上チェーンさせて1コマンド化する',
-      body:'【ハンズオン】\n\n① 自分の業務で「順番にやる作業」を2〜3個ピックアップ\n　 （例：日報作成→Slack 投稿下書き→明日のタスク整理）\n② 各作業を個別 Skill 化（LV 32 の応用）\n③ それらを順番に呼ぶ「ラッパー Skill」を1本作る\n④ allowed-tools に Agent を必ず入れる\n⑤ ラッパー Skill のトリガーワードを1回言うだけで、全部が連鎖実行されるか確認\n⑥ 実行ログと統合出力を Allen に共有\n\n→ 自分の1日の業務を「言葉ひとつ」で起動できるようになれば、もう作業時間が桁違いに減る。' }
+      body:'【ハンズオン】\n\n① 自分の業務で「順番にやる作業」を2〜3個ピックアップ\n　 （例：日報作成→Slack 投稿下書き→明日のタスク整理）\n② 各作業を個別 Skill 化（LV 32 の応用）\n③ それらを順番に呼ぶ「ラッパー Skill」を1本作る\n④ allowed-tools に Agent を必ず入れる\n⑤ ラッパー Skill のトリガーワードを1回言うだけで、全部が連鎖実行されるか確認\n⑥ 実行ログと統合出力を メンターに共有\n\n→ 自分の1日の業務を「言葉ひとつ」で起動できるようになれば、もう作業時間が桁違いに減る。' }
   },
   { stage:7, lv:35, num:'LESSON 35', title:'チームに配布する — ai-harness テンプレで横展開', time:'35 min', diff:'★★★★★', xpVal:160,
     blocks:[
       { icon:'📚', title:'Skill は「自分専用」で終わらせるな', time:'12 min', html:`<p class="lbtxt">ここまでで自分専用 Skill を作れるようになった。最終ステップは <strong>チームへの配布</strong>。1人の生産性が10倍になるより、10人の生産性が2倍になる方が組織にはインパクトが大きい。<br><br>
-山中（Allen）はこのために <strong>2ディレクトリ運用</strong>を採用している：</p>
+ベテラン実践者はこのために <strong>2ディレクトリ運用</strong>を採用している：</p>
 <div class="stepbox"><div class="step"><code>~/agents/</code>：個人運用（本番・実データ稼働中・一切触らない）</div><div class="step"><code>~/ai-harness/</code>：テンプレ・配布用ハーネス（クリーンに磨く）</div><div class="step">新規 Skill は <strong>まず ai-harness で汎用版</strong>を作る → 必要なら agents にコピー＋カスタム</div></div>
 <p class="lbtxt"><strong>ai-harness 思想（CLAUDE.md より）</strong>：<br>
 ・clone → 同じ Claude で起動 → 同じ品質のものが立ち上がる<br>
 ・環境変数・migration・seed が揃い、5分以内にローカル/本番が動く<br>
 ・必須機能（auth / rls / rate limit / sanitize / feedback / audit log）が <code>_harness/</code> に分離<br>
 ・README に「5 分キッティング手順」必須</p>
-<div class="warn">💡 これは Skill 単体の話ではない。<strong>「同僚に渡せば翌日から同じ環境が立ち上がる」</strong>という再現性の保証。属人化の対極にある考え方。Trepro でも Lakkan でも、これが組織展開のキモになる。</div>` },
+<div class="warn">💡 これは Skill 単体の話ではない。<strong>「同僚に渡せば翌日から同じ環境が立ち上がる」</strong>という再現性の保証。属人化の対極にある考え方。どんな組織でも、これが組織展開のキモになる。</div>` },
       { icon:'⚡', title:'GitHub 配布まで — 5分キッティング手順を作る', time:'15 min', html:`<p class="lbtxt">作った Skill 群をチームに配るには、GitHub の private リポジトリに置いて clone してもらうのが最速。Claude Code に頼むだけで完結する。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — Skill 配布リポジトリを作らせる</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>~/my-team-skills というフォルダを作って、以下をやって：
 
 1. ~/.claude/skills/ の中で「自分が作った Skill」だけを
    ~/my-team-skills/skills/ にコピー
-   （a-debate など Allen のものは含めない）
+   （a-debate など メンターのものは含めない）
 
 2. ~/my-team-skills/README.md を作って以下を書く：
    - このリポジトリの目的（1行）
@@ -1457,13 +1457,13 @@ allowed-tools: Read Write Bash Agent
 5. .gitignore に .env / *.pem / credentials* を入れて
    機密ファイルが混入していないか git status で確認</pre></div>
 <div class="stepbox"><div class="step">① 受け取った人は <code>git clone</code> → <code>bash install.sh</code> → <code>claude</code> 再起動だけで使える</div><div class="step">② README に「トリガーワードと用途」を一覧化してあると、新メンバーが迷わない</div><div class="step">③ 機密ファイル（.env / API キー / credentials）は <strong>絶対に commit しない</strong>（CLAUDE.md の鉄則）</div><div class="step">④ 更新があれば <code>git pull</code> + <code>install.sh</code> 再実行で全員に伝播</div></div>
-<div class="warn"><div class="warn-l">▶ STAGE 7 BOSS CHALLENGE</div><div class="warn-t">自分用 Skill を1本作って、同僚（Trepro / Lakkan のメンバー）に渡し、相手が <strong>「同じトリガーワードで同じ出力」</strong>を出せる状態を作る。GitHub repo URL ＋ 同僚から「動いた」というスクショ ＋ あなた自身の所感（時間短縮・気づき）を Allen にレポート提出する。これが STAGE 7 卒業の証明。</div></div>` }
+<div class="warn"><div class="warn-l">▶ STAGE 7 BOSS CHALLENGE</div><div class="warn-t">自分用 Skill を1本作って、同僚（社内のメンバー）に渡し、相手が <strong>「同じトリガーワードで同じ出力」</strong>を出せる状態を作る。GitHub repo URL ＋ 同僚から「動いた」というスクショ ＋ あなた自身の所感（時間短縮・気づき）を メンターにレポート提出する。これが STAGE 7 卒業の証明。</div></div>` }
     ],
     quiz:{ q:'Skill をチームに配布する時、ai-harness 思想で最も重要な原則はどれ？', opts:['英語ドキュメントだけ用意する','clone → 5分以内に同じ環境が立ち上がる再現性を保証する','配布前に Slack で全員の合意を取る','配布後は一切メンテナンスしない'], c:1,
       ok:'✅ 正解！ai-harness 思想の核は「clone → 5分以内に同じ品質の環境が立ち上がる」再現性の保証。README に5分キッティング手順を書くのは必須。これが属人化の対極にある考え方。',
       ng:'❌ 不正解。ai-harness 思想の本質は「clone → 5分で同じ環境が動く」再現性の保証。同僚が翌日から同じ品質で AI を使えることがゴールだ。' },
     ch:{ title:'【STAGE 7 ボス戦】自分の Skill を1本、同僚に配って同じ出力を再現させる',
-      body:'【STAGE 7 BOSS — Skill 横展開】\n\n自分用 Skill を1本作り、同僚に配って「同じトリガーで同じ品質の出力」を再現させる。\n\n① 自分の業務に直結する Skill を1本選ぶ（LV 32〜34 で作ったものでOK）\n② ~/my-team-skills/ を作り、README + install.sh を入れて GitHub private に上げる\n③ 同僚（Trepro / Lakkan のメンバー）に repo URL を共有\n④ 相手が clone → install → claude 再起動 → トリガーで起動できるか伴走\n⑤ 同僚から「動いた」スクショをもらう\n⑥ Allen への提出物：\n  - GitHub repo URL\n  - 同僚の動作スクショ\n  - 所感（時間短縮 / つまずきポイント / 改善案）\n\nこれができれば「AI を使える人」から「AI を組織に展開できる人」に進化した証明だ。STAGE 8 ではいよいよ MCP・サブエージェント・本格 AI 自動化に進む。' }
+      body:'【STAGE 7 BOSS — Skill 横展開】\n\n自分用 Skill を1本作り、同僚に配って「同じトリガーで同じ品質の出力」を再現させる。\n\n① 自分の業務に直結する Skill を1本選ぶ（LV 32〜34 で作ったものでOK）\n② ~/my-team-skills/ を作り、README + install.sh を入れて GitHub private に上げる\n③ 同僚（社内のメンバー）に repo URL を共有\n④ 相手が clone → install → claude 再起動 → トリガーで起動できるか伴走\n⑤ 同僚から「動いた」スクショをもらう\n⑥ メンターへの提出物：\n  - GitHub repo URL\n  - 同僚の動作スクショ\n  - 所感（時間短縮 / つまずきポイント / 改善案）\n\nこれができれば「AI を使える人」から「AI を組織に展開できる人」に進化した証明だ。STAGE 8 ではいよいよ MCP・サブエージェント・本格 AI 自動化に進む。' }
   },
 
   // ★ STAGE 8 DATA — MCP — 外部ツールを Claude に直結（LV36〜40）
@@ -1472,7 +1472,7 @@ allowed-tools: Read Write Bash Agent
       { icon:'📚', title:'API を書く時代の終わり — MCP という標準規格', time:'12 min', html:`<p class="lbtxt">これまで AI に外部サービス（Slack・Notion・Gmail 等）を触らせたい時、エンジニアが各サービスごとに <strong>API を書いて繋ぐ</strong> 必要があった。Slack の API、Notion の API、Gmail の API、それぞれ仕様が違うので学習コストが高い。<br><br>
 <strong>MCP（Model Context Protocol）</strong> は Anthropic が 2024 年末に出した「AI と外部ツールを繋ぐ共通プロトコル」。USB-C のように、どんなツールも同じ形のコネクタで AI に直結できる。</p>
 <div class="stepbox"><div class="step">従来：Slack 用に Python で API クライアントを書く → 認証・エラー処理・型定義…数日かかる</div><div class="step">MCP：claude mcp add slack を1回叩く → Claude Code から直接 slack_send_message が呼べる</div><div class="step">結果：「Slack に投稿して」と日本語で頼むだけで AI が実行する</div></div>
-<p class="lbtxt">Allen の Claude Code には現在 <strong>Slack / Notion / Gmail / Google Calendar / Supabase / Vercel / Desktop Commander</strong> 等の MCP サーバーが接続されており、すべて自然言語で操作できる。「先週の議事録を Notion から探して、内容を要約して Slack に投げて」が1コマンドで通る。</p>
+<p class="lbtxt">メンターの Claude Code には現在 <strong>Slack / Notion / Gmail / Google Calendar / Supabase / Vercel / Desktop Commander</strong> 等の MCP サーバーが接続されており、すべて自然言語で操作できる。「先週の議事録を Notion から探して、内容を要約して Slack に投げて」が1コマンドで通る。</p>
 <div class="warn">💡 公式情報源：<strong>https://modelcontextprotocol.io</strong> と <strong>https://docs.anthropic.com/en/docs/build-with-claude/mcp</strong>。OpenAI も Microsoft も MCP 採用を表明済みで、業界標準になりつつある。</div>` },
       { icon:'⚡', title:'最初の MCP サーバーをインストールする', time:'13 min', html:`<p class="lbtxt">Claude Code には MCP を追加するための <code>claude mcp add</code> コマンドが組み込まれている。最初は「ファイル操作系」の <strong>Desktop Commander</strong> から入れてみよう。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TERMINAL — MCP サーバー追加の基本</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
@@ -1488,19 +1488,19 @@ claude mcp add desktop-commander -- npx -y @wonderwhy-er/desktop-commander
 # 4. 動作確認 — Claude Code に頼む
 このフォルダの一覧を desktop-commander の list_directory で取得して。</pre></div>
 <div class="stepbox"><div class="step">① claude mcp list で現状を確認（最初は空）</div><div class="step">② claude mcp add &lt;名前&gt; -- &lt;起動コマンド&gt; で追加</div><div class="step">③ claude を再起動 → 自動で MCP サーバーが立ち上がる</div><div class="step">④ Claude Code がツール一覧に新ツールを自動認識し、日本語の依頼から呼び出せる</div></div>
-<div class="warn">💡 Allen が業務で繋いでいる代表例：Slack（slack_send_message）／ Notion（notion-search, notion-create-pages）／ Gmail（search_threads, create_draft）／ Calendar（list_events, create_event）／ Supabase（execute_sql）／ Vercel（deploy_to_vercel）。次のレッスンから1つずつ実機で繋ぐ。</div>` }
+<div class="warn">💡 メンターが業務で繋いでいる代表例：Slack（slack_send_message）／ Notion（notion-search, notion-create-pages）／ Gmail（search_threads, create_draft）／ Calendar（list_events, create_event）／ Supabase（execute_sql）／ Vercel（deploy_to_vercel）。次のレッスンから1つずつ実機で繋ぐ。</div>` }
     ],
     quiz:{ q:'MCP（Model Context Protocol）の本質を最も正確に表しているのはどれ？', opts:['Claude 専用の有料 API プラン','AI と外部ツールを繋ぐ共通プロトコル（USB-C のような標準規格）','プロンプトを暗号化する仕組み','ブラウザ拡張機能の名前'], c:1,
       ok:'✅ 正解！ MCP は Anthropic が提唱した「AI と外部ツールを繋ぐ共通の口」。これにより Slack も Notion も Gmail も、同じ手順で Claude に直結できるようになった。',
       ng:'❌ 不正解。MCP は「AI と外部ツールを繋ぐ共通プロトコル」。USB-C のように1つの規格で多様なツールを繋げる発想だ。' },
     ch:{ title:'claude mcp list を実行し、Desktop Commander を1本追加してスクショを送れ',
-      body:'【ハンズオン】\n\n① ターミナルで claude mcp list を実行（最初は空でもOK）\n② claude mcp add desktop-commander -- npx -y @wonderwhy-er/desktop-commander で追加\n③ claude を再起動して mcp list で desktop-commander が表示されることを確認\n④ Claude Code に「desktop-commander でホームの中身を一覧表示して」と頼む\n⑤ 一覧が出た画面のスクショを Allen に Slack で送る\n\n→ MCP が動いた瞬間、Claude が「あなたの PC を直接触れる AI」に変わる。' }
+      body:'【ハンズオン】\n\n① ターミナルで claude mcp list を実行（最初は空でもOK）\n② claude mcp add desktop-commander -- npx -y @wonderwhy-er/desktop-commander で追加\n③ claude を再起動して mcp list で desktop-commander が表示されることを確認\n④ Claude Code に「desktop-commander でホームの中身を一覧表示して」と頼む\n⑤ 一覧が出た画面のスクショを メンターに Slack で送る\n\n→ MCP が動いた瞬間、Claude が「あなたの PC を直接触れる AI」に変わる。' }
   },
   { stage:8, lv:37, num:'LESSON 37', title:'Notion MCP — DB を AI のデータ層にする', time:'30 min', diff:'★★★★☆', xpVal:150,
     blocks:[
       { icon:'📚', title:'Notion を「AI のデータベース」として使う発想', time:'13 min', html:`<p class="lbtxt">多くの会社が Notion を Wiki やタスク管理に使っている。だがそれは Notion の半分の力しか使えていない。<strong>Notion は本質的にデータベース</strong>であり、MCP で繋げば <strong>AI のデータ層</strong>として機能する。</p>
 <div class="stepbox"><div class="step">議事録 DB → AI が読んで「先週の◯◯社の会議の決定事項は？」に即答</div><div class="step">案件 DB → AI が新規行を追加・既存行のステータスを更新</div><div class="step">ナレッジ DB → AI が過去の知見を検索して提案に活用</div></div>
-<p class="lbtxt">Allen の Trepro / LunaTech 環境では、商談ナレッジ・案件パイプライン・採用候補者 DB をすべて Notion で管理している。Claude Code から MCP 経由で <code>notion-search</code> で検索、<code>notion-create-pages</code> で新規追加、<code>notion-update-page</code> で更新できる。<br><br>
+<p class="lbtxt">ある実践者の環境では、商談ナレッジ・案件パイプライン・採用候補者 DB をすべて Notion で管理している。Claude Code から MCP 経由で <code>notion-search</code> で検索、<code>notion-create-pages</code> で新規追加、<code>notion-update-page</code> で更新できる。<br><br>
 これにより「Slack の議事録を Notion の案件 DB に転記して」「先週の MTG ログを全件サマリーして朝刊 ch に貼って」が <strong>1コマンドで通る</strong>。</p>
 <div class="warn">💡 Notion API の従来手書き実装は認証 OAuth → トークン管理 → ページネーション処理…で半日かかる。MCP なら接続5分・利用ゼロコード。</div>` },
       { icon:'⚡', title:'Notion MCP 接続手順 — 5分でつながる', time:'13 min', html:`<p class="lbtxt">Notion の公式 MCP サーバーは Anthropic ディレクトリに登録済み。Claude Code から <code>/mcp</code> パネル経由でブラウザログインするだけ。</p>
@@ -1520,13 +1520,13 @@ claude mcp add notion --transport http https://mcp.notion.com/mcp
 # 5. 動作確認 — Claude Code に頼む
 Notion から「案件 DB」を notion-search で検索して、上位5件のタイトルを表示して。</pre></div>
 <div class="stepbox"><div class="step">① Notion 側でインテグレーション作成 + 対象 DB に接続許可</div><div class="step">② claude mcp add notion --transport http &lt;URL&gt; で MCP 登録</div><div class="step">③ /mcp パネルから OAuth ログインして認証完了</div><div class="step">④ 日本語で「Notion の◯◯DB を検索して」と頼むだけで結果が返る</div></div>
-<div class="warn">💡 Allen の実運用例：「今日の Slack 商談ログを Notion 案件 DB に追記。社名・日付・要約・次のアクションを列に分けて」と頼むと、AI が slack_watcher の結果を読み → Notion DB のスキーマを取得 → 正しい列に書き込む。完全自動。</div>` }
+<div class="warn">💡 メンターの実運用例：「今日の Slack 商談ログを Notion 案件 DB に追記。社名・日付・要約・次のアクションを列に分けて」と頼むと、AI が slack_watcher の結果を読み → Notion DB のスキーマを取得 → 正しい列に書き込む。完全自動。</div>` }
     ],
     quiz:{ q:'Notion MCP を Claude Code に繋ぐと何ができるようになる？', opts:['Notion の見た目だけ変えられる','Notion の DB を AI が直接検索・追加・更新できる','Notion が無料化される','API キーが自動生成される'], c:1,
       ok:'✅ 正解！ Notion MCP が繋がると、AI が DB を直接読み書きできる。議事録 DB・案件 DB・ナレッジ DB が「AI のデータ層」になり、自然言語で操作できる。',
       ng:'❌ 不正解。Notion MCP の本質は「AI が Notion DB を直接検索・追加・更新できる」こと。これにより Notion が AI のデータレイヤーになる。' },
     ch:{ title:'Notion MCP を接続し、自分の任意 DB を AI から検索してスクショを送れ',
-      body:'【ハンズオン】\n\n① Notion でインテグレーションを作る（既存があればスキップ）\n② 検索対象にしたい DB を開いて、インテグレーションを「接続」\n③ Claude Code で claude mcp add notion --transport http https://mcp.notion.com/mcp を実行\n④ /mcp パネルで OAuth 認証を完了\n⑤ Claude Code に「Notion の◯◯DB を検索して上位5件を表示して」と頼む\n⑥ 結果が表示された画面のスクショを Allen に送る\n\n→ ここまで来れば、自分の Notion ワークスペースが「AI が読み書きできる業務 DB」に変わる。' }
+      body:'【ハンズオン】\n\n① Notion でインテグレーションを作る（既存があればスキップ）\n② 検索対象にしたい DB を開いて、インテグレーションを「接続」\n③ Claude Code で claude mcp add notion --transport http https://mcp.notion.com/mcp を実行\n④ /mcp パネルで OAuth 認証を完了\n⑤ Claude Code に「Notion の◯◯DB を検索して上位5件を表示して」と頼む\n⑥ 結果が表示された画面のスクショを メンターに送る\n\n→ ここまで来れば、自分の Notion ワークスペースが「AI が読み書きできる業務 DB」に変わる。' }
   },
   { stage:8, lv:38, num:'LESSON 38', title:'Gmail / Calendar MCP — 受信箱と予定を AI に任せる', time:'30 min', diff:'★★★★☆', xpVal:150,
     blocks:[
@@ -1534,8 +1534,8 @@ Notion から「案件 DB」を notion-search で検索して、上位5件のタ
 Gmail MCP と Google Calendar MCP を繋げば、この10分が <strong>「朝刊くれ」の1コマンド</strong>で終わる。AI が裏で：<br>
 （1）Gmail の未読を <code>search_threads</code> で取得 →（2）重要そうな順に並べ替え →（3）Calendar の <code>list_events</code> で今日の予定を取得 →（4）両方を1枚のブリーフィングにまとめて返す。</p>
 <div class="stepbox"><div class="step">Gmail MCP：search_threads / get_thread / create_draft / label_thread</div><div class="step">Calendar MCP：list_events / create_event / update_event / suggest_time</div><div class="step">組合せ：「今日の予定 + 未対応メール + 今日中に返すべき相手」を朝1コマンドで把握</div></div>
-<p class="lbtxt">Allen の運用では、毎朝の <code>routine-report morning</code> スキルが Gmail + Calendar + Slack の3つを横断してブリーフィングを生成し、#朝刊 チャンネルに自動投稿している。MCP がなければ実現不可能だった機能だ。</p>
-<div class="warn">💡 Gmail MCP は <code>create_draft</code> で下書きを作るだけで送信はしない（人間が承認してから送る）設計。Calendar MCP の <code>create_event</code> もデフォルトで「タスク：」「社内：」等のプレフィックス規約に従って色分けされる（Allen のカレンダー色ルール）。</div>` },
+<p class="lbtxt">メンターの運用では、毎朝の <code>routine-report morning</code> スキルが Gmail + Calendar + Slack の3つを横断してブリーフィングを生成し、#朝刊 チャンネルに自動投稿している。MCP がなければ実現不可能だった機能だ。</p>
+<div class="warn">💡 Gmail MCP は <code>create_draft</code> で下書きを作るだけで送信はしない（人間が承認してから送る）設計。Calendar MCP の <code>create_event</code> もデフォルトで「タスク：」「社内：」等のプレフィックス規約に従って色分けされる（メンターのカレンダー色ルール）。</div>` },
       { icon:'⚡', title:'Gmail × Calendar の MCP を繋いで朝刊を作る', time:'14 min', html:`<p class="lbtxt">Anthropic の公式コネクタディレクトリから Google 系 MCP をインストールできる。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TERMINAL — Gmail / Calendar MCP 接続と朝のブリーフィング</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># 1. Claude Code 起動中に /mcp パネルを開く
@@ -1557,21 +1557,21 @@ claude mcp list
 4. 上記を「優先メール」「今日の予定」「推奨アクション」の3セクションでまとめて
 5. 機密情報（金額・個人名）はマスクして表示</pre></div>
 <div class="stepbox"><div class="step">① /mcp パネルで Gmail / Calendar を OAuth 認証</div><div class="step">② Claude Code に「朝のブリーフィングを作って」と頼むだけ</div><div class="step">③ 数十秒で未読メール + 今日の予定が1枚のレポートに統合される</div><div class="step">④ 慣れたら「重要メールには下書きまで create_draft で用意して」と追加できる</div></div>
-<div class="warn">⚠️ 重要：Gmail の <code>send</code> 系ツールはデフォルトで権限 ask（毎回確認）にしておく。AI が勝手に送信メールを出さないための安全策。Allen の .claude/settings.local.json にも同じ設定が入っている。</div>` }
+<div class="warn">⚠️ 重要：Gmail の <code>send</code> 系ツールはデフォルトで権限 ask（毎回確認）にしておく。AI が勝手に送信メールを出さないための安全策。メンターの .claude/settings.local.json にも同じ設定が入っている。</div>` }
     ],
     quiz:{ q:'Gmail MCP × Calendar MCP を繋げて朝のブリーフィングを作ると、何が起きる？', opts:['Gmail がオフラインになる','受信箱を開かずに「未読要約 + 今日の予定 + 推奨アクション」が AI から返ってくる','カレンダーの権限が失効する','Google アカウントが削除される'], c:1,
       ok:'✅ 正解！ 朝の10分作業（Gmail 確認 + Calendar 確認）が「朝のブリーフィングを作って」の1コマンドで完結する。これが MCP の威力。',
       ng:'❌ 不正解。Gmail × Calendar MCP を繋ぐと、未読の要約と今日の予定を1コマンドで取得できる。朝の確認作業が劇的に短縮される。' },
     ch:{ title:'Gmail と Calendar の MCP を繋いで、自分の朝のブリーフィングを1本生成せよ',
-      body:'【ハンズオン】\n\n① Claude Code で /mcp を開き、Gmail と Google Calendar を有効化（OAuth 承認）\n② claude mcp list で2つとも enabled になっていることを確認\n③ Claude Code に「朝のブリーフィング — 未読メール上位5件と今日の予定を1枚にまとめて」と頼む\n④ 出力された朝刊レポートをスクショして Allen に送る\n⑤ おまけ：気に入ったらこの依頼を ~/.claude/skills/morning/ にスキル化（STAGE 7 の応用）\n\n→ これで「朝の情報収集が AI 任せ」になる。実務で最も体感が変わる瞬間。' }
+      body:'【ハンズオン】\n\n① Claude Code で /mcp を開き、Gmail と Google Calendar を有効化（OAuth 承認）\n② claude mcp list で2つとも enabled になっていることを確認\n③ Claude Code に「朝のブリーフィング — 未読メール上位5件と今日の予定を1枚にまとめて」と頼む\n④ 出力された朝刊レポートをスクショして メンターに送る\n⑤ おまけ：気に入ったらこの依頼を ~/.claude/skills/morning/ にスキル化（STAGE 7 の応用）\n\n→ これで「朝の情報収集が AI 任せ」になる。実務で最も体感が変わる瞬間。' }
   },
   { stage:8, lv:39, num:'LESSON 39', title:'Vercel / Supabase MCP — デプロイ・DB をチャットで完結', time:'35 min', diff:'★★★★★', xpVal:170,
     blocks:[
       { icon:'📚', title:'デプロイも DB 操作も、ターミナルを叩かない時代', time:'15 min', html:`<p class="lbtxt">Web アプリ開発で最も「面倒」なのが <strong>デプロイ</strong> と <strong>DB マイグレーション</strong> だ。Vercel CLI を覚え、Supabase の SQL Editor を開き、migration ファイルを書く…これだけで初心者は心折れる。<br><br>
 <strong>Vercel MCP</strong> と <strong>Supabase MCP</strong> を繋ぐと、すべてがチャットで完結する。</p>
 <div class="stepbox"><div class="step">Vercel MCP：list_projects / deploy_to_vercel / get_deployment_build_logs / list_deployments</div><div class="step">Supabase MCP：list_projects / execute_sql / apply_migration / list_tables / get_advisors</div><div class="step">組合せ：「このフォルダをデプロイして」「users テーブルに role 列を足して」が日本語で通る</div></div>
-<p class="lbtxt"><strong>リソース作成ゲートに注意</strong>：Vercel プロジェクトや Supabase DB を <strong>新規作成する前に必ず既存リストを確認する</strong>こと（Allen の鉄則）。AI に頼む時も「まず list_projects で既存を確認して、目的に合うものがあれば再利用」と一文加える。Allen は過去にこれを怠って Supabase プロジェクトを増殖させ <strong>月$10 課金事故</strong>を起こした。同じ過ちをしないこと。</p>
-<div class="warn">💡 Supabase MCP の <code>get_advisors</code> は RLS（Row Level Security）の漏れ・パフォーマンス問題を自動で検出してくれる。本番リリース前に必ず1回叩く習慣を。Allen の運用では a-launch スキルがこれを自動実行する。</div>` },
+<p class="lbtxt"><strong>リソース作成ゲートに注意</strong>：Vercel プロジェクトや Supabase DB を <strong>新規作成する前に必ず既存リストを確認する</strong>こと（メンターの鉄則）。AI に頼む時も「まず list_projects で既存を確認して、目的に合うものがあれば再利用」と一文加える。メンターは過去にこれを怠って Supabase プロジェクトを増殖させ <strong>月$10 課金事故</strong>を起こした。同じ過ちをしないこと。</p>
+<div class="warn">💡 Supabase MCP の <code>get_advisors</code> は RLS（Row Level Security）の漏れ・パフォーマンス問題を自動で検出してくれる。本番リリース前に必ず1回叩く習慣を。メンターの運用では a-launch スキルがこれを自動実行する。</div>` },
       { icon:'⚡', title:'実機ハンズオン — 既存プロジェクトに列追加してデプロイ', time:'15 min', html:`<p class="lbtxt">Vercel と Supabase の MCP を繋ぎ、既存プロジェクトに対して安全な変更を流すまでの一連の流れ。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TERMINAL — Vercel / Supabase MCP 接続〜安全な変更</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># 1. Vercel MCP を追加（Anthropic 公式コネクタ）
@@ -1598,22 +1598,22 @@ apply_migration で追加して。マイグレーション名は add_display_nam
 # 6. デプロイ依頼
 Vercel の list_projects で「ai-quest」を探して、最新の本番デプロイの
 状態を get_deployment で確認。問題なければ deploy_to_vercel で再デプロイして。</pre></div>
-<div class="stepbox"><div class="step">① 必ず list_* で既存リソースを確認 → 山中の承認 → 変更</div><div class="step">② DB 変更は apply_migration で履歴に残す（直接 execute_sql しない）</div><div class="step">③ 変更後に get_advisors で RLS / index 漏れチェック</div><div class="step">④ Vercel deploy は get_deployment_build_logs でビルド結果を確認</div></div>
-<div class="warn">⚠️ 重要：本番 DB に対する <code>execute_sql</code>（DROP / UPDATE 等）は <strong>必ず ask 権限</strong>にする。Allen の .claude/settings.local.json で deny / ask 設定済み。これを忘れると AI が「テーブルを綺麗にしますね」と言って本番データを消す事故が起きる。</div>` }
+<div class="stepbox"><div class="step">① 必ず list_* で既存リソースを確認 → 管理者の承認 → 変更</div><div class="step">② DB 変更は apply_migration で履歴に残す（直接 execute_sql しない）</div><div class="step">③ 変更後に get_advisors で RLS / index 漏れチェック</div><div class="step">④ Vercel deploy は get_deployment_build_logs でビルド結果を確認</div></div>
+<div class="warn">⚠️ 重要：本番 DB に対する <code>execute_sql</code>（DROP / UPDATE 等）は <strong>必ず ask 権限</strong>にする。メンターの .claude/settings.local.json で deny / ask 設定済み。これを忘れると AI が「テーブルを綺麗にしますね」と言って本番データを消す事故が起きる。</div>` }
     ],
-    quiz:{ q:'Vercel / Supabase MCP を使う時の Allen の絶対ルールはどれ？', opts:['新規プロジェクトをどんどん作る','まず list_* で既存リソースを確認 → 山中の明示 GO → 作成・変更','本番 DB に直接 DROP を叩く','MCP を有効化したら認証は省略してOK'], c:1,
-      ok:'✅ 正解！ リソース作成ゲートは絶対。list_* で既存を確認 → 提示 → 山中の GO で初めて作成・変更する。これを怠ると Supabase で月額課金事故が起きる。',
-      ng:'❌ 不正解。正解は「list_* で既存を確認 → 山中の GO → 変更」。リソース作成ゲートを飛ばすと課金事故・データ消失事故の原因になる。' },
+    quiz:{ q:'Vercel / Supabase MCP を使う時の絶対ルールはどれ？', opts:['新規プロジェクトをどんどん作る','まず list_* で既存リソースを確認 → 管理者の明示 GO → 作成・変更','本番 DB に直接 DROP を叩く','MCP を有効化したら認証は省略してOK'], c:1,
+      ok:'✅ 正解！ リソース作成ゲートは絶対。list_* で既存を確認 → 提示 → 管理者の GO で初めて作成・変更する。これを怠ると Supabase で月額課金事故が起きる。',
+      ng:'❌ 不正解。正解は「list_* で既存を確認 → 管理者の GO → 変更」。リソース作成ゲートを飛ばすと課金事故・データ消失事故の原因になる。' },
     ch:{ title:'Vercel と Supabase MCP を接続し、既存リソースの list_projects を実行してレポート提出',
-      body:'【ハンズオン】\n\n① claude mcp add で vercel と supabase の MCP を追加\n② /mcp で OAuth 認証を完了\n③ Claude Code に「Supabase と Vercel の list_projects を実行して、既存プロジェクト一覧を見せて」と頼む\n④ 出力された一覧の中から「自分のものではないプロジェクト・不要なもの」がないかを Allen と一緒に確認\n⑤ さらに任意のプロジェクトに対して get_advisors を1回実行し、RLS の警告が出ていないかチェック\n⑥ 結果をスクショして Allen に Slack で送る\n\n→ ここまで来れば、Web アプリ開発の「最も難しい後工程」を AI 任せにできる。' }
+      body:'【ハンズオン】\n\n① claude mcp add で vercel と supabase の MCP を追加\n② /mcp で OAuth 認証を完了\n③ Claude Code に「Supabase と Vercel の list_projects を実行して、既存プロジェクト一覧を見せて」と頼む\n④ 出力された一覧の中から「自分のものではないプロジェクト・不要なもの」がないかを メンターと一緒に確認\n⑤ さらに任意のプロジェクトに対して get_advisors を1回実行し、RLS の警告が出ていないかチェック\n⑥ 結果をスクショして メンターに Slack で送る\n\n→ ここまで来れば、Web アプリ開発の「最も難しい後工程」を AI 任せにできる。' }
   },
   { stage:8, lv:40, num:'LESSON 40', title:'自社業務 MCP を作る — 既存社内ツールを Claude から呼ぶ', time:'40 min', diff:'★★★★★', xpVal:180,
     blocks:[
       { icon:'📚', title:'公開 MCP がない社内 API を「自分で MCP 化」する', time:'17 min', html:`<p class="lbtxt">Slack や Notion など有名サービスは公式 MCP が用意されている。だが <strong>自社の社内 API</strong>（独自の顧客 DB・kintone・社内 Web ツール等）には MCP が存在しない。<br><br>
-そこで <strong>自社業務 MCP を自分で作る</strong>。これができれば、社内のどんなツールも Claude から自然言語で叩けるようになる。Trepro 社内なら「TikTok アカウント運用 DB」を MCP 化、Lakkan なら「採用候補者管理シート」を MCP 化、といった具合。</p>
+そこで <strong>自社業務 MCP を自分で作る</strong>。これができれば、社内のどんなツールも Claude から自然言語で叩けるようになる。例えば「SNS アカウント運用 DB」を MCP 化、「採用候補者管理シート」を MCP 化、といった具合。</p>
 <div class="stepbox"><div class="step">① 公式 SDK：@modelcontextprotocol/sdk（TypeScript）か mcp（Python）</div><div class="step">② サーバー実装：tools を定義 → handler を書く（30 行程度で動く）</div><div class="step">③ ローカル起動：node server.js or python server.py</div><div class="step">④ claude mcp add で Claude Code に登録 → 完了</div></div>
 <p class="lbtxt">公式ドキュメント：<strong>https://modelcontextprotocol.io/docs</strong>。Anthropic が用意したサンプル（github.com/modelcontextprotocol/servers）を clone して中身を1ファイル書き換えるだけで、自社用 MCP が動く。</p>
-<div class="warn">💡 Allen が社内で運用している自作 MCP の例：「議事録 DB MCP」（brain/knowledge/ を検索）／「シュートエージェント MCP」（orchestrator を起動）／「請求書発行 MCP」（freee API ラッパー）。すべて TypeScript SDK で 50〜100 行程度の実装。</div>` },
+<div class="warn">💡 メンターが社内で運用している自作 MCP の例：「議事録 DB MCP」（brain/knowledge/ を検索）／「シュートエージェント MCP」（orchestrator を起動）／「請求書発行 MCP」（freee API ラッパー）。すべて TypeScript SDK で 50〜100 行程度の実装。</div>` },
       { icon:'⚡', title:'TypeScript SDK で「社内 API ラッパー MCP」を15分で作る', time:'17 min', html:`<p class="lbtxt">最小構成。社内 API（架空：https://api.your-company.internal/customers）を Claude から呼べる MCP サーバーを作る手順。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TERMINAL + CODE — 自社 MCP サーバーの最小実装</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># 1. プロジェクト雛形を作成
@@ -1650,15 +1650,15 @@ claude mcp add my-company -- node --loader ts-node/esm server.ts \\
   -e COMPANY_API_KEY=sk-xxxxx
 
 # 4. claude を再起動 → 動作確認
-Claude Code に頼む：「my-company の search_customers でトレプロを検索して」</pre></div>
+Claude Code に頼む：「my-company の search_customers でサンプル株式会社を検索して」</pre></div>
 <div class="stepbox"><div class="step">① McpServer インスタンスを作り、tool() でツール名・引数スキーマ・処理を1つずつ登録</div><div class="step">② Zod でバリデーション（型安全）</div><div class="step">③ StdioServerTransport で Claude Code と通信</div><div class="step">④ claude mcp add で登録 → 即使える</div></div>
-<div class="warn"><div class="warn-l">▶ STAGE 8 BOSS CHALLENGE</div><div class="warn-t">自社業務の中から1つ「Claude に直接やらせたい操作」を選び、MCP サーバーを実装して Claude Code に登録するところまでを完成させること。完成した MCP のスクリーンキャプチャ（claude mcp list で表示された姿）と、Claude Code から実際にそのツールを呼んだ結果を Allen にレポート提出。これが STAGE 8 クリアの証明であり、AI QUEST 全コースの最終ボス到達となる。</div></div>` }
+<div class="warn"><div class="warn-l">▶ STAGE 8 BOSS CHALLENGE</div><div class="warn-t">自社業務の中から1つ「Claude に直接やらせたい操作」を選び、MCP サーバーを実装して Claude Code に登録するところまでを完成させること。完成した MCP のスクリーンキャプチャ（claude mcp list で表示された姿）と、Claude Code から実際にそのツールを呼んだ結果を メンターにレポート提出。これが STAGE 8 クリアの証明であり、AI QUEST 全コースの最終ボス到達となる。</div></div>` }
     ],
     quiz:{ q:'自社業務 MCP を作る時、最も最小な構成要素はどれ？', opts:['Kubernetes クラスタと GPU サーバー','MCP SDK + tool 定義 + StdioServerTransport の3点（数十行のコード）','専用の物理サーバーと専用回線','Anthropic との有料契約'], c:1,
-      ok:'✅ 正解！ MCP SDK + tool 定義 + StdioServerTransport の3つだけで動く。数十行のコードで自社業務 MCP が完成する。Allen の自作 MCP もすべてこの構成。',
+      ok:'✅ 正解！ MCP SDK + tool 定義 + StdioServerTransport の3つだけで動く。数十行のコードで自社業務 MCP が完成する。メンターの自作 MCP もすべてこの構成。',
       ng:'❌ 不正解。MCP サーバーは「SDK + tool 定義 + StdioServerTransport」の3点で完結する。物理サーバーも有料契約も不要、TypeScript / Python 数十行で動く。' },
     ch:{ title:'【STAGE 8 ボス戦】自社業務 MCP を1本実装し Claude Code から呼んで結果を提出せよ',
-      body:'【STAGE 8 BOSS — 自社業務 MCP 化】\n\nあなたの業務の中で「Claude に直接やらせたい操作」を1つ選んで、MCP サーバーとして実装する。\n\n例（どれか1つ選ぶ）：\n・社内 Google Sheets を読み書きする MCP\n・自分のメモアプリ（Obsidian / kintone 等）を検索する MCP\n・社内 Slack の特定チャンネル投稿を集計する MCP\n・社内 API（既にあるもの）をラップする MCP\n\n【ステップ】\n① ツール名と引数を設計（例：search_customers(keyword: string)）\n② npm init + @modelcontextprotocol/sdk をインストール\n③ server.ts を書く（雛形は本文参照）\n④ claude mcp add で登録\n⑤ claude を再起動 → Claude Code から日本語でそのツールを呼ぶ\n⑥ 動作したスクショと server.ts のコードを Allen に Slack で送る\n\n→ ここまでクリアできれば、もう「AI が触れないツール」はあなたの業務の中に存在しない。AI QUEST 本編のラスボス戦・突破おめでとう。' }
+      body:'【STAGE 8 BOSS — 自社業務 MCP 化】\n\nあなたの業務の中で「Claude に直接やらせたい操作」を1つ選んで、MCP サーバーとして実装する。\n\n例（どれか1つ選ぶ）：\n・社内 Google Sheets を読み書きする MCP\n・自分のメモアプリ（Obsidian / kintone 等）を検索する MCP\n・社内 Slack の特定チャンネル投稿を集計する MCP\n・社内 API（既にあるもの）をラップする MCP\n\n【ステップ】\n① ツール名と引数を設計（例：search_customers(keyword: string)）\n② npm init + @modelcontextprotocol/sdk をインストール\n③ server.ts を書く（雛形は本文参照）\n④ claude mcp add で登録\n⑤ claude を再起動 → Claude Code から日本語でそのツールを呼ぶ\n⑥ 動作したスクショと server.ts のコードを メンターに Slack で送る\n\n→ ここまでクリアできれば、もう「AI が触れないツール」はあなたの業務の中に存在しない。AI QUEST 本編のラスボス戦・突破おめでとう。' }
   },
 
   // ★ STAGE 9 DATA — Subagent・Hooks・Memory — AI を多体化する（LV41〜45）
@@ -1670,7 +1670,7 @@ Claude Code に頼む：「my-company の search_customers でトレプロを検
 <p class="lbtxt"><strong>標準で使える Subagent の代表例</strong>：</p>
 <div class="pills"><span class="pill pb">general-purpose（汎用）</span><span class="pill pg">Explore（横断調査）</span><span class="pill py">Plan（計画立案）</span><span class="pill pr">code-reviewer（レビュー）</span></div>
 <p class="lbtxt">あなたは「LP の競合5社を調査して」と1回頼むだけ。メイン Claude が裏で Explore を5本並列起動して、5社分の調査結果を圧縮レポートで返してくる。所要時間は1社調査と同じくらい。</p>
-<div class="warn">💡 Allen（山中）は提案資料制作時、競合調査・トレンド調査・素材集めを全部 Subagent に並列でやらせている。「自分で5回検索 → 30分」が「1回頼んで5分」になる。これが多体化の威力。</div>` },
+<div class="warn">💡 ベテラン実践者は提案資料制作時、競合調査・トレンド調査・素材集めを全部 Subagent に並列でやらせている。「自分で5回検索 → 30分」が「1回頼んで5分」になる。これが多体化の威力。</div>` },
       { icon:'⚡', title:'初めて Subagent を呼んでみる', time:'13 min', html:`<p class="lbtxt">Subagent は <strong>Agent ツール</strong> という名前で Claude Code に内蔵されている。あなたが意識する必要はない。日本語で「並列で」「複数同時に」「サブにやらせて」と頼めば、メイン Claude が自動で起動する。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 並列 Subagent を体験する</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># Claude Code 起動中の状態で、以下を試す：
@@ -1694,8 +1694,8 @@ Claude Code に頼む：「my-company の search_customers でトレプロを検
     quiz:{ q:'Subagent（サブエージェント）の本質はどれ？', opts:['Claude のバージョン違いを切り替える機能','Claude Code が別の Claude を並列で呼び出して作業させる仕組み','Web で動く軽量版 Claude','Claude API を使うための認証システム'], c:1,
       ok:'✅ 正解！ Subagent は Claude Code が自分自身を別 Claude として並列起動する仕組み。1人が10人になる感覚で、大規模調査や並列タスクに使う。',
       ng:'❌ 不正解。Subagent は Claude Code が「別の Claude を呼び出して並列で動かす」仕組み。AI チームを編成して大規模タスクを高速処理できる。' },
-    ch:{ title:'Subagent を1回起動して、並列実行ログのスクショを Allen に提出せよ',
-      body:'【ハンズオン】\n\n① Claude Code を起動中のフォルダで、3つの並列調査を頼む\n   例：「以下3つを並列で調べて結果をまとめて：① 競合A社の料金 ② 競合B社の料金 ③ 業界平均」\n② 画面に「Agent」「サブエージェント」「並列実行中」などの表示が出るのを確認\n③ 最終レポートが返ってきたら、その画面のスクショと「何分かかったか」を Allen に Slack で送る\n④ 通常の1件ずつ調査と比べて、どれくらい速かったか所感も添える\n\n→ 多体化の威力を体感した瞬間、あなたは「AI を1人で使う時代」を卒業する。' }
+    ch:{ title:'Subagent を1回起動して、並列実行ログのスクショを メンターに提出せよ',
+      body:'【ハンズオン】\n\n① Claude Code を起動中のフォルダで、3つの並列調査を頼む\n   例：「以下3つを並列で調べて結果をまとめて：① 競合A社の料金 ② 競合B社の料金 ③ 業界平均」\n② 画面に「Agent」「サブエージェント」「並列実行中」などの表示が出るのを確認\n③ 最終レポートが返ってきたら、その画面のスクショと「何分かかったか」を メンターに Slack で送る\n④ 通常の1件ずつ調査と比べて、どれくらい速かったか所感も添える\n\n→ 多体化の威力を体感した瞬間、あなたは「AI を1人で使う時代」を卒業する。' }
   },
   { stage:9, lv:42, num:'LESSON 42', title:'専門 Subagent を作る — researcher / launcher / reviewer', time:'30 min', diff:'★★★★★', xpVal:170,
     blocks:[
@@ -1703,7 +1703,7 @@ Claude Code に頼む：「my-company の search_customers でトレプロを検
 イメージは <strong>会社の役職</strong>。リサーチ部長・LP 制作担当・コードレビュアー・営業文章作成係、それぞれに「専門指示書」を渡しておく。あなたは「リサーチ部長にやらせて」と言うだけで、その役職用にチューニングされた Claude が呼び出される。</p>
 <div class="stepbox"><div class="step">researcher：競合調査・市場調査専門。出力は必ず比較表＋出典付き</div><div class="step">launcher：LP/サイトを爆速で1本作る専門。HTML 1ファイル完結が前提</div><div class="step">reviewer：書いたコード/文章をセキュリティ・可読性の観点でレビュー</div></div>
 <p class="lbtxt"><strong>配置場所</strong>は <code>~/.claude/agents/</code> 配下に <code>{名前}.md</code> として置く。Claude Code が起動時に自動で読み込む。</p>
-<div class="warn">💡 Allen の <code>~/.claude/skills/subagent-delegation/SKILL.md</code> には「いつ委譲するか」「どうブリーフするか」「戻ってきた後にどう検証するか」が標準化されている。サブが「やった」と嘘をついても、検証ステップで必ず暴かれる。これがチーム運用の鍵。</div>` },
+<div class="warn">💡 メンターの <code>~/.claude/skills/subagent-delegation/SKILL.md</code> には「いつ委譲するか」「どうブリーフするか」「戻ってきた後にどう検証するか」が標準化されている。サブが「やった」と嘘をついても、検証ステップで必ず暴かれる。これがチーム運用の鍵。</div>` },
       { icon:'⚡', title:'researcher Subagent を実際に作る', time:'14 min', html:`<p class="lbtxt">最初の自分専用 Subagent は <strong>researcher</strong> がおすすめ。普段のリサーチ業務がそのまま再利用資産になる。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TEMPLATE — ~/.claude/agents/researcher.md</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>---
@@ -1731,13 +1731,13 @@ tools: WebSearch, WebFetch, Read, Write
 - 古い情報は年月を必ず併記
 - 出典の URL は実際にアクセスして内容を確認してから引用</pre></div>
 <div class="stepbox"><div class="step">① Claude Code に「~/.claude/agents/researcher.md を上のテンプレで作って」と頼む</div><div class="step">② 一度 claude を終了して再起動（agents/ は起動時に読まれる）</div><div class="step">③ 「researcher を使って A社・B社・C社の競合調査をして」と頼む</div><div class="step">④ 比較表＋出典付きのレポートが返ってくれば成功</div></div>
-<div class="warn">💡 慣れたら launcher（LP 専門）・reviewer（コードレビュー専門）・writer（営業文章専門）と増やしていく。Allen は10本以上の自分用 Subagent を運用していて、業務の8割が「Subagent への指示出し」になっている。</div>` }
+<div class="warn">💡 慣れたら launcher（LP 専門）・reviewer（コードレビュー専門）・writer（営業文章専門）と増やしていく。メンターは10本以上の自分用 Subagent を運用していて、業務の8割が「Subagent への指示出し」になっている。</div>` }
     ],
     quiz:{ q:'自分専用の Subagent はどこに配置するのが基本？', opts:['プロジェクト直下の README.md','~/.claude/agents/ 配下に {名前}.md として配置','GitHub のリポジトリのみ','OS のシステムフォルダ'], c:1,
       ok:'✅ 正解！ ~/.claude/agents/{名前}.md に置くと、Claude Code が起動時に自動で読み込み、その役職として呼び出せるようになる。',
       ng:'❌ 不正解。~/.claude/agents/ 配下に Markdown で配置するのが基本。frontmatter（name/description/tools）と本文（役割・出力フォーマット）を書く。' },
     ch:{ title:'researcher Subagent を作って実際の競合調査1件を回せ',
-      body:'【ハンズオン】\n\n① Claude Code に頼んで ~/.claude/agents/researcher.md を作る（テンプレ参照）\n② claude を再起動\n③ 自社の競合3社について「researcher で調査して」と頼む\n④ 出てきた比較表＋出典 URL を Allen に Slack で送る\n⑤ 同じ調査を Subagent なしでやった場合の所要時間も推定して併記する\n\n→ 「リサーチ部長を雇った」感覚を体験したら、次は launcher（LP 制作専門）・reviewer（レビュー専門）と増やしていく。' }
+      body:'【ハンズオン】\n\n① Claude Code に頼んで ~/.claude/agents/researcher.md を作る（テンプレ参照）\n② claude を再起動\n③ 自社の競合3社について「researcher で調査して」と頼む\n④ 出てきた比較表＋出典 URL を メンターに Slack で送る\n⑤ 同じ調査を Subagent なしでやった場合の所要時間も推定して併記する\n\n→ 「リサーチ部長を雇った」感覚を体験したら、次は launcher（LP 制作専門）・reviewer（レビュー専門）と増やしていく。' }
   },
   { stage:9, lv:43, num:'LESSON 43', title:'Hooks — 保存時・コミット時に自動でルールを走らせる', time:'28 min', diff:'★★★★☆', xpVal:160,
     blocks:[
@@ -1746,7 +1746,7 @@ tools: WebSearch, WebFetch, Read, Write
 <div class="stepbox"><div class="step"><strong>PreToolUse</strong>：AI がツールを使う直前に発動（コマンド実行前チェックに最適）</div><div class="step"><strong>PostToolUse</strong>：AI がツール使用直後に発動（保存後の lint やテスト）</div><div class="step"><strong>Stop</strong>：AI が応答を終えた直後に発動（最終レポートや通知）</div></div>
 <p class="lbtxt">配置場所は <code>.claude/settings.local.json</code>。プロジェクトごとに固有 Hooks を設定でき、AI に「これだけは絶対やってね」を強制できる。</p>
 <div class="warn">⚠️ Hooks は CLAUDE.md の「お願いベース」のルールと違い、<strong>機械的に必ず実行される</strong>。AI が忘れることがない。だからこそ、シークレット流出・本番削除など <strong>絶対防ぎたい事故</strong> に Hooks を貼るのが鉄則。</div>` },
-      { icon:'⚡', title:'保存時に自動レビュー・送信時にログ取り', time:'13 min', html:`<p class="lbtxt">Allen の本番設定は実際にこうなっている。<code>~/agents/.claude/settings.local.json</code> から抜粋：</p>
+      { icon:'⚡', title:'保存時に自動レビュー・送信時にログ取り', time:'13 min', html:`<p class="lbtxt">メンターの本番設定は実際にこうなっている。<code>~/agents/.claude/settings.local.json</code> から抜粋：</p>
 <div class="cb"><div class="cbh2"><span class="cbl">EXAMPLE — Hooks の実例（settings.local.json）</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre>{
   "hooks": {
@@ -1785,15 +1785,15 @@ tools: WebSearch, WebFetch, Read, Write
       ok:'✅ 正解！ PostToolUse は AI がツールを使った直後に発動する。Write/Edit の後に lint やテストを自動実行する用途に最適。',
       ng:'❌ 不正解。PostToolUse は AI が任意のツール使用を終えた直後に発動する。保存直後の自動チェックや通知に使う。' },
     ch:{ title:'自分のプロジェクトに1つ Hooks を設定して動作を確認せよ',
-      body:'【ハンズオン】\n\n① 自分のプロジェクトの .claude/settings.local.json を開く（なければ作る）\n② Claude Code に「Write/Edit のたびにファイル保存ログを ~/tmp/save.log に追記する PostToolUse Hooks を書いて」と頼む\n③ 何かファイルを編集して、~/tmp/save.log に行が増えるか確認\n④ 設定ファイル本文と save.log の中身を Allen に共有\n\n→ Hooks の本質は「AI に任せていても絶対外れない安全網」。一度仕込めば一生効く資産になる。' }
+      body:'【ハンズオン】\n\n① 自分のプロジェクトの .claude/settings.local.json を開く（なければ作る）\n② Claude Code に「Write/Edit のたびにファイル保存ログを ~/tmp/save.log に追記する PostToolUse Hooks を書いて」と頼む\n③ 何かファイルを編集して、~/tmp/save.log に行が増えるか確認\n④ 設定ファイル本文と save.log の中身を メンターに共有\n\n→ Hooks の本質は「AI に任せていても絶対外れない安全網」。一度仕込めば一生効く資産になる。' }
   },
   { stage:9, lv:44, num:'LESSON 44', title:'Memory と vault — AI に長期記憶を持たせる', time:'28 min', diff:'★★★★☆', xpVal:160,
     blocks:[
       { icon:'📚', title:'セッションは消えるが、vault は残る', time:'13 min', html:`<p class="lbtxt">Claude Code の最大の弱点は <strong>セッションが終わると記憶が消える</strong> こと。昨日 3時間かけて教えたことを、翌日には完全に忘れている。これでは「育つ AI」にならない。<br><br>
 解決策が <strong>外部脳としての vault</strong>（Obsidian の Markdown フォルダ）だ。Claude が学んだこと・ミス・好み・決定事項を Markdown ファイルとして書き溜めておき、新セッション開始時に <strong>必ずロード</strong> する仕組みを作る。</p>
 <div class="stepbox"><div class="step">~/vault/9-AI蓄積/mistakes/：過去のミスを記録（二度と繰り返さない）</div><div class="step">~/vault/9-AI蓄積/learnings/：新しく学んだ技術・パターン</div><div class="step">~/vault/0-常駐/：常時参照する絶対ルール（Slack 運用ガイド等）</div><div class="step">~/vault/_companies/：会社別・案件別の正本データ</div></div>
-<p class="lbtxt">セッション開始時のロードは <code>CLAUDE.md</code> で強制する。Allen の <code>~/.claude/CLAUDE.md</code> セクション0「Obsidian 長期記憶統合」がまさにこれ。新セッションの Claude は最初に mistakes 直近10件＋常駐ルール＋アプリ正本を読んでから動き出す。</p>
-<div class="warn">💡 これが Allen の AI が「育つ」核心。同じミスを2度しないし、過去案件の文脈を持ち越せる。あなたが今日教えたことが、明日の Claude にも引き継がれる状態を作る。</div>` },
+<p class="lbtxt">セッション開始時のロードは <code>CLAUDE.md</code> で強制する。メンターの <code>~/.claude/CLAUDE.md</code> セクション0「Obsidian 長期記憶統合」がまさにこれ。新セッションの Claude は最初に mistakes 直近10件＋常駐ルール＋アプリ正本を読んでから動き出す。</p>
+<div class="warn">💡 これが メンターの AI が「育つ」核心。同じミスを2度しないし、過去案件の文脈を持ち越せる。あなたが今日教えたことが、明日の Claude にも引き継がれる状態を作る。</div>` },
       { icon:'⚡', title:'自分の vault を立ち上げる最短手順', time:'13 min', html:`<p class="lbtxt">Obsidian は無料アプリ。インストールして任意のフォルダを vault として開くだけ。Claude Code 連携は単純に「同じフォルダを読み書きするだけ」なので、Obsidian 側に特別な設定は不要。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">SETUP — vault を Claude の長期記憶に統合する</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># ① Obsidian を obsidian.md からダウンロード・インストール
@@ -1811,25 +1811,25 @@ mkdir -p ~/vault/0-常駐
 2. ~/vault/0-常駐/ 配下すべて
 
 以下のトリガーで自動的に書き込む（指示なしでも）：
-- 山中からの修正・叱責 → mistakes/YYYY-MM-DD_カテゴリ_要約.md
+- メンターからの修正・指摘 → mistakes/YYYY-MM-DD_カテゴリ_要約.md
 - 新しい好み・決定 → 該当箇所に追記
 - 技術的発見 → learnings/YYYY-MM-DD_技術名.md</pre></div>
 <div class="stepbox"><div class="step">① mistakes/ にテンプレ用 README.md を1枚作る（事象/原因/解決/再発防止）</div><div class="step">② 最初の1週間は意識的に「今のミスを mistakes/ に書いて」と Claude に頼む</div><div class="step">③ 2週間目から Claude が自動で書き始める（CLAUDE.md にルールがあるため）</div><div class="step">④ 新セッションを開いて「mistakes 読んだ？」と聞いて、本当に読んでいるか確認</div></div>
-<div class="warn">💡 vault は git 管理してもいいが、API キーや機密情報が混ざる可能性があるので <strong>private repo</strong> か、そもそも push しないのが安全。Allen は ~/.claude.json や .env と同じく「絶対 commit しない」ルールを敷いている。</div>` }
+<div class="warn">💡 vault は git 管理してもいいが、API キーや機密情報が混ざる可能性があるので <strong>private repo</strong> か、そもそも push しないのが安全。メンターは ~/.claude.json や .env と同じく「絶対 commit しない」ルールを敷いている。</div>` }
     ],
     quiz:{ q:'vault（Obsidian の Markdown フォルダ）を Claude の長期記憶にする狙いは？', opts:['Claude のレスポンスを高速化する','セッションが終わっても学習を蓄積し、新セッションで自動ロードする','API コストをゼロにする','GitHub の代わりに使う'], c:1,
       ok:'✅ 正解！ vault は AI の外部脳。セッションをまたいで知識・ミス・好みが残るので、Claude が日に日に賢くなる。同じミスを繰り返さなくなる。',
       ng:'❌ 不正解。vault の目的は「セッションをまたいで記憶を残す」こと。新セッション開始時に Claude が自動ロードする仕組みを作ると、AI が育つ。' },
     ch:{ title:'自分の vault を作って mistakes/ に最初の1件を書け',
-      body:'【ハンズオン】\n\n① Obsidian をインストールして ~/vault フォルダを vault として開く\n② ~/vault/9-AI蓄積/mistakes/ ディレクトリを作る\n③ 過去に Claude にやらせて失敗した実例を1件、mistakes/YYYY-MM-DD_カテゴリ_要約.md として書く（事象/原因/解決/再発防止の4項目）\n④ ~/.claude/CLAUDE.md に「セッション開始時に mistakes/ 直近10件を読む」ルールを追記\n⑤ 新セッションを開いて「mistakes 読みましたか？」と聞き、読んだ証拠を確認\n⑥ vault の中身と CLAUDE.md の差分を Allen に共有\n\n→ これで Claude は「育つ AI」になる。今日学んだことが明日にも残る状態を手に入れた。' }
+      body:'【ハンズオン】\n\n① Obsidian をインストールして ~/vault フォルダを vault として開く\n② ~/vault/9-AI蓄積/mistakes/ ディレクトリを作る\n③ 過去に Claude にやらせて失敗した実例を1件、mistakes/YYYY-MM-DD_カテゴリ_要約.md として書く（事象/原因/解決/再発防止の4項目）\n④ ~/.claude/CLAUDE.md に「セッション開始時に mistakes/ 直近10件を読む」ルールを追記\n⑤ 新セッションを開いて「mistakes 読みましたか？」と聞き、読んだ証拠を確認\n⑥ vault の中身と CLAUDE.md の差分を メンターに共有\n\n→ これで Claude は「育つ AI」になる。今日学んだことが明日にも残る状態を手に入れた。' }
   },
   { stage:9, lv:45, num:'LESSON 45', title:'並列 Subagent + Plan モード — 巨大タスクを安全に量産', time:'35 min', diff:'★★★★★', xpVal:180,
     blocks:[
       { icon:'📚', title:'「LP を5本同時に作る」を現実にする設計', time:'15 min', html:`<p class="lbtxt">STAGE 9 の集大成。Subagent・Hooks・Memory・CLAUDE.md・Plan モードを全部組み合わせると、<strong>巨大タスクを安全に量産する</strong> ことができる。<br><br>
-具体例：あるクライアントから「採用 LP を5業種ぶん作って」と言われた。普通なら1本2時間で計10時間。Allen の運用ではこうなる：</p>
+具体例：あるクライアントから「採用 LP を5業種ぶん作って」と言われた。普通なら1本2時間で計10時間。メンターの運用ではこうなる：</p>
 <div class="stepbox"><div class="step">① Plan モードに切り替えて全体計画を Claude に作らせる（実行はまだしない）</div><div class="step">② 計画を人間がレビュー → OK なら実行に移る</div><div class="step">③ launcher Subagent を5本並列起動（業種ごとに1本ずつ）</div><div class="step">④ 各 Subagent は CLAUDE.md（黒背景禁止・絵文字最小）と vault（過去案件の決定）を読んでから作業</div><div class="step">⑤ Hooks で生成ファイルを自動チェック（シークレット混入・禁止パターン）</div><div class="step">⑥ reviewer Subagent が完成 5本を順番にレビュー → メイン Claude が統合報告</div></div>
 <p class="lbtxt">所要時間は <strong>10時間 → 30分</strong>。しかも全本が同じトンマナで、ルール違反がゼロ。これが「AI 経営」の入り口だ。</p>
-<div class="warn">⚠️ 並列 Subagent はトークン消費がデカい。Plan モードで先に計画を確認しないと「気づいたら 100ドル飛んでた」事故が起きる。<strong>Plan → 承認 → 並列起動</strong> の順は絶対守る。Allen も subagent-delegation スキルで明文化している。</div>` },
+<div class="warn">⚠️ 並列 Subagent はトークン消費がデカい。Plan モードで先に計画を確認しないと「気づいたら 100ドル飛んでた」事故が起きる。<strong>Plan → 承認 → 並列起動</strong> の順は絶対守る。メンターも subagent-delegation スキルで明文化している。</div>` },
       { icon:'⚡', title:'STAGE 9 BOSS — 5並列タスクを Plan モードで実走', time:'18 min', html:`<p class="lbtxt">この STAGE 9 のボス戦は <strong>並列 Subagent ＋ Plan モード</strong> を実機で1回回しきること。完了すれば、もうあなたは「AI を多体化して経営する側」に立っている。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">PROMPT — 並列 LP 生成（Plan モード起動から）</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># ① Claude Code 起動中に Shift+Tab を2回押して Plan モードに切り替え
@@ -1856,20 +1856,20 @@ vault の過去 LP 案件の決定事項があれば参照すること。
 
 計画を見てから実行 GO を出す。</pre></div>
 <div class="stepbox"><div class="step">① Plan モードで全体計画が出てくる（まだ実行はしない）</div><div class="step">② 計画を確認 → 「これで実行して」と承認</div><div class="step">③ 5本の launcher Subagent が並列起動して LP 生成が始まる</div><div class="step">④ Hooks（PostToolUse）で各保存ファイルが自動チェックされる</div><div class="step">⑤ 完成後 reviewer Subagent が5本を統合レビュー → メインが最終報告</div><div class="step">⑥ あなたは ./output/ に並んだ5本の LP を確認するだけ</div></div>
-<div class="warn"><div class="warn-l">▶ STAGE 9 BOSS CHALLENGE</div><div class="warn-t">並列 Subagent ＋ Plan モードを実機で1回完走させ、Plan の出力・完成物・所要時間・トークン消費を Allen にレポート提出する。これが STAGE 9 クリアの証明になる。完走すれば、もうあなたは「AI を多体化して経営する側」だ。</div></div>` }
+<div class="warn"><div class="warn-l">▶ STAGE 9 BOSS CHALLENGE</div><div class="warn-t">並列 Subagent ＋ Plan モードを実機で1回完走させ、Plan の出力・完成物・所要時間・トークン消費を メンターにレポート提出する。これが STAGE 9 クリアの証明になる。完走すれば、もうあなたは「AI を多体化して経営する側」だ。</div></div>` }
     ],
     quiz:{ q:'並列 Subagent で巨大タスクを安全に走らせる時、最初にやるべきことは？', opts:['いきなり並列で全 Subagent を起動する','Plan モードに切り替えて全体計画を AI に出させ、人間が承認してから実行','Hooks を全部無効化する','vault を全部消去する'], c:1,
-      ok:'✅ 正解！ Plan モード → 計画レビュー → 並列実行、の順が鉄則。これを飛ばすとトークン暴走・意図しない並列処理事故が起きる。Allen の subagent-delegation スキルでも必須フロー。',
+      ok:'✅ 正解！ Plan モード → 計画レビュー → 並列実行、の順が鉄則。これを飛ばすとトークン暴走・意図しない並列処理事故が起きる。メンターの subagent-delegation スキルでも必須フロー。',
       ng:'❌ 不正解。Plan モードで先に全体計画を出させ、人間が承認してから並列実行に進むのが正しい順序。これを飛ばすと AI 暴走事故になる。' },
     ch:{ title:'【STAGE 9 ボス戦】並列 Subagent ＋ Plan モードで5並列タスクを完走せよ',
-      body:'【STAGE 9 BOSS — AI 多体化の実戦】\n\n自分の業務で「5並列で量産したい」タスクを1つ選んで、Plan モード ＋ 並列 Subagent で完走させる。\n\n例：\n・採用 LP を5業種ぶん同時生成\n・競合5社を並列で深堀り調査\n・営業メールのテンプレを5パターン同時に生成\n・社内ツール改修を5機能ぶん並列で実装\n\n【レポート項目】\n① 何のタスクをやったか\n② Plan モードで出てきた全体計画（スクショ or 貼り付け）\n③ 並列起動した Subagent の本数と種類\n④ 完成物（ファイル名・URL・スクショ）\n⑤ 所要時間（Plan 開始から完成まで）\n⑥ トークン消費の概算\n⑦ 直列でやった場合との時間比較\n⑧ Hooks や vault がどう効いたか\n\nレポートを Slack で Allen に送れば STAGE 9 クリア。次は STAGE 10（実戦運用と経営応用）へ進む。\n\n→ ここまで来たあなたは、もう「AI を1人で使う人」ではない。「AI チームを編成して経営する人」だ。' }
+      body:'【STAGE 9 BOSS — AI 多体化の実戦】\n\n自分の業務で「5並列で量産したい」タスクを1つ選んで、Plan モード ＋ 並列 Subagent で完走させる。\n\n例：\n・採用 LP を5業種ぶん同時生成\n・競合5社を並列で深堀り調査\n・営業メールのテンプレを5パターン同時に生成\n・社内ツール改修を5機能ぶん並列で実装\n\n【レポート項目】\n① 何のタスクをやったか\n② Plan モードで出てきた全体計画（スクショ or 貼り付け）\n③ 並列起動した Subagent の本数と種類\n④ 完成物（ファイル名・URL・スクショ）\n⑤ 所要時間（Plan 開始から完成まで）\n⑥ トークン消費の概算\n⑦ 直列でやった場合との時間比較\n⑧ Hooks や vault がどう効いたか\n\nレポートを Slack で メンターに送れば STAGE 9 クリア。次は STAGE 10（実戦運用と経営応用）へ進む。\n\n→ ここまで来たあなたは、もう「AI を1人で使う人」ではない。「AI チームを編成して経営する人」だ。' }
   },
 
   // ★ STAGE 10 DATA — 自分の AI 工場を作る・配布する（LV46〜50）
   { stage:10, lv:46, num:'LESSON 46', title:'Plugin として配布 — Skills + MCP + Hooks をひとつに', time:'35 min', diff:'★★★★★', xpVal:180,
     blocks:[
       { icon:'📚', title:'Plugin = 自分の AI 工場を1ファイルで配る仕組み', time:'15 min', html:`<p class="lbtxt">ここまで学んできた <strong>Skills</strong>（作業の型）／<strong>MCP</strong>（外部接続）／<strong>Hooks</strong>（自動チェック）／<strong>Commands</strong>（呼び出し命令）。これらはバラバラに置くと、別 PC や別メンバーに渡すときに「あれ入れて、これ入れて、設定ここ書いて」と再現が崩れる。<br><br>
-<strong>Plugin</strong> はこの4点セットを <strong>1パッケージにまとめて配布する仕組み</strong> だ。Claude Code のプラグインマーケットプレイスに公開すれば、受け取った側は1コマンドでインストールできる。Allen の言葉では「自分の AI 工場をそのまま配る」。</p>
+<strong>Plugin</strong> はこの4点セットを <strong>1パッケージにまとめて配布する仕組み</strong> だ。Claude Code のプラグインマーケットプレイスに公開すれば、受け取った側は1コマンドでインストールできる。メンターの言葉では「自分の AI 工場をそのまま配る」。</p>
 <div class="stepbox"><div class="step">Skills：プロンプトの型（営業メール・議事録要約・提案資料 等）</div><div class="step">MCP：外部ツール接続（Slack / Notion / Supabase / Gmail 等）</div><div class="step">Hooks：イベント時の自動処理（保存時にlint / commit前にチェック 等）</div><div class="step">Commands：呼び出しショートカット（/proposal / /report 等）</div></div>
 <p class="lbtxt">これらを <code>.claude-plugin/</code> ディレクトリ配下に置いて <code>plugin.json</code> でメタ情報を書けば、それが Plugin になる。</p>
 <div class="warn">💡 STAGE 6〜9 で作ってきた CLAUDE.md / Skill / MCP / Hooks は、すべて Plugin 化できる。つまりあなたの業務 AI 化のノウハウが、そのまま「商品」になる。</div>` },
@@ -1899,21 +1899,21 @@ vault の過去 LP 案件の決定事項があれば参照すること。
   }
 }</pre></div>
 <div class="stepbox"><div class="step">① <code>.claude-plugin/</code> ディレクトリを作る</div><div class="step">② plugin.json を書く（上のテンプレを Claude Code に貼って「自分用に書き換えて」と頼む）</div><div class="step">③ skills / commands / hooks をディレクトリにまとめる</div><div class="step">④ GitHub に push して公開 → 受け取った人は <code>/plugin install &lt;repo-url&gt;</code> で導入完了</div></div>
-<div class="warn">⚠️ Plugin に <strong>API キーや認証情報を絶対に含めない</strong>。MCP の token は受け取った側が各自設定する想定で書く。Allen の CLAUDE.md にも「シークレットファイル絶対 commit 禁止」が明記されている。</div>` }
+<div class="warn">⚠️ Plugin に <strong>API キーや認証情報を絶対に含めない</strong>。MCP の token は受け取った側が各自設定する想定で書く。メンターの CLAUDE.md にも「シークレットファイル絶対 commit 禁止」が明記されている。</div>` }
     ],
     quiz:{ q:'Plugin として配布する最大のメリットはどれ？', opts:['Claude のモデル性能が上がる','Skills / MCP / Hooks / Commands を1パッケージで再現性100%で配れる','API 料金が無料になる','プロンプトを暗号化できる'], c:1,
       ok:'✅ 正解！ Plugin の本質は「自分の AI 工場一式を再現性100%で配布できる」こと。受け取った人は1コマンドで同じ環境を再現できる。',
       ng:'❌ 不正解。Plugin は Skills / MCP / Hooks / Commands を1パッケージにまとめ、別 PC・別メンバーで同じ AI 環境を再現する仕組みだ。' },
     ch:{ title:'自分の Skill を1つ Plugin 化して GitHub で公開せよ',
-      body:'【ハンズオン】\n\n① STAGE 7〜9 で作った Skill のうち1つを選ぶ（提案書・議事録要約・メール下書き 等 何でもOK）\n② Claude Code に「これを Plugin として配布できる形に整えて、.claude-plugin/plugin.json も作って」と頼む\n③ シークレットが混入していないか git status で確認（必ず確認）\n④ GitHub の新規 public リポジトリにして push\n⑤ リポジトリ URL を Allen に Slack で送る\n\n→ あなたの業務ノウハウが「世界に配布できる商品」になった瞬間。これが Plugin の威力だ。' }
+      body:'【ハンズオン】\n\n① STAGE 7〜9 で作った Skill のうち1つを選ぶ（提案書・議事録要約・メール下書き 等 何でもOK）\n② Claude Code に「これを Plugin として配布できる形に整えて、.claude-plugin/plugin.json も作って」と頼む\n③ シークレットが混入していないか git status で確認（必ず確認）\n④ GitHub の新規 public リポジトリにして push\n⑤ リポジトリ URL を メンターに Slack で送る\n\n→ あなたの業務ノウハウが「世界に配布できる商品」になった瞬間。これが Plugin の威力だ。' }
   },
   { stage:10, lv:47, num:'LESSON 47', title:'Cowork モード — チームで同じ AI 環境を共有する', time:'30 min', diff:'★★★★', xpVal:160,
     blocks:[
       { icon:'📚', title:'Cowork = 同じ Claude セッションを複数人で共有する', time:'12 min', html:`<p class="lbtxt">普通の Claude Code は「あなたの PC・あなたのセッション」で動く。Cowork モードは <strong>同じセッションを複数人で同時に共有</strong> できる仕組みだ。<br><br>
-何が嬉しいか。新人オンボーディングで「Allen の画面を一緒に見ながら作業」「ペアプロで2人で1セッションを進める」「商談中にチーム全員が同じ Claude と会話」が全部できるようになる。</p>
+何が嬉しいか。新人オンボーディングで「メンターの画面を一緒に見ながら作業」「ペアプロで2人で1セッションを進める」「商談中にチーム全員が同じ Claude と会話」が全部できるようになる。</p>
 <div class="stepbox"><div class="step">通常モード：1人 = 1セッション。他人とは共有しない</div><div class="step">Cowork モード：1セッション = N人。同じファイル・同じ Claude を全員が見られる</div><div class="step">用途：オンボーディング・ペアプロ・MTG 中のリアルタイム壁打ち</div></div>
-<p class="lbtxt"><strong>Trepro・Lakkan で想定する使い方</strong>：採用面接後の振り返り MTG で、面接官3人と Claude が同じセッションに入り、議事録を全員で書き直しながら最終評価をまとめる。1人で書くより精度も速度も上がる。</p>
-<div class="warn">💡 Cowork は「教える側」と「教わる側」の差を消す。Allen が頭の中でやっている判断を、受講者が同じ画面で見ながら覚えられる。これが社内 AI 普及の最短ルート。</div>` },
+<p class="lbtxt"><strong>想定する使い方</strong>：採用面接後の振り返り MTG で、面接官3人と Claude が同じセッションに入り、議事録を全員で書き直しながら最終評価をまとめる。1人で書くより精度も速度も上がる。</p>
+<div class="warn">💡 Cowork は「教える側」と「教わる側」の差を消す。メンターが頭の中でやっている判断を、受講者が同じ画面で見ながら覚えられる。これが社内 AI 普及の最短ルート。</div>` },
       { icon:'⚡', title:'Cowork セッションを起動して招待する', time:'13 min', html:`<p class="lbtxt">Cowork は Claude Code の最新版で利用可能。セッションを開始して招待リンクを発行 → 相手がそのリンクを開けば同じセッションに入れる。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">FLOW — Cowork セッションの始め方</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># ① Claude Code を起動した状態で
@@ -1931,20 +1931,20 @@ vault の過去 LP 案件の決定事項があれば参照すること。
 # ⑤ 終了するとき
 /cowork end</pre></div>
 <div class="stepbox"><div class="step">① ホスト（あなた）が <code>/cowork start</code> でセッション開始</div><div class="step">② 招待 URL を Slack でメンバーに共有</div><div class="step">③ 受け取った側はリンクを開くだけ、Claude Code のインストール不要</div><div class="step">④ 全員が同じファイル・同じ AI を見ながら作業できる</div></div>
-<div class="warn">⚠️ Cowork は強力な分、共有範囲に注意。シークレットファイルが置かれているフォルダで起動すると参加者全員に見えてしまう。必ず作業専用フォルダで起動すること。Allen も「機密が混じるなら通常モード」を徹底している。</div>` }
+<div class="warn">⚠️ Cowork は強力な分、共有範囲に注意。シークレットファイルが置かれているフォルダで起動すると参加者全員に見えてしまう。必ず作業専用フォルダで起動すること。メンターも「機密が混じるなら通常モード」を徹底している。</div>` }
     ],
     quiz:{ q:'Cowork モードの本質的な特徴はどれ？', opts:['Claude のレスポンスが2倍速くなる','同じ Claude セッションを複数人で同時共有できる','料金が半額になる','英語専用モードになる'], c:1,
       ok:'✅ 正解！ Cowork は「1セッションを複数人で共有」する仕組み。オンボーディング・ペアプロ・チーム壁打ちで一気に AI 活用が広がる。',
       ng:'❌ 不正解。Cowork の核心は「同じセッションを複数人で共有」できる点。Claude の判断プロセスをチーム全員で同時に見られる。' },
-    ch:{ title:'Cowork セッションを起動して Allen を招待し、共同作業を1本完結させよ',
-      body:'【ハンズオン】\n\n① 専用の作業フォルダを1つ作る（機密ファイルが入っていないこと必須）\n② Claude Code で /cowork start を実行\n③ 発行された招待 URL を Slack で Allen に送る\n④ Allen が参加したら、お題を1つ決めて2人で同じ Claude と作業（例：採用向けキャッチコピーを2人で詰める）\n⑤ 終わったら /cowork end で終了 → 感想を Allen にレポート\n\n→ 「AI を共有する」という新しい働き方を体験できれば、チーム導入の主役になれる。' }
+    ch:{ title:'Cowork セッションを起動して メンターを招待し、共同作業を1本完結させよ',
+      body:'【ハンズオン】\n\n① 専用の作業フォルダを1つ作る（機密ファイルが入っていないこと必須）\n② Claude Code で /cowork start を実行\n③ 発行された招待 URL を Slack で メンターに送る\n④ メンターが参加したら、お題を1つ決めて2人で同じ Claude と作業（例：採用向けキャッチコピーを2人で詰める）\n⑤ 終わったら /cowork end で終了 → 感想を メンターにレポート\n\n→ 「AI を共有する」という新しい働き方を体験できれば、チーム導入の主役になれる。' }
   },
   { stage:10, lv:48, num:'LESSON 48', title:'Claude Agent SDK — AI を組み込んだプロダクトを作る', time:'40 min', diff:'★★★★★', xpVal:190,
     blocks:[
       { icon:'📚', title:'Claude Agent SDK = 自分のアプリに AI を「中身」として組み込む', time:'15 min', html:`<p class="lbtxt">これまでは「Claude Code を使って作業する側」だった。次のステージは <strong>自分のプロダクトに Claude を組み込んで配る側</strong> になる。<br><br>
 それを実現するのが <strong>Claude Agent SDK</strong>（<code>@anthropic-ai/claude-agent-sdk</code>）だ。npm でインストールして、数十行のコードを書くだけで「Claude が中で動く SaaS」を作れる。</p>
 <div class="stepbox"><div class="step">Claude Code を使う = ユーザー側</div><div class="step">Agent SDK で作る = プロダクト提供側</div><div class="step">例：採用 LP に「AI が職務経歴書を添削」機能を埋め込む</div><div class="step">例：社内ツールに「議事録を自動構造化」機能を組み込む</div></div>
-<p class="lbtxt"><strong>Lakkan・Trepro の実例</strong>：山中は KANOA JOB（求人マッチング）・Vigil AI（育つ第二の脳）・FASTMeet（日程調整 SaaS）など、すべて Agent SDK 系統で「AI が中身で動く」プロダクトを作っている。あなたも同じことができる。</p>
+<p class="lbtxt"><strong>実例</strong>：ある実践者は求人マッチング・育つ第二の脳・日程調整 SaaS など、すべて Agent SDK 系統で「AI が中身で動く」プロダクトを作っている。あなたも同じことができる。</p>
 <div class="warn">💡 Plugin が「自分の AI 工場を配る」なら、Agent SDK は「AI を組み込んだ商品を売る」。事業化の最終段階がここ。</div>` },
       { icon:'⚡', title:'最小コードで「自分の AI エージェント」を立ち上げる', time:'20 min', html:`<p class="lbtxt">これが最小構成。Node.js プロジェクトで以下を書けば、自分のサーバー上で動く Claude エージェントが完成する。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">CODE — Claude Agent SDK 最小サンプル（Node.js）</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
@@ -1962,7 +1962,7 @@ const client = new Anthropic({
 const response = await client.messages.create({
   model: \'claude-opus-4-7\',
   max_tokens: 1024,
-  system: \'あなたは Trepro の採用 AI です。応募者の職務経歴書を 5 点満点で評価してください。\',
+  system: \'あなたは採用支援サービスの採用 AI です。応募者の職務経歴書を 5 点満点で評価してください。\',
   messages: [
     { role: \'user\', content: \'応募者の経歴：3 年営業 → 2 年マーケ → ...\' }
   ]
@@ -1973,21 +1973,21 @@ console.log(response.content[0].text);
 # 起動
 node index.js</pre></div>
 <div class="stepbox"><div class="step">① <code>createMessage</code>（<code>messages.create</code>）が基本 API。system プロンプトで AI の役割を固定</div><div class="step">② 長期実行エージェントを作るなら、応答ループ・記憶（DB保存）・ツール接続を追加</div><div class="step">③ Vercel / Cloudflare Workers にデプロイすれば、世界中からアクセスできる SaaS に</div><div class="step">④ ユーザー入力をそのまま渡さない（プロンプトインジェクション対策）／API キーは絶対サーバー側に隠す</div></div>
-<div class="warn">⚠️ Agent SDK で作るプロダクトは、API キーがサーバー側にあるので「キーをユーザーに渡さずに AI 機能を提供する」のが基本。フロントエンドに API キーを書いた瞬間に流出する。Allen の CLAUDE.md にも「シークレット絶対公開禁止」が明記されている。</div>` }
+<div class="warn">⚠️ Agent SDK で作るプロダクトは、API キーがサーバー側にあるので「キーをユーザーに渡さずに AI 機能を提供する」のが基本。フロントエンドに API キーを書いた瞬間に流出する。メンターの CLAUDE.md にも「シークレット絶対公開禁止」が明記されている。</div>` }
     ],
     quiz:{ q:'Claude Agent SDK を使う最も適切な場面はどれ？', opts:['自分の PC で作業を効率化したい時','自分のプロダクトに AI 機能を組み込んで顧客に提供したい時','プロンプトを保存しておきたい時','GitHub にコードを push したい時'], c:1,
       ok:'✅ 正解！ Agent SDK は「AI を組み込んだプロダクトを作って提供する」ためのツール。Claude Code が使う側、Agent SDK は作る側、と覚えればOK。',
       ng:'❌ 不正解。Agent SDK は「自分のプロダクトに Claude を組み込む」ためのもの。作業効率化なら Claude Code、商品化なら Agent SDK。' },
     ch:{ title:'Agent SDK で「職務経歴書を5点満点で評価する API」を1本作って Vercel に公開せよ',
-      body:'【ハンズオン】\n\n① 新しいフォルダで npm init → @anthropic-ai/claude-agent-sdk をインストール\n② 上のテンプレを貼って、自分用の評価プロンプトに書き換える\n③ ANTHROPIC_API_KEY は .env に書き、絶対に GitHub にコミットしない（.gitignore に .env を必ず追加）\n④ Claude Code に「これを Vercel にデプロイできる形にして」と頼む\n⑤ 公開された API エンドポイントを Allen に Slack で送る\n\n→ ここまでできれば、あなたは「AI を売る側」の門に立っている。Trepro・Lakkan の SaaS と同じ土俵だ。' }
+      body:'【ハンズオン】\n\n① 新しいフォルダで npm init → @anthropic-ai/claude-agent-sdk をインストール\n② 上のテンプレを貼って、自分用の評価プロンプトに書き換える\n③ ANTHROPIC_API_KEY は .env に書き、絶対に GitHub にコミットしない（.gitignore に .env を必ず追加）\n④ Claude Code に「これを Vercel にデプロイできる形にして」と頼む\n⑤ 公開された API エンドポイントを メンターに Slack で送る\n\n→ ここまでできれば、あなたは「AI を売る側」の門に立っている。世の中の AI SaaS と同じ土俵だ。' }
   },
-  { stage:10, lv:49, num:'LESSON 49', title:'ケーススタディ：山中の1日 — 業務 AI 化のリアル', time:'30 min', diff:'★★★', xpVal:150,
+  { stage:10, lv:49, num:'LESSON 49', title:'ケーススタディ：AI を使い倒す人の1日 — 業務 AI 化のリアル', time:'30 min', diff:'★★★', xpVal:150,
     blocks:[
-      { icon:'📚', title:'山中（Allen）の1日 — 6社マルチハットを Claude Code で回す', time:'15 min', html:`<p class="lbtxt">Lakkan・Trepro・LunaTech・Skylink・KANOA・Solve の<strong>6社マルチハット経営</strong>。普通なら破綻する。それを実現しているのが Claude Code を中心とした AI 工場だ。実際の1日を時系列で見てみよう。</p>
-<div class="stepbox"><div class="step"><strong>06:00 朝のブリーフィング</strong>：<code>a-aide brief</code> スキルが昨夜の議事録・今日の予定・未対応 Slack を要約して Slack #shuto_agents に投稿</div><div class="step"><strong>07:00 移動中</strong>：iPhone から <code>inbox-check</code> で Gmail / Slack / Notion を横断スキャン → 緊急対応を確認</div><div class="step"><strong>09:00 商談前</strong>：<code>a-deal prep</code> で相手企業のリサーチ・競合・提案構成を 10 分で生成</div><div class="step"><strong>11:00 商談中</strong>：tldv が議事録を自動録音 → 終了後 slack_watcher が Slack 経由で構造化 → brain/knowledge/ に蓄積</div><div class="step"><strong>14:00 提案資料</strong>：<code>S_ProposalCompe</code> スキルでスライド30枚生成 → トレプロトンマナ自動適用</div><div class="step"><strong>17:00 デプロイ</strong>：<code>lp-builder</code> で採用LPを構築 → Vercel公開 → <code>portfolio-update</code> でダッシュボード自動更新</div><div class="step"><strong>23:30 夜の振り返り</strong>：<code>nightly_review.py</code> が今日の学びを <code>brain/patterns/</code> に自動蓄積 → 翌朝のブリーフィングに反映</div></div>
-<p class="lbtxt">これが「1人 6 社」の正体だ。<strong>記憶・判断・実行のうち、実行と記憶を全部 Claude に任せる</strong>。山中の頭は「判断」だけに集中できる。</p>
+      { icon:'📚', title:'ある実践者の1日 — 複数事業を Claude Code で回す', time:'15 min', html:`<p class="lbtxt">複数の会社を兼務する<strong>マルチハット経営</strong>。普通なら破綻する。それを実現しているのが Claude Code を中心とした AI 工場だ。実際の1日を時系列で見てみよう。</p>
+<div class="stepbox"><div class="step"><strong>06:00 朝のブリーフィング</strong>：<code>a-aide brief</code> スキルが昨夜の議事録・今日の予定・未対応 Slack を要約して Slack #shuto_agents に投稿</div><div class="step"><strong>07:00 移動中</strong>：iPhone から <code>inbox-check</code> で Gmail / Slack / Notion を横断スキャン → 緊急対応を確認</div><div class="step"><strong>09:00 商談前</strong>：<code>a-deal prep</code> で相手企業のリサーチ・競合・提案構成を 10 分で生成</div><div class="step"><strong>11:00 商談中</strong>：tldv が議事録を自動録音 → 終了後 slack_watcher が Slack 経由で構造化 → brain/knowledge/ に蓄積</div><div class="step"><strong>14:00 提案資料</strong>：<code>S_ProposalCompe</code> スキルでスライド30枚生成 → ブランドトンマナ自動適用</div><div class="step"><strong>17:00 デプロイ</strong>：<code>lp-builder</code> で採用LPを構築 → Vercel公開 → <code>portfolio-update</code> でダッシュボード自動更新</div><div class="step"><strong>23:30 夜の振り返り</strong>：<code>nightly_review.py</code> が今日の学びを <code>brain/patterns/</code> に自動蓄積 → 翌朝のブリーフィングに反映</div></div>
+<p class="lbtxt">これが「1人で複数事業」の正体だ。<strong>記憶・判断・実行のうち、実行と記憶を全部 Claude に任せる</strong>。この実践者の頭は「判断」だけに集中できる。</p>
 <div class="warn">💡 蓄積データの実数：brain/knowledge/ 77件・brain/patterns/ 63件・brain/feedback/ 99件・55件超の自社プロダクト・16のスキル。これは1日2日で作れる量ではない。<strong>毎日少しずつ積んで、AI に資産化させた結果</strong>だ。</div>` },
-      { icon:'⚡', title:'あなたが「自分の1日」を AI 化する設計図', time:'12 min', html:`<p class="lbtxt">山中の真似をしろ、ではない。<strong>あなた自身の業務</strong>を同じ仕組みで再設計しよう。テンプレはこれ。</p>
+      { icon:'⚡', title:'あなたが「自分の1日」を AI 化する設計図', time:'12 min', html:`<p class="lbtxt">この実践者の真似をしろ、ではない。<strong>あなた自身の業務</strong>を同じ仕組みで再設計しよう。テンプレはこれ。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">TEMPLATE — 自分の1日を AI 化する設計図</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># 朝
 □ ブリーフィング AI に「今日の TODO・予定・未対応」を要約させる
@@ -2012,22 +2012,22 @@ node index.js</pre></div>
 # 夜
 □ nightly_review 相当の振り返り Skill で今日の学びをパターン化
   → 蓄積された pattern が翌日の判断精度を上げる</pre></div>
-<div class="warn">💡 「自分も山中みたいになれる」と思えたか？ なれる。山中も2年前は普通の経営者だった。Claude Code + 毎日の蓄積、これだけ。あなたが今このレッスンを終えた時点で、もう同じスタート地点に立っている。</div>` }
+<div class="warn">💡 「自分もこんなふうになれる」と思えたか？ なれる。この実践者も2年前は普通の経営者だった。Claude Code + 毎日の蓄積、これだけ。あなたが今このレッスンを終えた時点で、もう同じスタート地点に立っている。</div>` }
     ],
-    quiz:{ q:'山中（Allen）が6社マルチハット経営を回せている最大の理由はどれ？', opts:['天才だから','記憶と実行を Claude Code に任せて、自分は判断だけに集中しているから','社員が大量にいるから','睡眠時間が少ないから'], c:1,
-      ok:'✅ 正解！ AI に「実行と記憶」を任せ、人間は「判断」だけに集中する。これが山中の1日の本質。あなたも今日から同じ構造を真似られる。',
+    quiz:{ q:'ある実践者が複数事業のマルチハット経営を回せている最大の理由はどれ？', opts:['天才だから','記憶と実行を Claude Code に任せて、自分は判断だけに集中しているから','社員が大量にいるから','睡眠時間が少ないから'], c:1,
+      ok:'✅ 正解！ AI に「実行と記憶」を任せ、人間は「判断」だけに集中する。これがこの実践者の1日の本質。あなたも今日から同じ構造を真似られる。',
       ng:'❌ 不正解。鍵は「実行と記憶を Claude に任せ、人間は判断に集中する」分業構造。才能でも根性でもない、仕組みだ。' },
-    ch:{ title:'自分の「理想の1日」設計図を書き出し、AI 化できる箇所に印を付けて Allen に提出',
-      body:'【ハンズオン】\n\n① 自分の典型的な1日を時系列で書き出す（朝6時〜夜10時、30分単位でOK）\n② 各タスクに「AI 化できる / できない」の印を付ける\n③ AI 化できるタスクのうち「今すぐ Skill 化できるもの」を3つ選ぶ\n④ それぞれ「どんなプロンプト・どんなトリガーで呼び出すか」を1行で書く\n⑤ この設計図を Markdown にして Allen に Slack で送る\n\n→ 設計図が描けた瞬間、あなたの業務の半分は AI 化への片足を入れた。次のレッスン LV 50 で完成させる。' }
+    ch:{ title:'自分の「理想の1日」設計図を書き出し、AI 化できる箇所に印を付けて メンターに提出',
+      body:'【ハンズオン】\n\n① 自分の典型的な1日を時系列で書き出す（朝6時〜夜10時、30分単位でOK）\n② 各タスクに「AI 化できる / できない」の印を付ける\n③ AI 化できるタスクのうち「今すぐ Skill 化できるもの」を3つ選ぶ\n④ それぞれ「どんなプロンプト・どんなトリガーで呼び出すか」を1行で書く\n⑤ この設計図を Markdown にして メンターに Slack で送る\n\n→ 設計図が描けた瞬間、あなたの業務の半分は AI 化への片足を入れた。次のレッスン LV 50 で完成させる。' }
   },
   { stage:10, lv:50, num:'LESSON 50', title:'【FINAL】修了制作 — 自分の業務 AI 化3本を公開する', time:'90 min', diff:'★★★★★', xpVal:220,
     blocks:[
       { icon:'📚', title:'AI QUEST 最終ステージ — あなたが「AI を使う側」から「AI で価値を出す側」へ', time:'20 min', html:`<p class="lbtxt">🏆 <strong>AI QUEST FINAL BOSS</strong> へようこそ。<br><br>
 LV 1 で「Claude って何？」と始めたあなたが、ここまで来た。50 のレッスン、累計 XP 7000 超。もうあなたは「AI を学んでいる人」ではない。<strong>AI を使いこなして、世の中に価値を出せる人</strong>だ。<br><br>
-最終ステージで証明することはひとつ。<strong>あなたの業務を3つ完全に AI 化して、世界に公開する</strong>。これができれば、Trepro・Lakkan のメンバーとして、いや、どの会社に行っても通用する「AI 実装者」として認められる。</p>
+最終ステージで証明することはひとつ。<strong>あなたの業務を3つ完全に AI 化して、世界に公開する</strong>。これができれば、どの会社に行っても通用する「AI 実装者」として認められる。</p>
 <div class="stepbox"><div class="step">業務 AI 化① ：日々のルーティン作業1つを Skill 化（メール下書き / 議事録要約 / 数値集計 等）</div><div class="step">業務 AI 化② ：クリエイティブ作業1つを Plugin 化（提案資料 / LP 制作 / SNS 投稿 等）</div><div class="step">業務 AI 化③ ：プロダクト1本を Agent SDK で構築（社内ツール / SaaS / API 等）</div></div>
-<p class="lbtxt"><strong>3本の質はバラバラでいい</strong>。完璧じゃなくていい。大事なのは「やった」「公開した」「世の中に出した」という事実だけ。あなたが今日この瞬間に手を動かして、3本のリンクを Allen に提出することがゴールだ。</p>
-<div class="warn">🎓 ここまで来たあなたへ：山中（Allen）も2年前はゼロだった。違いは「毎日 Claude と一緒に手を動かしたかどうか」だけ。あなたは今、その差を埋めた。あとは <strong>世に出すか・出さないか</strong>、それだけだ。</div>` },
+<p class="lbtxt"><strong>3本の質はバラバラでいい</strong>。完璧じゃなくていい。大事なのは「やった」「公開した」「世の中に出した」という事実だけ。あなたが今日この瞬間に手を動かして、3本のリンクを メンターに提出することがゴールだ。</p>
+<div class="warn">🎓 ここまで来たあなたへ：ベテラン実践者も2年前はゼロだった。違いは「毎日 Claude と一緒に手を動かしたかどうか」だけ。あなたは今、その差を埋めた。あとは <strong>世に出すか・出さないか</strong>、それだけだ。</div>` },
       { icon:'⚡', title:'修了制作の進め方 — 90分で3本を仕上げて公開する', time:'45 min', html:`<p class="lbtxt">時間は90分。完璧主義は今日は捨てる。「出す」が正義。テンプレを使えば1本30分で終わる。</p>
 <div class="cb"><div class="cbh2"><span class="cbl">PLAN — 90 分でフィニッシュする修了制作</span><button class="cpb" onclick="cpCode(this)">COPY</button></div>
 <pre># ── 0〜30 分：① Skill 1本（ルーティン作業の AI 化）
@@ -2052,16 +2052,16 @@ LV 1 で「Claude って何？」と始めたあなたが、ここまで来た�
 → 成果物：公開 URL
 
 # ── 提出
-3本の URL/パスを 1 通の Slack で Allen に送る。タイトルは：
+3本の URL/パスを 1 通の Slack で メンターに送る。タイトルは：
 「AI QUEST 修了制作 提出 — &lt;あなたの名前&gt;」</pre></div>
-<div class="stepbox"><div class="step">① Skill 1本を作って <code>~/.claude/skills/</code> に配置 → スクショ提出</div><div class="step">② Plugin 1本を GitHub public リポジトリに公開 → URL 提出</div><div class="step">③ Agent SDK プロダクト1本を Vercel に公開 → URL 提出</div><div class="step">④ 3本を1通の Slack で Allen に送る → 修了認定</div></div>
-<div class="warn"><div class="warn-l">🎓 FINAL BOSS CHALLENGE — AI QUEST 修了の条件</div><div class="warn-t">上記3本を90分以内に提出すること。完璧じゃなくていい、雑でいい、動けばいい。「世に出す」ことだけが評価軸。提出を確認したら Allen から修了メッセージが届く。あなたは AI QUEST 卒業生として、Trepro × Lakkan の「AI 実装者」名簿に正式登録される。</div></div>
+<div class="stepbox"><div class="step">① Skill 1本を作って <code>~/.claude/skills/</code> に配置 → スクショ提出</div><div class="step">② Plugin 1本を GitHub public リポジトリに公開 → URL 提出</div><div class="step">③ Agent SDK プロダクト1本を Vercel に公開 → URL 提出</div><div class="step">④ 3本を1通の Slack で メンターに送る → 修了認定</div></div>
+<div class="warn"><div class="warn-l">🎓 FINAL BOSS CHALLENGE — AI QUEST 修了の条件</div><div class="warn-t">上記3本を90分以内に提出すること。完璧じゃなくていい、雑でいい、動けばいい。「世に出す」ことだけが評価軸。提出を確認したら メンターから修了メッセージが届く。あなたは AI QUEST 卒業生として、AI QUEST の「AI 実装者」名簿に正式登録される。</div></div>
 <p class="lbtxt" style="text-align:center;font-size:1.1em;margin-top:24px;"><strong>🏆 さあ、最後の一歩だ。90分後、あなたは別人になっている。</strong></p>` }
     ],
-    quiz:{ q:'AI QUEST FINAL BOSS の修了条件として正しいのはどれ？', opts:['全レッスンを2周する','業務 AI 化3本（Skill / Plugin / Agent SDK プロダクト）を作って公開し Allen に提出','100点満点のクイズを全問正解','英語で論文を1本書く'], c:1,
+    quiz:{ q:'AI QUEST FINAL BOSS の修了条件として正しいのはどれ？', opts:['全レッスンを2周する','業務 AI 化3本（Skill / Plugin / Agent SDK プロダクト）を作って公開し メンターに提出','100点満点のクイズを全問正解','英語で論文を1本書く'], c:1,
       ok:'🎓 正解！ AI QUEST の修了条件は「3本作って世に出す」こと。完璧じゃなくていい、出すことが全て。さあ、90分で仕上げよう。',
-      ng:'❌ 不正解。修了条件は「業務 AI 化3本（Skill / Plugin / Agent SDK）を作って公開し Allen に提出」。完璧さは問わない、「出した」事実だけが評価軸だ。' },
-    ch:{ title:'【FINAL BOSS】業務 AI 化3本（Skill / Plugin / Agent SDK プロダクト）を90分で公開し Allen に提出',
-      body:'🏆 AI QUEST FINAL BOSS\n\n【修了制作 提出物】\n\n① Skill 1本\n　→ ~/.claude/skills/<名前>/SKILL.md\n　→ 日々のルーティンを1つ Skill 化（メール下書き・議事録要約・数値集計 等）\n　→ 実際に呼び出して動くスクショを添付\n\n② Plugin 1本\n　→ GitHub の public リポジトリ URL\n　→ .claude-plugin/plugin.json + Skills + Commands を含む\n　→ 必ず git status でシークレット混入チェック\n\n③ Agent SDK プロダクト1本\n　→ Vercel の公開 URL\n　→ messages.create で AI が応答する機能を1つ実装\n　→ ANTHROPIC_API_KEY は .env でサーバー側に隠す\n\n【提出方法】\nSlack で Allen に1通送る。件名：\n「AI QUEST 修了制作 提出 — <あなたの名前>」\n\n本文に：\n・3本の URL/パス\n・所要時間\n・一番苦労した点\n・次に作りたいもの\n\n🎓 提出を確認したら、Allen から修了メッセージが届く。あなたは Trepro × Lakkan の「AI 実装者」名簿に正式登録される。\n\nこれが AI QUEST の卒業証書だ。\n\nさあ、世界にあなたの AI 工場を見せに行こう。' }
+      ng:'❌ 不正解。修了条件は「業務 AI 化3本（Skill / Plugin / Agent SDK）を作って公開し メンターに提出」。完璧さは問わない、「出した」事実だけが評価軸だ。' },
+    ch:{ title:'【FINAL BOSS】業務 AI 化3本（Skill / Plugin / Agent SDK プロダクト）を90分で公開し メンターに提出',
+      body:'🏆 AI QUEST FINAL BOSS\n\n【修了制作 提出物】\n\n① Skill 1本\n　→ ~/.claude/skills/<名前>/SKILL.md\n　→ 日々のルーティンを1つ Skill 化（メール下書き・議事録要約・数値集計 等）\n　→ 実際に呼び出して動くスクショを添付\n\n② Plugin 1本\n　→ GitHub の public リポジトリ URL\n　→ .claude-plugin/plugin.json + Skills + Commands を含む\n　→ 必ず git status でシークレット混入チェック\n\n③ Agent SDK プロダクト1本\n　→ Vercel の公開 URL\n　→ messages.create で AI が応答する機能を1つ実装\n　→ ANTHROPIC_API_KEY は .env でサーバー側に隠す\n\n【提出方法】\nSlack で メンターに1通送る。件名：\n「AI QUEST 修了制作 提出 — <あなたの名前>」\n\n本文に：\n・3本の URL/パス\n・所要時間\n・一番苦労した点\n・次に作りたいもの\n\n🎓 提出を確認したら、メンターから修了メッセージが届く。あなたは AI QUEST の「AI 実装者」名簿に正式登録される。\n\nこれが AI QUEST の卒業証書だ。\n\nさあ、世界にあなたの AI 工場を見せに行こう。' }
   }
 ];

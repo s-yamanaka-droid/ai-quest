@@ -172,7 +172,7 @@ tr:hover td{background:rgba(255,255,255,.03);}
   <div class="section active" id="sec-overview">
     <div class="pg-hd">
       <div class="pg-title">📊 ダッシュボード</div>
-      <div class="pg-sub">AI QUEST — Trepro × Lakkan オンボーディングRPG の管理画面</div>
+      <div class="pg-sub">AI QUEST — Vigil AI Academy 管理画面</div>
     </div>
 
     <div class="card-grid col3" style="margin-bottom:20px;">
@@ -250,8 +250,8 @@ tr:hover td{background:rgba(255,255,255,.03);}
         <div class="arch-layer" style="border-color:rgba(68,136,255,.3);">
           <div class="arch-layer-title" style="color:var(--blue);">👤 ユーザー層</div>
           <div class="arch-items">
-            <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">Trepro 社員</div>
-            <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">Lakkan インターン</div>
+            <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">受講者（社員）</div>
+            <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">受講者（インターン・個人）</div>
             <div class="arch-item" style="color:var(--blue);border-color:rgba(68,136,255,.3);">新入社員・まなさん</div>
           </div>
         </div>
@@ -647,7 +647,7 @@ ORDER BY stage;</pre></div>
         </div>
         <div style="padding:16px;background:var(--bg2);border-left:3px solid var(--green);">
           <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--green);margin-bottom:8px;">3ブロック構成</div>
-          <div style="font-size:11px;color:var(--dim);line-height:1.8;">「読む→解く→やる」の順が最も記憶定着率が高い（ブルームのタキソノミー）。チャレンジをAllenに提出することでアウトプットを強制し、曖昧な理解を防ぐ。</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.8;">「読む→解く→やる」の順が最も記憶定着率が高い（ブルームのタキソノミー）。チャレンジをメンターに提出することでアウトプットを強制し、曖昧な理解を防ぐ。</div>
         </div>
         <div style="padding:16px;background:var(--bg2);border-left:3px solid var(--gold2);">
           <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--gold2);margin-bottom:8px;">順番固定の理由</div>
@@ -678,7 +678,7 @@ ORDER BY stage;</pre></div>
     if(!isNaN(ts) && Date.now() - ts < 24*60*60*1000) return; // OK
   }
   // パスワードプロンプト
-  const pw = prompt('🔒 AI QUEST 管理画面\\n\\n管理者パスワードを入力してください（Allen に確認）');
+  const pw = prompt('🔒 AI QUEST 管理画面\\n\\n管理者パスワードを入力してください（運営者に確認）');
   if(pw === null){ window.location.href = '/'; return; }
   sha256(pw).then(h => {
     if(h === PASS_HASH){
@@ -730,7 +730,7 @@ const LESSONS = [
   {lv:22,stage:5,title:'Google Sheets API入門 — Claudeにコードを書かせて連携する',time:'25 min',diff:'★★★☆☆',xp:120},
   {lv:23,stage:5,title:'データをClaudeに渡して分析・要約・グラフ提案させる',time:'25 min',diff:'★★★★☆',xp:130},
   {lv:24,stage:5,title:'月次レポートをAIで自動生成する完全フロー',time:'30 min',diff:'★★★★★',xp:150},
-  {lv:25,stage:5,title:'実際の業務データで月次レポートを1本作ってAllenに提出する',time:'30 min',diff:'★★★★★',xp:150},
+  {lv:25,stage:5,title:'実際の業務データで月次レポートを1本作ってメンターに提出する',time:'30 min',diff:'★★★★★',xp:150},
   {lv:26,stage:6,title:'Slackとは何か — チームコミュニケーションの構造',time:'15 min',diff:'★★☆☆☆',xp:100},
   {lv:27,stage:6,title:'Slack APIとは何か — Slackを外から動かす仕組み',time:'20 min',diff:'★★★☆☆',xp:120},
   {lv:28,stage:6,title:'ClaudeにSlack APIコードを書かせて通知を自動送信する',time:'25 min',diff:'★★★★☆',xp:140},

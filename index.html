@@ -675,7 +675,7 @@ a:focus-visible,
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box">
     <div class="login-title">⚔ AI QUEST</div>
-    <div class="login-tagline">TREPRO × LAKKAN — AI ONBOARDING RPG</div>
+    <div class="login-tagline">Vigil AI Academy — AI ONBOARDING RPG</div>
     <div class="login-desc">
       <div class="login-desc-item">🎮 50のレッスンをクリアして「AI を使いこなして自走できる人材」になる</div>
       <div class="login-desc-item">💾 名前を入れるだけ。次回も同じ名前で続きから始められる</div>
@@ -732,7 +732,7 @@ a:focus-visible,
     <div class="profile-q">
       <label class="profile-q-label" for="profileCompany">Q2. 所属している会社名<span class="opt">任意</span></label>
       <div class="profile-q-hint">個人事業主・フリーランス・学生の方は屋号 / 大学名でもOKです。空欄でも進めます。</div>
-      <input class="profile-input" id="profileCompany" type="text" maxlength="80" placeholder="例：株式会社トレプロ / フリーランス / ◯◯大学">
+      <input class="profile-input" id="profileCompany" type="text" maxlength="80" placeholder="例：株式会社◯◯ / フリーランス / ◯◯大学">
     </div>
 
     <!-- Q3 業務内容（推奨） -->
@@ -800,7 +800,7 @@ a:focus-visible,
   <div id="tL" style="position:absolute;bottom:0;left:0;pointer-events:none;z-index:0;"></div>
   <div id="tR" style="position:absolute;bottom:0;right:0;pointer-events:none;z-index:0;transform:scaleX(-1)"></div>
   <div class="hero-cont">
-    <div class="h-badge">⚔ TREPRO × LAKKAN — AI ONBOARDING RPG</div>
+    <div class="h-badge">⚔ Vigil AI Academy — AI ONBOARDING RPG</div>
     <div class="h-title">AI QUEST<br>ZERO TO CREATOR</div>
     <p class="h-sub">AIの基礎の基礎から学び、50のダンジョンをクリアして「AI を使いこなして自走できる人材」になる。コードは書かない。AIに書かせる。</p>
     <div class="h-stats">
@@ -865,8 +865,8 @@ a:focus-visible,
       <div class="howto-step">
         <div class="howto-num">04</div>
         <div class="howto-body">
-          <div class="howto-step-title">チャレンジはAllenに提出する</div>
-          <div class="howto-step-desc">各レッスン末尾の「チャレンジ」は実際に手を動かす課題。完了したらSlackでAllenに報告しよう。証拠（スクショやURL）を添えること。「クリア！」ボタンでXPが加算される。</div>
+          <div class="howto-step-title">チャレンジはメンターに提出する</div>
+          <div class="howto-step-desc">各レッスン末尾の「チャレンジ」は実際に手を動かす課題。完了したらメンター（あなたのチームのAI担当者）に報告しよう。証拠（スクショやURL）を添えること。「クリア！」ボタンでXPが加算される。</div>
         </div>
       </div>
 
@@ -886,7 +886,7 @@ a:focus-visible,
     </div><!-- /howto-steps -->
 
     <div class="howto-foot">
-      <div class="howto-foot-txt">詰まったらガイドNPCのClaudeに質問しよう。AllenにSlackでDMしてもOK。</div>
+      <div class="howto-foot-txt">詰まったらガイドNPCのClaudeに質問しよう。メンターに相談してもOK。</div>
       <button class="howto-cta" onclick="closeHowTo()">▶ 冒険を始める</button>
     </div>
 
@@ -988,7 +988,7 @@ a:focus-visible,
           <span class="prep-tag later">後で</span>
           <div class="prep-item-body">
             <div class="prep-item-title">Slackワークスペース参加</div>
-            <div class="prep-item-desc">STAGE 8（MCP）で使う。Allenから招待リンクをもらうこと。</div>
+            <div class="prep-item-desc">STAGE 8（MCP）で使う。お使いのチームのワークスペースに参加すること。</div>
           </div>
         </div>
       </div>
@@ -1070,11 +1070,11 @@ a:focus-visible,
 <!-- ③ GUIDE NPC -->
 <div class="sec" id="guide">
   <div class="sech"><div class="secht">▶ GUIDE NPC — AI講師</div></div>
-  <p class="secsub">詰まったら即Claudeに質問。質問文をコピー → claude.aiで貼り付けるだけ。AllenのAPIコストはゼロ。</p>
+  <p class="secsub">詰まったら即Claudeに質問。質問文をコピー → claude.aiで貼り付けるだけ。運営側に追加のAPIコストはかからない。</p>
   <div class="guide-box">
     <div class="guide-hd">
       <span style="font-size:18px;">🤖</span>
-      <div><div class="guide-hdt">AI GUIDE — TREPRO QUEST</div><div class="guide-hds">AIの基礎から実務まで何でも答えます</div></div>
+      <div><div class="guide-hdt">AI GUIDE — AI QUEST</div><div class="guide-hds">AIの基礎から実務まで何でも答えます</div></div>
     </div>
     <div class="guide-body">
       <div class="how-box">
@@ -1105,14 +1105,14 @@ a:focus-visible,
         <div class="sys-l">▶ SYSTEM PROMPT — 最初に設定すると精度が上がる</div>
         <div class="sys-sub">Claudeの新規チャットを開いたら最初にこれを設定しておくと、AI QUEST専任講師として動いてくれる。</div>
         <div class="sys-pre-wrap">
-          <pre class="sys-pre" id="sysPre">あなたはTrepro・Lakkanの新入社員・インターン向けAI学習「AI QUEST」の専任講師です。
+          <pre class="sys-pre" id="sysPre">あなたはAI学習プログラム「AI QUEST」の専任講師です。受講者はAIをこれから学ぶ初心者です。
 
-受講者はAIの基礎から学び始めており、最終的にClaude・v0.dev・Cursor・Vercelを使ってLP制作・社内DX・クラウドワークス案件受注を1人で回せる状態を目指しています。コードは書かない、AIに指示するだけで完結させることが目標です。
+受講者はAIの基礎から学び始めており、最終的にClaude・Claude Code・Skills・MCPを使ってLP制作・社内DX・業務自動化を1人で回せる状態を目指しています。コードは書かない、AIに指示するだけで完結させることが目標です。
 
 回答スタイル：
 - 日本語。短く断言する形で。
 - 専門用語は使わず、小学生でもわかる言葉で答える。
-- 「このままCursorに貼って」「このままv0.devに入れて」という形で手順を提示する。
+- 「このままClaude Codeに頼んで」「このプロンプトをそのまま送って」という形で手順を提示する。
 - 「できません」は絶対に言わない。必ずAIで解決する方法を示す。
 - 初心者が詰まりやすい箇所には先回りして注意点を添える。</pre>
           <button class="sys-cpb" onclick="copySys(this)">COPY</button>
@@ -1134,7 +1134,7 @@ a:focus-visible,
 </div>
 
 <footer class="footer">
-  <div class="footer-t">© TREPRO INC. — AI QUEST v2.0 | STAGE 1〜5 公開中 / STAGE 6〜10 v2「Claude Code era」近日公開 | Supabase進捗保存対応</div>
+  <div class="footer-t">© Vigil AI Academy — AI QUEST v2.0 | 全50レッスン公開中 | 進捗保存対応</div>
   <div class="footer-t" style="margin-top:6px;font-size:10px;opacity:.6;">powered by <strong style="color:rgba(255,200,50,.7);">Vigil AI Academy</strong> — 育つ第二の脳・Vigil AI が提供する学習トラック</div>
   <div class="footer-t" style="margin-top:8px;font-size:10px;">
     <a href="/privacy.html" style="color:rgba(120,200,255,.7);text-decoration:none;margin:0 8px;">プライバシーポリシー</a>
@@ -1387,7 +1387,7 @@ function showClearModal(ld){
   // 励ましメッセージ
   const msgs = [
     'よくやった！また一歩AIクリエイターに近づいた。',
-    'チャレンジをAllenに送ることを忘れずに！',
+    'チャレンジをメンターに送ることを忘れずに！',
     'この調子で次のレッスンへ進もう。',
     '素晴らしい！学んだことを明日の仕事で試してみよう。',
     '完璧だ。知識は使わないと消える。今日中に実践しよう！'
