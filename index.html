@@ -249,6 +249,34 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .badge-get-btn{margin-top:28px;padding:13px 32px;background:linear-gradient(135deg,var(--gold2),#d4a017);border:none;color:#1a1a1a;font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;letter-spacing:.06em;box-shadow:0 4px 0 #a87c00;}
 .badge-get-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 #a87c00;}
 /* STAGE MAP */
+/* SHOWCASE モーダル — 修了制作の共有 */
+.showcase-modal{position:fixed;inset:0;background:rgba(5,8,16,.94);z-index:9998;display:none;align-items:center;justify-content:center;overflow-y:auto;padding:20px 0;}
+.showcase-modal.show{display:flex;animation:fadeIn .3s ease;}
+.showcase-box{background:linear-gradient(160deg,rgba(15,20,36,.99),rgba(10,14,28,.99));border:2px solid var(--gold2);padding:32px 36px;max-width:540px;width:92%;box-shadow:0 0 80px rgba(255,200,50,.2);max-height:90vh;overflow-y:auto;}
+.showcase-head{text-align:center;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border);}
+.showcase-h-label{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--gold2);letter-spacing:.12em;margin-bottom:10px;text-shadow:0 0 12px rgba(255,200,50,.5);}
+.showcase-h-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.5;}
+.showcase-h-sub{font-size:12px;color:var(--dim);line-height:1.7;}
+.showcase-q{margin-bottom:18px;}
+.showcase-q-label{font-size:13px;color:var(--text);font-weight:600;margin-bottom:8px;display:block;}
+.showcase-q-label .req{color:var(--red);margin-left:4px;font-size:10px;font-weight:400;}
+.showcase-q-label .opt{color:var(--dim);margin-left:4px;font-size:10px;font-weight:400;}
+.showcase-input,.showcase-textarea{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);color:var(--text);padding:10px 12px;font-size:13px;font-family:inherit;line-height:1.6;border-radius:4px;outline:none;resize:vertical;}
+.showcase-textarea{min-height:84px;}
+.showcase-input:focus,.showcase-textarea:focus{border-color:var(--gold2);background:rgba(0,0,0,.6);}
+.showcase-err{color:var(--red);font-size:11px;margin-top:6px;min-height:14px;text-align:center;}
+.showcase-btns{display:flex;flex-direction:column;gap:10px;margin-top:8px;}
+.showcase-btn-go{padding:14px;background:linear-gradient(135deg,var(--gold2),#d4a017);border:none;color:#1a1a1a;font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;letter-spacing:.06em;box-shadow:0 4px 0 #a87c00;transition:all .15s;}
+.showcase-btn-go:hover{transform:translateY(2px);box-shadow:0 2px 0 #a87c00;}
+.showcase-btn-skip{padding:10px;background:none;border:1px solid var(--border2);color:var(--dim);font-size:11px;cursor:pointer;transition:all .2s;}
+.showcase-btn-skip:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+/* SHOWCASE フィードカード */
+.cf-card.cf-showcase{border-left-color:var(--gold2);background:rgba(255,200,50,.05);}
+.cf-showcase-banner{display:inline-block;font-family:'Press Start 2P',monospace;font-size:8px;color:var(--gold2);background:rgba(255,200,50,.15);padding:3px 8px;border-radius:3px;margin-bottom:6px;letter-spacing:.06em;}
+.cf-showcase-title{font-size:14px;font-weight:700;color:var(--text);margin:6px 0;}
+.cf-showcase-desc{font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:8px;}
+.cf-showcase-url{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--cyan);text-decoration:none;padding:5px 12px;border:1px solid var(--cyan);border-radius:4px;background:rgba(120,200,255,.05);transition:all .2s;}
+.cf-showcase-url:hover{background:rgba(120,200,255,.15);}
 .smap{display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:8px;}
 .snode{background:linear-gradient(135deg,var(--card),rgba(11,15,26,.9));
   border:1px solid var(--border);padding:12px 10px;text-align:center;
@@ -445,6 +473,33 @@ textarea:focus{border-color:#4488ff;}
   font-size:6px;padding:2px 7px;cursor:pointer;transition:all .2s;}
 .sys-cpb:hover{border-color:var(--gold2);color:var(--gold2);}
 
+/* COMMUNITY FEED */
+.cf-wrap{display:flex;flex-direction:column;gap:10px;max-height:560px;overflow-y:auto;padding-right:4px;}
+.cf-wrap::-webkit-scrollbar{width:6px;}
+.cf-wrap::-webkit-scrollbar-thumb{background:rgba(120,200,255,.2);border-radius:3px;}
+.cf-empty{font-size:12px;color:var(--dim);padding:18px;text-align:center;border:1px dashed rgba(120,200,255,.15);}
+.cf-card{display:flex;gap:12px;padding:14px 16px;background:rgba(8,12,24,.5);
+  border:1px solid rgba(68,120,220,.18);border-left:3px solid var(--cyan);
+  transition:all .2s ease;align-items:flex-start;}
+.cf-card:hover{background:rgba(12,18,32,.7);border-left-color:var(--gold2);transform:translateX(2px);}
+.cf-card.cf-badge{border-left-color:var(--gold2);background:rgba(255,200,50,.06);}
+.cf-avatar{flex:0 0 38px;height:38px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;background:rgba(120,200,255,.08);border:1px solid rgba(120,200,255,.25);border-radius:50%;}
+.cf-card.cf-badge .cf-avatar{background:rgba(255,200,50,.12);border-color:rgba(255,200,50,.4);}
+.cf-body{flex:1;min-width:0;}
+.cf-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+.cf-name{font-size:13px;font-weight:700;color:var(--text);}
+.cf-persona{font-size:10px;color:var(--cyan);padding:1px 7px;background:rgba(120,200,255,.1);
+  border:1px solid rgba(120,200,255,.25);border-radius:2px;}
+.cf-msg{font-size:12px;color:var(--dim);line-height:1.7;}
+.cf-msg .cf-lv{color:var(--gold2);font-family:'Press Start 2P',monospace;font-size:9px;margin-right:4px;}
+.cf-msg .cf-title{color:var(--text);font-weight:600;}
+.cf-msg .cf-xp{color:var(--gold2);font-weight:700;}
+.cf-badge-mark{display:inline-block;margin-top:6px;padding:4px 10px;font-size:11px;
+  font-family:'Press Start 2P',monospace;font-size:9px;color:#1a1a1a;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));letter-spacing:.04em;}
+.cf-time{font-size:10px;color:var(--vdark);margin-top:6px;font-family:'Press Start 2P',monospace;letter-spacing:.05em;}
+
 /* LEVEL UP */
 .lvup{position:fixed;inset:0;background:rgba(5,8,16,.95);z-index:9999;
   display:none;align-items:center;justify-content:center;flex-direction:column;}
@@ -629,6 +684,13 @@ body.theme-10 .pc{border-top-color:#ffd060;}
   .profile-box{padding:24px 20px;}
   .profile-opt-grid{grid-template-columns:1fr;}
 }
+/* Google OAuth ログインボタン */
+.login-google-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;background:#fff;color:#1f1f1f;border:none;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;box-shadow:0 4px 0 rgba(255,255,255,.2);font-family:-apple-system,'Hiragino Sans',sans-serif;}
+.login-google-btn:hover{background:#f6f6f6;transform:translateY(2px);box-shadow:0 2px 0 rgba(255,255,255,.2);}
+.login-google-btn svg{flex-shrink:0;}
+.login-divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--vdark);font-size:10px;letter-spacing:.1em;}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:rgba(120,144,176,.18);}
+.login-guest-label{font-size:11px;color:var(--dim);margin-bottom:8px;letter-spacing:.04em;}
 /* TODAY GOAL BANNER */
 .today-goal{margin:0 0 18px;padding:14px 18px;
   background:linear-gradient(135deg,rgba(26,68,170,.18),rgba(10,20,50,.6));
@@ -715,7 +777,19 @@ a:focus-visible,
       <div class="login-desc-item">💾 名前を入れるだけ。次回も同じ名前で続きから始められる</div>
       <div class="login-desc-item">⏱ 1レッスン15〜30分。スキマ時間に少しずつ進めてOK</div>
     </div>
-    <p class="login-sub" style="margin-top:20px;">あなたの名前を入力してスタート</p>
+    <button class="login-google-btn" type="button" onclick="loginWithGoogle()">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+        <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
+        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+      </svg>
+      Google で続ける（推奨）
+    </button>
+
+    <div class="login-divider">または</div>
+
+    <p class="login-guest-label" style="margin-top:6px;">ゲストとして名前だけで開始</p>
     <label for="loginName" class="sr-only">プレイヤー名</label>
     <input class="login-inp" id="loginName" type="text" placeholder="例：まな" maxlength="20" autocomplete="off"
       aria-label="プレイヤー名"
@@ -801,6 +875,36 @@ a:focus-visible,
     <div class="badge-get-name" id="badgeGetName"></div>
     <div class="badge-get-ai" id="badgeGetAi"></div>
     <button class="badge-get-btn" onclick="closeBadgeGet()">▶ 受け取る</button>
+  </div>
+</div>
+
+<!-- SHOWCASE MODAL — 修了制作を COMMUNITY に共有 -->
+<div class="showcase-modal" id="showcaseModal" role="dialog" aria-labelledby="showcaseTitle">
+  <div class="showcase-box">
+    <div class="showcase-head">
+      <div class="showcase-h-label">🎓 修了制作 — COMMUNITY シェア</div>
+      <div class="showcase-h-title" id="showcaseTitle">あなたの成果物をコミュニティに共有しませんか？</div>
+      <div class="showcase-h-sub">あなたが作ったものは、他の受講者の刺激になります。<br>
+        作品のタイトル・URL・短い説明を共有すると、COMMUNITY タイムラインに掲載されます（任意）。</div>
+    </div>
+
+    <div class="showcase-q">
+      <label class="showcase-q-label" for="showcaseTitleInput">作品タイトル<span class="req">必須</span></label>
+      <input class="showcase-input" id="showcaseTitleInput" type="text" maxlength="80" placeholder="例：採用業務を AI 自動化するチャットボット">
+    </div>
+    <div class="showcase-q">
+      <label class="showcase-q-label" for="showcaseUrlInput">URL（GitHub / Vercel / Notion 等）<span class="opt">任意</span></label>
+      <input class="showcase-input" id="showcaseUrlInput" type="url" maxlength="300" placeholder="https://...">
+    </div>
+    <div class="showcase-q">
+      <label class="showcase-q-label" for="showcaseDescInput">説明<span class="opt">200文字目安</span></label>
+      <textarea class="showcase-textarea" id="showcaseDescInput" maxlength="500" placeholder="どんな課題を AI で解決したか、どんな技術を組み合わせたか、ひと言で。"></textarea>
+    </div>
+    <div class="showcase-err" id="showcaseErr"></div>
+    <div class="showcase-btns">
+      <button class="showcase-btn-go" type="button" onclick="submitShowcase()">▶ COMMUNITY に共有する</button>
+      <button class="showcase-btn-skip" type="button" onclick="closeShowcase()">あとにする（個人内に留める）</button>
+    </div>
   </div>
 </div>
 
@@ -1102,6 +1206,15 @@ a:focus-visible,
   <div class="sech"><div class="secht">▶ STAGE MAP — 全50ダンジョン</div></div>
   <p class="secsub">10のステージ、各5つのダンジョン。順番にクリアすることで「AI を使いこなして自走できる人材」になる。</p>
   <div class="smap" id="stageMap"></div>
+</div>
+
+<!-- ①.5 COMMUNITY FEED -->
+<div class="sec">
+  <div class="sech"><div class="secht">📣 COMMUNITY — 受講者の最新クリア</div></div>
+  <p class="secsub">仲間の進捗がリアルタイムに流れる掲示板。最新30件。先に進んでいる人を見て自分の現在地を確認しよう。</p>
+  <div class="cf-wrap" id="communityFeed">
+    <div class="cf-empty">読み込み中…</div>
+  </div>
 </div>
 
 <!-- ② DUNGEONS -->
@@ -1484,6 +1597,8 @@ function closeClearModal(){
   // バッジ獲得演出（予約があれば）
   if(_pendingBadgeStage){
     const stage = _pendingBadgeStage;
+    // LV50（STAGE 10）クリア時は、バッジ獲得→閉じた後に showcase 提案
+    if(stage === 10) _pendingShowcase = true;
     _pendingBadgeStage = null;
     setTimeout(()=>showBadgeGet(stage), 350);
   }
@@ -1574,6 +1689,18 @@ let currentPlayerName = null;
 
 // 起動時：保存済みプレイヤーがいればそのまま再開、いなければログイン表示
 (async function initPlayer(){
+  // コミュニティフィードはログイン状態に関わらず表示
+  loadCommunityFeed();
+
+  // Google OAuth リダイレクトから戻ってきた場合のセッション処理
+  try {
+    const { data:{ session } } = await supa.auth.getSession();
+    if(session && session.user){
+      const ok = await ensurePlayerFromGoogle(session.user);
+      if(ok) return;
+    }
+  } catch(e){ /* セッションなしは無視 */ }
+
   const savedId = localStorage.getItem('aq_player_id');
   const savedName = localStorage.getItem('aq_player_name');
   if(savedId && savedName){
@@ -1591,6 +1718,63 @@ let currentPlayerName = null;
   document.getElementById('loginOverlay').classList.remove('hide');
   setTimeout(()=>document.getElementById('loginName').focus(),300);
 })();
+
+// Google OAuth でログイン
+async function loginWithGoogle(){
+  document.getElementById('loginErr').textContent = '';
+  try {
+    const { error } = await supa.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + window.location.pathname,
+        queryParams: { access_type: 'offline', prompt: 'consent' }
+      }
+    });
+    if(error){
+      // プロバイダ未設定など
+      document.getElementById('loginErr').innerHTML = 'Google ログインがまだ有効化されていません。<br>運営者に連絡するか、下のゲストモードで開始してください。';
+      console.error('Google OAuth error:', error);
+    }
+  } catch(e){
+    document.getElementById('loginErr').innerHTML = 'Google ログインが利用できません。<br>下のゲストモードで開始してください。';
+    console.error('signInWithOAuth threw:', e);
+  }
+}
+
+// Google で認証された user 情報から aiq_players に紐付け
+async function ensurePlayerFromGoogle(user){
+  const meta = user.user_metadata || {};
+  const displayName = meta.full_name || meta.name || (user.email ? user.email.split('@')[0] : 'Google User');
+  const email = user.email || null;
+  try {
+    // 既存（email or google_sub で照合）— まず google_sub があれば優先、なければ name 照合
+    let existing = null;
+    if(email){
+      const r = await supa.from('aiq_players').select('id,name').eq('name', displayName).maybeSingle();
+      existing = r.data;
+    }
+    if(!existing){
+      const ins = await supa.from('aiq_players').insert({ name: displayName }).select().single();
+      if(ins.error){ console.error('insert player failed:', ins.error); return false; }
+      existing = ins.data;
+    }
+    currentPlayerId = existing.id;
+    currentPlayerName = existing.name;
+    localStorage.setItem('aq_player_id', existing.id);
+    localStorage.setItem('aq_player_name', existing.name);
+    await supa.from('aiq_players').update({ last_seen_at: new Date().toISOString() }).eq('id', existing.id);
+    document.getElementById('loginOverlay').classList.add('hide');
+    setHeaderName(existing.name);
+    await loadProgress();
+    // 新規プレイヤー or プロフィール未入力ならプロフィールモーダル
+    const { data: prof } = await supa.from('aiq_player_profile').select('player_id').eq('player_id', existing.id).maybeSingle();
+    if(!prof) showProfileModal();
+    return true;
+  } catch(e){
+    console.error('ensurePlayerFromGoogle failed:', e);
+    return false;
+  }
+}
 
 async function startAdventure(){
   const name = document.getElementById('loginName').value.trim();
@@ -1778,6 +1962,7 @@ async function loadProgress(){
   });
   renderBadgeShelf();
   renderControlTree();
+  loadCommunityFeed();
 }
 
 function loadMasterMode(){
@@ -1806,6 +1991,7 @@ function loadMasterMode(){
   switchStage(10);
   renderBadgeShelf();
   renderControlTree();
+  loadCommunityFeed();
 }
 
 // ── GYM BADGES ────────────────────────────────────────────────
@@ -1859,6 +2045,123 @@ function renderControlTree(){
   tree.innerHTML = html;
 }
 
+// ── COMMUNITY FEED ────────────────────────────────────────────
+const CF_PERSONA_LABEL = {
+  '個人事業主':'個人事業主','会社員':'会社員','経営者':'経営者',
+  '学生':'学生','求職中':'求職中','その他':'その他'
+};
+const CF_PERSONA_ICON = {
+  '個人事業主':'💼','会社員':'🏢','経営者':'👔',
+  '学生':'🎓','求職中':'🔍','その他':'🧭'
+};
+function cfTimeAgo(iso){
+  if(!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const s = Math.max(0, Math.floor(diff/1000));
+  if(s<60) return 'たった今';
+  const m = Math.floor(s/60); if(m<60) return m+'分前';
+  const h = Math.floor(m/60); if(h<24) return h+'時間前';
+  const d = Math.floor(h/24); if(d<7) return d+'日前';
+  const w = Math.floor(d/7); if(w<5) return w+'週間前';
+  const mo = Math.floor(d/30); return mo+'ヶ月前';
+}
+function cfEscape(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+async function loadCommunityFeed(){
+  const wrap = document.getElementById('communityFeed');
+  if(!wrap) return;
+  try{
+    // 最新30件のクリアログを取得（player JOIN込み）
+    const { data: rows, error } = await supa
+      .from('aiq_progress')
+      .select('lesson_lv,xp_gained,cleared_at,player_id,aiq_players(name)')
+      .order('cleared_at', { ascending: false })
+      .limit(30);
+    if(error){ wrap.innerHTML = '<div class="cf-empty">読み込みに失敗しました</div>'; return; }
+    // 修了制作（SHOWCASE）の最新10件も取得
+    const { data: showcases } = await supa
+      .from('aiq_showcase')
+      .select('id,player_id,lesson_lv,title,url,description,created_at,aiq_players(name)')
+      .order('created_at', { ascending: false })
+      .limit(10);
+    const hasRows = (rows && rows.length>0);
+    const hasShowcase = (showcases && showcases.length>0);
+    if(!hasRows && !hasShowcase){ wrap.innerHTML = '<div class="cf-empty">まだクリア記録がありません。最初の一歩を踏み出そう。</div>'; return; }
+    // プロフィール属性を一括取得
+    const allIds = [...new Set([
+      ...(rows||[]).map(r=>r.player_id),
+      ...(showcases||[]).map(s=>s.player_id)
+    ].filter(Boolean))];
+    let profMap = {};
+    if(allIds.length){
+      const { data: profs } = await supa.from('aiq_player_profile').select('player_id,persona_type').in('player_id', allIds);
+      (profs||[]).forEach(p=>{ profMap[p.player_id] = p.persona_type; });
+    }
+    const lessonData = window.LESSON_DATA || [];
+
+    // 進捗フィードと showcase をマージ（時系列降順）
+    const merged = [
+      ...(rows||[]).map(r => ({type:'progress', data:r, ts:r.cleared_at})),
+      ...(showcases||[]).map(s => ({type:'showcase', data:s, ts:s.created_at})),
+    ].sort((a,b)=> new Date(b.ts) - new Date(a.ts)).slice(0, 35);
+
+    const html = merged.map(item => {
+      if(item.type === 'showcase'){
+        const s = item.data;
+        const name = (s.aiq_players && s.aiq_players.name) ? s.aiq_players.name : '匿名プレイヤー';
+        const persona = profMap[s.player_id] || null;
+        const icon = (persona && CF_PERSONA_ICON[persona]) ? CF_PERSONA_ICON[persona] : '🎮';
+        const personaLabel = (persona && CF_PERSONA_LABEL[persona]) ? CF_PERSONA_LABEL[persona] : '';
+        return `<div class="cf-card cf-showcase">
+          <div class="cf-avatar">${icon}</div>
+          <div class="cf-body">
+            <div class="cf-showcase-banner">🎓 修了制作 SHOWCASE</div>
+            <div class="cf-row">
+              <span class="cf-name">${cfEscape(name)}さん</span>
+              ${personaLabel?`<span class="cf-persona">${cfEscape(personaLabel)}</span>`:''}
+            </div>
+            <div class="cf-showcase-title">${cfEscape(s.title)}</div>
+            ${s.description?`<div class="cf-showcase-desc">${cfEscape(s.description)}</div>`:''}
+            ${s.url?`<a class="cf-showcase-url" href="${cfEscape(s.url)}" target="_blank" rel="noopener noreferrer">▶ 作品を見る</a>`:''}
+            <div class="cf-time" style="margin-top:8px;">${cfTimeAgo(s.created_at)}</div>
+          </div>
+        </div>`;
+      }
+      const r = item.data;
+      const ld = lessonData.find(l=>l.lv===r.lesson_lv);
+      const title = ld ? (ld.title || ld.t || `LESSON ${r.lesson_lv}`) : `LESSON ${r.lesson_lv}`;
+      const xpVal = (r.xp_gained!=null) ? r.xp_gained : (ld ? ld.xpVal : 0);
+      const name = (r.aiq_players && r.aiq_players.name) ? r.aiq_players.name : '匿名プレイヤー';
+      const persona = profMap[r.player_id] || null;
+      const icon = (persona && CF_PERSONA_ICON[persona]) ? CF_PERSONA_ICON[persona] : '🎮';
+      const personaLabel = (persona && CF_PERSONA_LABEL[persona]) ? CF_PERSONA_LABEL[persona] : '';
+      const isBadge = (r.lesson_lv % 5 === 0);
+      const stage = Math.ceil(r.lesson_lv / 5);
+      const badge = isBadge && window.AIQ_BADGES && window.AIQ_BADGES[stage] ? window.AIQ_BADGES[stage] : null;
+      return `<div class="cf-card${isBadge?' cf-badge':''}">
+        <div class="cf-avatar">${icon}</div>
+        <div class="cf-body">
+          <div class="cf-row">
+            <span class="cf-name">${cfEscape(name)}さん</span>
+            ${personaLabel?`<span class="cf-persona">${cfEscape(personaLabel)}</span>`:''}
+          </div>
+          <div class="cf-msg">
+            <span class="cf-lv">LV ${r.lesson_lv}</span>
+            「<span class="cf-title">${cfEscape(title)}</span>」をクリア
+            <span class="cf-xp">（+${xpVal} XP）</span>
+          </div>
+          ${badge?`<div class="cf-badge-mark">🏅 GYM BADGE 獲得！ ${cfEscape(badge.name)}</div>`:''}
+          <div class="cf-time">${cfTimeAgo(r.cleared_at)}</div>
+        </div>
+      </div>`;
+    }).join('');
+    wrap.innerHTML = html;
+  }catch(e){
+    wrap.innerHTML = '<div class="cf-empty">読み込みに失敗しました</div>';
+  }
+}
+
 // バッジ獲得演出
 let _badgeGetQueue = [];
 function showBadgeGet(stage){
@@ -1874,6 +2177,44 @@ function showBadgeGet(stage){
 }
 function closeBadgeGet(){
   document.getElementById('badgeGetModal').classList.remove('show');
+  // 修了制作（LV50 = STAGE 10 バッジ）獲得後は showcase 提案
+  if(_pendingShowcase){
+    _pendingShowcase = false;
+    setTimeout(()=>showShowcaseModal(), 300);
+  }
+}
+
+// ── 修了制作 SHOWCASE（COMMUNITY シェア）──────────────────────
+let _pendingShowcase = false;
+function showShowcaseModal(){
+  document.getElementById('showcaseErr').textContent = '';
+  document.getElementById('showcaseModal').classList.add('show');
+}
+function closeShowcase(){
+  document.getElementById('showcaseModal').classList.remove('show');
+}
+async function submitShowcase(){
+  const title = document.getElementById('showcaseTitleInput').value.trim();
+  const url = document.getElementById('showcaseUrlInput').value.trim() || null;
+  const desc = document.getElementById('showcaseDescInput').value.trim() || null;
+  const errEl = document.getElementById('showcaseErr');
+  if(!title){ errEl.textContent = 'タイトルは必須です'; return; }
+  if(!currentPlayerId){ errEl.textContent = 'ログイン状態が確認できません。再ログインしてください。'; return; }
+  if(url && !/^https?:\/\//i.test(url)){ errEl.textContent = 'URL は https:// で始まる形式で入力してください'; return; }
+  try {
+    const { error } = await supa.from('aiq_showcase').insert({
+      player_id: currentPlayerId,
+      lesson_lv: 50,
+      title, url, description: desc
+    });
+    if(error) throw error;
+    closeShowcase();
+    // フィード即更新
+    if(typeof loadCommunityFeed==='function') loadCommunityFeed();
+    spawnPx(20);
+  } catch(e){
+    errEl.textContent = '保存に失敗しました。時間を置いて再度お試しください。';
+  }
 }
 
 async function saveProgress(lvNum, xpVal){
